@@ -1,0 +1,1 @@
+Floral 테마용 이미지 파일을 이 폴더에 저장하세요. 예: floral-main.webp, floral-divider.svg

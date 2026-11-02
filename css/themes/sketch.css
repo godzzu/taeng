@@ -1,0 +1,18 @@
+html[data-theme="wedding-sketch"] {
+  --color-primary: #333333;
+  --color-secondary: #777777;
+  --color-background: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-muted: #777777;
+  --color-border: #dedede;
+  --color-accent: #f4f4f4;
+  --font-display: "Comic Sans MS", "Bradley Hand", cursive;
+}
+html[data-theme="wedding-sketch"] body { background-image: radial-gradient(#00000008 .7px, transparent .7px); background-size: 7px 7px; }
+html[data-theme="wedding-sketch"] .hero { background: #fff; border-bottom: 1px dashed #bbb; }
+html[data-theme="wedding-sketch"] .section-soft { background: #fafafa; }
+html[data-theme="wedding-sketch"] .info-card,
+html[data-theme="wedding-sketch"] .account-card,
+html[data-theme="wedding-sketch"] .contact-card { border: 1px solid #333; border-radius: 2px; box-shadow: 3px 3px 0 #eee; }
+html[data-theme="wedding-sketch"] .eyebrow { color: #555; }

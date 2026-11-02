@@ -1,0 +1,1 @@
+Sketch 테마용 손그림 이미지 파일을 이 폴더에 저장하세요. 예: sketch-main.webp, sketch-flower.svg

@@ -1,0 +1,17 @@
+html[data-theme="wedding-floral"] {
+  --color-primary: #afc8d9;
+  --color-secondary: #b9ccba;
+  --color-background: #fafaf5;
+  --color-surface: #fffefa;
+  --color-text: #58666b;
+  --color-muted: #879195;
+  --color-border: #e4e9e5;
+  --color-accent: #d9e6e2;
+  --font-display: "Times New Roman", Georgia, serif;
+}
+html[data-theme="wedding-floral"] .hero {
+  background: radial-gradient(ellipse at 12% 18%, #dcebe5 0, transparent 34%),
+              radial-gradient(ellipse at 88% 78%, #dce8ef 0, transparent 34%);
+}
+html[data-theme="wedding-floral"] .eyebrow { color: #8daea6; }
+html[data-theme="wedding-floral"] h2 { color: #718f88; }

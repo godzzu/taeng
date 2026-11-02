@@ -1,0 +1,17 @@
+/* 공통 기본값. 실제 테마 변수는 themes/*.css에서 덮어씁니다. */
+:root {
+  --color-primary: #afc8d9;
+  --color-secondary: #b9ccba;
+  --color-background: #fafaf5;
+  --color-surface: #ffffff;
+  --color-text: #58666b;
+  --color-muted: #879195;
+  --color-border: #e4e9e5;
+  --color-accent: #d9e6e2;
+  --font-body: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  --font-display: Georgia, serif;
+  --content-width: 720px;
+  --section-space: clamp(76px, 12vw, 132px);
+  --radius-card: 18px;
+  --shadow-soft: 0 12px 36px rgba(40, 55, 60, .07);
+}
