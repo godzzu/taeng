@@ -1,18 +1,16 @@
 export function initLocation(config) {
   const section = document.querySelector("#location");
   if (!section) return;
-  const location = config.location;
-  section.querySelector('[data-field="location-venue"]').textContent = location.venue;
-  section.querySelector('[data-field="location-address"]').textContent = location.address;
-  section.querySelector('[data-field="transport"]').textContent = location.transport;
-  section.querySelector('[data-field="parking"]').textContent = location.parking;
+  section.querySelector('[data-field="location-venue"]').textContent = config.weddingInfo.venue;
+  section.querySelector('[data-field="location-address"]').textContent = config.weddingInfo.address;
+  for (const key of ["transport", "parking"]) {
+    const node = section.querySelector(`[data-field="${key}"]`);
+    node.textContent = config.location[key].text;
+    node.hidden = !config.location[key].visible || !config.location[key].text;
+  }
   const links = section.querySelector('[data-field="map-links"]');
   links.replaceChildren();
-  [
-    ["카카오맵에서 보기", location.kakaoMapUrl],
-    ["네이버 지도에서 보기", location.naverMapUrl]
-  ].forEach(([label, url]) => {
-    if (!url) return;
+  config.location.links.forEach(({ label, url }) => {
     const anchor = document.createElement("a");
     anchor.className = "button button-primary";
     anchor.href = url;

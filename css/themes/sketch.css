@@ -1,18 +1,40 @@
 html[data-theme="wedding-sketch"] {
-  --color-primary: #333333;
-  --color-secondary: #777777;
+  --color-primary: #222222;
+  --color-secondary: #666666;
   --color-background: #ffffff;
   --color-surface: #ffffff;
-  --color-text: #333333;
-  --color-muted: #777777;
-  --color-border: #dedede;
-  --color-accent: #f4f4f4;
-  --font-display: "Comic Sans MS", "Bradley Hand", cursive;
+  --color-soft: #fafafa;
+  --color-text: #222222;
+  --color-muted: #606060;
+  --color-border: #777777;
+  --color-accent: #f1f1f1;
+  --color-heading: #222222;
+  --color-action: #222222;
+  --color-action-hover: #444444;
+  --color-focus: #222222;
+  --color-overlay: #111111;
+  --font-display: "Nanum Pen Script", "Segoe Print", "HYGungSo", "Apple Chancery", "Batang", cursive;
+  --font-size-heading: clamp(1.9rem, 6vw, 2.5rem);
+  --letter-spacing: 0;
+  --eyebrow-spacing: .16em;
+  --section-space: clamp(64px, 10vw, 104px);
+  --heading-gap: 24px;
+  --card-padding: clamp(18px, 5vw, 24px);
+  --grid-gap: 8px;
+  --radius-card: 3px 8px 4px 7px;
+  --radius-control: 3px;
+  --radius-button: 4px 8px 5px 7px;
+  --radius-image: 2px;
+  --shadow-soft: 2px 3px 0 #eeeeee;
+  --button-shadow: 2px 2px 0 #dedede;
+  --divider-width: 56px;
+  --divider-style: dashed;
+  --divider-color: #777777;
+  --paper-image: url("../../assets/images/templates/sketch/paper.svg");
+  --paper-size: 180px 180px;
+  --decoration-image: url("../../assets/images/templates/sketch/flowers.svg");
+  --decoration-width: 82px;
+  --decoration-height: 52px;
+  --hero-decoration-width: 210px;
+  --hero-decoration-height: 134px;
 }
-html[data-theme="wedding-sketch"] body { background-image: radial-gradient(#00000008 .7px, transparent .7px); background-size: 7px 7px; }
-html[data-theme="wedding-sketch"] .hero { background: #fff; border-bottom: 1px dashed #bbb; }
-html[data-theme="wedding-sketch"] .section-soft { background: #fafafa; }
-html[data-theme="wedding-sketch"] .info-card,
-html[data-theme="wedding-sketch"] .account-card,
-html[data-theme="wedding-sketch"] .contact-card { border: 1px solid #333; border-radius: 2px; box-shadow: 3px 3px 0 #eee; }
-html[data-theme="wedding-sketch"] .eyebrow { color: #555; }

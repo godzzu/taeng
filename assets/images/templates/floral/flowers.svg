@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="150" viewBox="0 0 300 150">
+<defs>
+ <filter id="wash" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="8" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="5"/><feGaussianBlur stdDeviation=".65"/></filter>
+ <radialGradient id="blue"><stop stop-color="#91b4d0" stop-opacity=".8"/><stop offset="1" stop-color="#c7deec" stop-opacity=".35"/></radialGradient>
+ <g id="flower" fill="url(#blue)"><ellipse cy="-14" rx="13" ry="21"/><ellipse cy="-14" rx="13" ry="21" transform="rotate(72)"/><ellipse cy="-14" rx="13" ry="21" transform="rotate(144)"/><ellipse cy="-14" rx="13" ry="21" transform="rotate(216)"/><ellipse cy="-14" rx="13" ry="21" transform="rotate(288)"/><circle r="5" fill="#c7b886" fill-opacity=".7"/></g>
+</defs>
+<g filter="url(#wash)">
+ <g fill="none" stroke="#91aa91" stroke-width="1.4" opacity=".7"><path d="M44 116Q107 115 156 60M144 112Q195 75 260 98M100 110Q78 82 66 53"/></g>
+ <g fill="#a8c0a6" opacity=".65"><ellipse cx="77" cy="108" rx="9" ry="22" transform="rotate(-55 77 108)"/><ellipse cx="112" cy="89" rx="9" ry="23" transform="rotate(30 112 89)"/><ellipse cx="182" cy="97" rx="10" ry="23" transform="rotate(-40 182 97)"/><ellipse cx="225" cy="85" rx="8" ry="21" transform="rotate(65 225 85)"/><ellipse cx="72" cy="76" rx="8" ry="18" transform="rotate(-30 72 76)"/></g>
+ <use href="#flower" transform="translate(143 60)"/><use href="#flower" transform="translate(207 76) scale(.7)"/><use href="#flower" transform="translate(75 58) scale(.55)"/>
+</g></svg>

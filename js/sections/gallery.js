@@ -6,7 +6,7 @@ export function initGallery(config) {
   const grid = section.querySelector('[data-field="gallery"]');
   const image = dialog.querySelector("[data-dialog-image]");
   const counter = dialog.querySelector("[data-dialog-counter]");
-  const items = config.gallery || [];
+  const items = config.gallery.items;
   let current = 0;
   let touchStartX = 0;
 
@@ -15,7 +15,7 @@ export function initGallery(config) {
     const button = document.createElement("button");
     button.className = "gallery-item";
     button.type = "button";
-    button.setAttribute("aria-label", `${index + 1}번 사진 크게 보기`);
+    button.setAttribute("aria-label", config.labels.galleryOpen.replace("{number}", index + 1));
     const img = document.createElement("img");
     img.src = item.src;
     img.alt = item.alt || "";

@@ -1,9 +1,4 @@
-export function formatKoreanDate(dateString) {
-  const [year, month, day] = dateString.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-  return `${year}년 ${month}월 ${day}일 ${weekdays[date.getDay()]}요일`;
-}
+export { formatKoreanDate } from "./date.js";
 
 export function showToast(message) {
   const toast = document.querySelector("[data-toast]");

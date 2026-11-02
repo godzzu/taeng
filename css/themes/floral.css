@@ -1,17 +1,18 @@
 html[data-theme="wedding-floral"] {
   --color-primary: #afc8d9;
   --color-secondary: #b9ccba;
-  --color-background: #fafaf5;
+  --color-background: #faf9f3;
   --color-surface: #fffefa;
-  --color-text: #58666b;
-  --color-muted: #879195;
-  --color-border: #e4e9e5;
-  --color-accent: #d9e6e2;
-  --font-display: "Times New Roman", Georgia, serif;
+  --color-soft: #eef2ed;
+  --color-text: #394c50;
+  --color-muted: #626f70;
+  --color-border: #d4ded7;
+  --color-accent: #e1ebe7;
+  --color-heading: #4d6861;
+  --color-action: #46665c;
+  --color-action-hover: #354f46;
+  --color-focus: #46665c;
+  --font-display: "Noto Serif KR", "Batang", "Songti SC", Georgia, serif;
+  --hero-wash: radial-gradient(ellipse at 10% 20%, #dcebe580, transparent 48%), radial-gradient(ellipse at 90% 80%, #dce8ef80, transparent 48%);
+  --decoration-image: url("../../assets/images/templates/floral/flowers.svg");
 }
-html[data-theme="wedding-floral"] .hero {
-  background: radial-gradient(ellipse at 12% 18%, #dcebe5 0, transparent 34%),
-              radial-gradient(ellipse at 88% 78%, #dce8ef 0, transparent 34%);
-}
-html[data-theme="wedding-floral"] .eyebrow { color: #8daea6; }
-html[data-theme="wedding-floral"] h2 { color: #718f88; }

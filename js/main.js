@@ -1,4 +1,5 @@
 import { getWeddingConfig } from "./core/config.js";
+import { renderConfig } from "./core/config-view.js";
 import { applyTheme } from "./core/theme.js";
 import { initHero } from "./sections/hero.js";
 import { initInvitation } from "./sections/invitation.js";
@@ -14,6 +15,7 @@ import { appConfig } from "../config/app.config.js";
 function initializeWedding() {
   const config = getWeddingConfig();
   applyTheme(config.templateId);
+  renderConfig(config);
 
   // 각 섹션은 독립적인 init 함수로 초기화합니다.
   initHero(config);

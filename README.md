@@ -24,7 +24,7 @@ python -m http.server 8000
 
 ## 이미지 교체
 
-갤러리 이미지 경로는 `config/wedding.config.js`의 `gallery` 배열에서 변경합니다. 실제 배포 이미지에는 JPG 또는 WebP 사용을 권장합니다.
+갤러리 이미지 경로는 `config/wedding.config.js`의 `gallery.items` 배열에서 변경합니다. 실제 배포 이미지에는 JPG 또는 WebP 사용을 권장합니다.
 
 ## 기능 상태
 
@@ -52,3 +52,7 @@ python -m http.server 8000
 ## 보안 주의
 
 GitHub Pages에 올라간 JS 설정은 공개됩니다. 카카오 JavaScript 키처럼 브라우저에 노출되는 공개 키만 설정하고, Supabase service role key, Firebase Admin credential, 관리자 비밀번호 등 비밀정보는 절대 커밋하지 마세요. 방명록은 데이터베이스 보안 규칙과 스팸 방지 정책을 별도로 설정해야 합니다.
+
+## 콘텐츠 설정 구조
+
+모든 콘텐츠와 표시 여부는 `config/wedding.config.js`에서 관리합니다. 상세 필드와 사용법은 [설정 문서](docs/configuration.md)를 참고하세요.

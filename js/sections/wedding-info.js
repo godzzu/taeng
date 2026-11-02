@@ -1,20 +1,50 @@
-import { formatKoreanDate } from "../core/utils.js";
+import { formatKoreanDate, formatKoreanTime, getWeddingDayState, millisecondsUntilKoreanMidnight, toKoreanDateTime } from "../core/date.js";
 
+let dispose;
 export function initWeddingInfo(config) {
+  // Reinitializing does not accumulate timers or listeners.
+  dispose?.();
   const section = document.querySelector("#wedding-info");
   if (!section) return;
-  const { weddingDate, weddingTime, dateLabel, timeLabel } = config.basic;
-  section.querySelector('[data-field="date"]').textContent = dateLabel || formatKoreanDate(weddingDate);
-  section.querySelector('[data-field="time"]').textContent = timeLabel || weddingTime;
-  section.querySelector('[data-field="venue"]').textContent = config.weddingInfo.venue;
-  section.querySelector('[data-field="hall"]').textContent = config.weddingInfo.hall;
-  section.querySelector('[data-field="address"]').textContent = config.weddingInfo.address;
-
-  const [year, month, day] = weddingDate.split("-").map(Number);
-  const target = Date.UTC(year, month - 1, day);
-  const now = new Date();
-  const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
-  const diff = Math.ceil((target - today) / 86400000);
-  const label = diff > 0 ? `D-${diff}` : diff === 0 ? "오늘, 결혼합니다" : `결혼식이 ${Math.abs(diff)}일 지났습니다`;
-  section.querySelector('[data-field="dday"]').textContent = label;
+  const info = config.weddingInfo;
+  section.hidden = !info.visible;
+  section.querySelector("h2").textContent = info.title;
+  const subtitle = section.querySelector(".eyebrow");
+  subtitle.textContent = info.subtitle;
+  subtitle.hidden = !info.subtitle;
+  const { weddingDate, weddingTime } = config.basic;
+  const date = section.querySelector('[data-field="date"]');
+  date.textContent = formatKoreanDate(weddingDate);
+  date.dateTime = weddingDate;
+  const time = section.querySelector('[data-field="time"]');
+  time.textContent = formatKoreanTime(weddingTime);
+  time.dateTime = toKoreanDateTime(weddingDate, weddingTime);
+  for (const key of ["venue", "hall", "address"]) {
+    const node = section.querySelector(`[data-field="${key}"]`);
+    node.textContent = info[key];
+    node.hidden = !info[key];
+  }
+  const dday = section.querySelector('[data-field="dday"]');
+  dday.hidden = !info.showDday;
+  let timer;
+  function refresh() {
+    window.clearTimeout(timer);
+    const now = new Date();
+    const { daysRemaining, status } = getWeddingDayState(weddingDate, now);
+    const label = status === "upcoming" ? `D-${daysRemaining}`
+      : status === "today" ? config.labels.ddayToday
+      : config.labels.ddayPast.replace("{days}", Math.abs(daysRemaining));
+    dday.dataset.state = status;
+    if (dday.textContent !== label) dday.textContent = label;
+    // Date-based D-day stays "today" even after the ceremony time.
+    if (info.visible && info.showDday && !document.hidden) {
+      timer = window.setTimeout(refresh, millisecondsUntilKoreanMidnight(now) + 50);
+    }
+  }
+  refresh();
+  if (info.visible && info.showDday) document.addEventListener("visibilitychange", refresh);
+  dispose = () => {
+    window.clearTimeout(timer);
+    document.removeEventListener("visibilitychange", refresh);
+  };
 }
