@@ -6,13 +6,27 @@ HTML5, CSS3, Vanilla JavaScript ES Modules로 구성한 단일 페이지 모바�
 
 ES Modules는 `file://` 환경에서 브라우저 보안 정책으로 동작하지 않을 수 있습니다. 로컬 웹 서버로 실행하세요.
 
-Python이 설치되어 있다면 프로젝트 루트에서:
+Node.js 20 이상이 설치된 환경에서 프로젝트 폴더로 이동한 뒤 실행합니다.
+외부 패키지가 없어 `npm install`이나 빌드 과정은 필요하지 않습니다.
 
 ```bash
-python -m http.server 8000
+npm start
 ```
 
-브라우저에서 `http://localhost:8000`을 엽니다.
+브라우저에서 `http://127.0.0.1:8000`을 엽니다. 종료는 `Ctrl+C`입니다.
+`npm run dev`도 동일하게 실행됩니다. 파일 수정 후에는 브라우저를 새로고침하세요.
+
+포트가 사용 중이면 `npm start -- --port 8001`로 변경할 수 있습니다.
+이 서버는 로컬 개발용이며 같은 컴퓨터에서만 접속할 수 있습니다.
+
+검증은 `npm test`로 실행합니다. 설정·한국 시간 날짜 계산·서버의 모듈 및 정적 파일 제공을 확인합니다.
+
+### 초기 실행 흐름
+
+`npm start` → `scripts/dev-server.mjs` → `index.html` → `js/main.js`
+
+`js/main.js`에서 설정 검증 → 테마 적용 → 공통 콘텐츠 렌더링 → 섹션 초기화 → 공유 버튼 연결 순서로 실행됩니다.
+운영 배포에는 개발 서버가 필요하지 않으며 기존 정적 파일을 그대로 사용할 수 있습니다.
 
 ## 콘텐츠 및 디자인 변경
 
@@ -37,7 +51,7 @@ python -m http.server 8000
 - [x] 지도 서비스 외부 링크
 - [x] 청첩장 주소 복사
 - [ ] 카카오톡 SDK 공유(앱 키 설정 후 구현)
-- [ ] 방명록 저장/조회(Supabase 또는 Firebase 연결 필요)
+- [x] Supabase 방명록 등록/조회 코드 및 DB 구조(프로젝트 연결 필요)
 
 ## GitHub Pages 배포
 
@@ -56,3 +70,7 @@ GitHub Pages에 올라간 JS 설정은 공개됩니다. 카카오 JavaScript 키
 ## 콘텐츠 설정 구조
 
 모든 콘텐츠와 표시 여부는 `config/wedding.config.js`에서 관리합니다. 상세 필드와 사용법은 [설정 문서](docs/configuration.md)를 참고하세요.
+
+## 방명록
+
+Supabase 연결과 승인 운영 방법은 [방명록 설정](docs/guestbook.md)을 참고하세요.

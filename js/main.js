@@ -22,10 +22,10 @@ function initializeWedding() {
   initInvitation(config);
   initWeddingInfo(config);
   initGallery(config);
-  initLocation(config);
+  initLocation(config, appConfig);
   initAccount(config);
   initContact(config);
-  initGuestbook(config);
+  initGuestbook(config, appConfig);
   initKakaoShare(config, appConfig);
 
   document.title = config.share.title;

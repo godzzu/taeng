@@ -51,13 +51,16 @@ export function getWeddingConfig(source = weddingConfig) {
   const coords = object(input.location?.coordinates);
   const validCoord = (value, max) => typeof value === "number" && Number.isFinite(value) && Math.abs(value) <= max;
   result.location.coordinates = validCoord(coords.latitude, 90) && validCoord(coords.longitude, 180) ? { latitude: coords.latitude, longitude: coords.longitude } : null;
-  result.location.links = items(input.location?.links, row => ({ label: text(row.label), url: url(row.url) })).filter(row => row.url);
+  result.location.links = items(input.location?.links, row => ({
+    provider: ["kakao", "naver"].includes(row.provider) ? row.provider : "",
+    label: text(row.label), url: url(row.url)
+  })).filter(row => row.url || row.provider);
   result.account.items = items(input.account?.items, row => Object.fromEntries(["label", "bank", "holder", "number"].map(key => [key, text(row[key])]))).filter(row => row.number);
   result.account.visible &&= result.account.items.length > 0;
   result.contact.items = items(input.contact?.items, row => ({
     label: text(row.label), name: text(row.name) || (row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""),
-    phone: text(row.phone)
-  })).filter(row => /\d/.test(row.phone));
+    phone: text(row.phone), dialNumber: text(row.phone).replace(/[()\s.-]/g, "")
+  })).filter(row => /^\+?\d{3,15}$/.test(row.dialNumber));
   result.contact.visible &&= result.contact.items.length > 0;
   result.guestbook.visible = input.guestbook?.visible === true;
   result.footer.message = text(input.footer?.message);

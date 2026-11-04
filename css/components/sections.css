@@ -120,7 +120,7 @@
   color: var(--color-muted);
   font-size: .8125rem;
 }
-#invitation .family-parents { display: block; font-weight: 500; }
+#invitation .family-parents { display: block; font-weight: 500; white-space: pre-line; }
 #invitation .family-relation {
   color: var(--color-heading);
   font-family: var(--font-display);
@@ -197,3 +197,137 @@
   color: var(--color-on-action);
 }
 #wedding-info .dday[data-state="past"] { background: transparent; color: var(--color-muted); }
+
+/* SECTION 04: thumbnail feedback and accessible theme-aware viewer. */
+#gallery .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#gallery .gallery-item { min-width: 0; position: relative; border: 1px solid var(--color-border); }
+#gallery .gallery-item:focus-visible { outline-offset: 3px; }
+#gallery .gallery-fallback {
+  display: grid; place-items: center; height: 100%; padding: var(--space-2);
+  color: var(--color-muted); font-size: .75rem; line-height: 1.6;
+}
+.image-dialog {
+  background: var(--color-surface) var(--paper-image);
+  background-size: var(--paper-size);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 60px 52px 56px;
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+.image-dialog .dialog-stage {
+  display: grid; place-items: center;
+  width: 100%; height: 100%; min-width: 0; min-height: 0;
+  touch-action: pan-y pinch-zoom;
+}
+.image-dialog [data-dialog-image] {
+  grid-area: 1 / 1;
+  width: 100%; height: 100%; max-height: 100%; min-height: 0;
+  object-fit: contain;
+}
+.image-dialog .dialog-feedback {
+  grid-area: 1 / 1; text-align: center; max-width: 100%;
+  font-size: .9375rem; line-height: 1.8;
+}
+.image-dialog [data-dialog-retry] { margin-top: var(--space-4); }
+.image-dialog .dialog-close, .image-dialog .dialog-nav {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; padding: 0; line-height: 1;
+  color: var(--color-text); border-radius: var(--radius-button);
+  z-index: 1;
+}
+.image-dialog .dialog-close { top: 8px; right: 8px; }
+.image-dialog .dialog-prev { left: 4px; }
+.image-dialog .dialog-next { right: 4px; }
+.image-dialog .dialog-counter {
+  bottom: 12px; color: var(--color-muted); font-size: .875rem;
+  font-variant-numeric: tabular-nums; pointer-events: none;
+}
+@media (max-width: 520px) {
+  .image-dialog { width: calc(100vw - 16px); max-width: calc(100vw - 16px); padding: 56px 44px 48px; }
+}
+@media (max-width: 359px) {
+  #gallery .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* SECTION 05: map and practical venue information. */
+#location { scroll-margin-top: 80px; }
+#location .info-card { text-align: left; }
+#location [data-field="location-venue"] {
+  color: var(--color-heading); font-family: var(--font-display);
+  font-size: clamp(1.25rem, 5vw, 1.625rem); line-height: 1.6;
+}
+#location [data-field="location-address"] {
+  margin-block: var(--space-2) var(--space-4);
+  white-space: pre-line; user-select: text; line-height: 1.9;
+}
+#location .location-copy-status {
+  color: var(--color-muted); font-size: .875rem; margin-top: var(--space-2);
+}
+#location .location-copy-status:empty { display: none; }
+#location .location-map-frame {
+  margin-block: var(--space-5);
+  border: 1px solid var(--color-border); border-radius: var(--radius-control);
+  overflow: hidden; background: var(--color-soft);
+}
+#location .location-map { width: 100%; height: clamp(240px, 65vw, 320px); }
+#location .location-map img { max-width: none; } /* Preserve SDK tile dimensions. */
+#location .location-map-status {
+  padding: var(--space-5); text-align: center;
+  color: var(--color-muted); font-size: .9375rem; line-height: 1.9;
+}
+#location [data-field="transport"], #location [data-field="parking"] {
+  white-space: pre-wrap; line-height: 1.9; font-size: .9375rem;
+  margin-top: var(--space-4);
+}
+#location .button-row { justify-content: flex-start; gap: var(--space-3); }
+#location .button-row .button { flex: 1 1 180px; }
+
+/* SECTION 06 / 07: legible numbers and touch-friendly actions. */
+#account, #contact { scroll-margin-top: 80px; }
+#account .account-details { min-width: 0; flex: 1 1 200px; }
+#account .account-side, #contact .contact-name {
+  color: var(--color-heading); font-family: var(--font-display); font-size: 1.125rem;
+}
+#account .account-bank { margin-top: var(--space-2); }
+#account .account-number, #contact .contact-phone {
+  color: var(--color-text); font-size: 1rem; font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere; user-select: text;
+}
+#account .account-holder { margin-top: var(--space-1); }
+#account .account-copy-fallback {
+  flex-basis: 100%; min-width: 0; margin-top: var(--space-3);
+  border-top: 1px var(--divider-style) var(--color-border); padding-top: var(--space-4);
+}
+#account .account-copy-fallback p { line-height: 1.8; }
+#account .account-copy-fallback label { display: block; margin-top: var(--space-3); font-size: .875rem; }
+#account .account-copy-input {
+  display: block; width: 100%; min-height: 44px;
+  margin-top: var(--space-2); padding: var(--space-3);
+  border: 1px solid var(--color-border); border-radius: var(--radius-control);
+  background: var(--color-surface); color: var(--color-text); font-size: 1rem;
+}
+#contact .contact-phone { margin-top: var(--space-2); }
+#contact .contact-actions .button { flex: 1; }
+.toast {
+  width: max-content; max-width: calc(100vw - 32px);
+  text-align: center; overflow-wrap: anywhere;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+/* SECTION 08: comfortable input, counters, and plain-text message cards. */
+#guestbook { scroll-margin-top: 80px; }
+#guestbook .guestbook-form input, #guestbook .guestbook-form textarea { font-size: 1rem; line-height: 1.7; }
+#guestbook .guestbook-count { text-align: right; color: var(--color-muted); font-size: .8125rem; }
+#guestbook [aria-invalid="true"] { border: 2px solid var(--color-text); }
+#guestbook .guestbook-form :disabled { cursor: not-allowed; opacity: .65; }
+#guestbook .guestbook-card {
+  text-align: left; padding: var(--card-padding);
+  border: 1px var(--border-style) var(--color-border);
+  border-radius: var(--radius-card); background: var(--color-surface); box-shadow: var(--shadow-soft);
+}
+#guestbook .guestbook-card h3 { color: var(--color-heading); font-size: 1rem; }
+#guestbook .guestbook-date { display: block; color: var(--color-muted); font-size: .8125rem; margin-top: var(--space-2); }
+#guestbook .guestbook-message { white-space: pre-wrap; overflow-wrap: anywhere; margin-top: var(--space-4); line-height: 1.9; }
+#guestbook [data-guestbook-list-status] { margin: var(--space-4) 0; }

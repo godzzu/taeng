@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#faf9f3">
   <meta name="description" content="">
+  <!-- Generated from wedding.config.js by npm run build:meta before deployment. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="">
   <title>모바일 청첩장</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,6 +92,12 @@
         <div class="info-card">
           <h3 data-field="location-venue"></h3>
           <p data-field="location-address"></p>
+          <button class="button button-small" type="button" data-copy-address></button>
+          <p class="location-copy-status" data-address-status role="status" aria-live="polite"></p>
+          <div class="location-map-frame">
+            <div class="location-map" data-location-map hidden></div>
+            <p class="location-map-status" data-map-status role="status" aria-live="polite"></p>
+          </div>
           <p data-field="transport"></p>
           <p data-field="parking"></p>
           <div class="button-row" data-field="map-links"></div>
@@ -116,13 +130,18 @@
         <p class="section-description"></p>
         <form class="guestbook-form" data-guestbook-form>
           <label for="guest-name" data-copy="guestName"></label>
-          <input id="guest-name" name="name" maxlength="30" required data-placeholder="guestNamePlaceholder">
+          <input id="guest-name" name="name" maxlength="30" required autocomplete="name" aria-describedby="guest-name-count" data-placeholder="guestNamePlaceholder">
+          <p id="guest-name-count" class="guestbook-count" data-name-count></p>
           <label for="guest-message" data-copy="guestMessage"></label>
-          <textarea id="guest-message" name="message" maxlength="300" required rows="4" data-placeholder="guestMessagePlaceholder"></textarea>
+          <textarea id="guest-message" name="message" maxlength="300" required rows="5" aria-describedby="guest-message-count" data-placeholder="guestMessagePlaceholder"></textarea>
+          <p id="guest-message-count" class="guestbook-count" data-message-count></p>
+          <div hidden aria-hidden="true"><input name="website" tabindex="-1" autocomplete="off" aria-label="Website"></div>
           <button class="button button-primary" type="submit" data-copy="guestSubmit"></button>
           <p class="form-status" role="status" aria-live="polite" data-field="guestbook-status"></p>
         </form>
         <div class="guestbook-list" data-field="guestbook-list"></div>
+        <p class="form-status" data-guestbook-list-status role="status" aria-live="polite"></p>
+        <button class="button" type="button" data-guestbook-more hidden></button>
       </div>
     </section>
   </main>
@@ -131,15 +150,22 @@
     <p data-field="footer-names"></p>
     <p data-field="footer-message"></p>
     <button class="button button-quiet" type="button" data-share-button data-copy="share"></button>
+    <p class="share-status" data-share-status role="status" aria-live="polite"></p>
   </footer>
 
   <div class="toast" role="status" aria-live="polite" data-toast></div>
   <dialog class="image-dialog" data-gallery-dialog data-aria="galleryDialog">
-    <button class="dialog-close" type="button" data-dialog-close data-aria="galleryClose">×</button>
+    <button class="dialog-close" type="button" data-dialog-close data-aria="galleryClose" autofocus>×</button>
     <button class="dialog-nav dialog-prev" type="button" data-dialog-prev data-aria="galleryPrev">‹</button>
-    <img src="" alt="" data-dialog-image>
+    <div class="dialog-stage" data-dialog-stage>
+      <img alt="" data-dialog-image hidden>
+      <div class="dialog-feedback">
+        <p data-dialog-status role="status" aria-live="polite"></p>
+        <button class="button button-small" type="button" data-dialog-retry hidden></button>
+      </div>
+    </div>
     <button class="dialog-nav dialog-next" type="button" data-dialog-next data-aria="galleryNext">›</button>
-    <p class="dialog-counter" data-dialog-counter></p>
+    <p class="dialog-counter" data-dialog-counter role="status" aria-live="polite" aria-atomic="true"></p>
   </dialog>
 
   <script type="module" src="./js/main.js"></script>
