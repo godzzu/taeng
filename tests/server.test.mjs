@@ -1,13 +1,23 @@
 import assert from "node:assert/strict";
 import { once } from "node:events";
+import { createServer } from "node:http";
 import { createDevServer } from "../scripts/dev-server.mjs";
 
-const server = createDevServer();
+for (const mount of ["", "/wd_letter"]) {
+const handler = createDevServer().listeners("request")[0];
+const server = createServer((request, response) => {
+  if (mount && !request.url.startsWith(mount + "/")) {
+    response.writeHead(404).end();
+    return;
+  }
+  request.url = request.url.slice(mount.length) || "/";
+  handler(request, response);
+});
 server.listen(0, "127.0.0.1");
 await once(server, "listening");
-const base = `http://127.0.0.1:${server.address().port}`;
+const base = `http://127.0.0.1:${server.address().port}${mount}`;
 try {
-  const response = await fetch(base);
+  const response = await fetch(base + "/");
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type"), /text\/html/);
   const html = await response.text();
@@ -25,8 +35,11 @@ try {
     }
   }
   await checkModule(`${base}/js/main.js`);
+  assert.equal((await fetch(`${base}/admin.html`)).status, 200);
+  assert.equal((await fetch(`${base}/css/admin.css`)).status, 200);
+  await checkModule(`${base}/js/admin.js`);
   for (const [, css] of html.matchAll(/href="(\.\/css\/[^"?]+)"/g)) {
-    const cssUrl = new URL(css, base);
+    const cssUrl = new URL(css, base + "/");
     const result = await fetch(cssUrl);
     assert.equal(result.status, 200);
     assert.match(result.headers.get("content-type"), /text\/css/);
@@ -35,16 +48,20 @@ try {
     }
   }
   assert.equal((await fetch(`${base}/assets/images/gallery/photo-01.svg`)).status, 200);
+  const thumbnail = await fetch(`${base}/assets/images/og/wedding.png`);
+  assert.equal(thumbnail.status, 200);
+  assert.match(thumbnail.headers.get("content-type"), /image\/png/);
   for (const path of ["/.git/config", "/.env", "/package.json", "/missing.js", "/assets/%2e%2e%2fpackage.json", "/assets/C:%5Csecret"]) {
     assert.equal((await fetch(base + path)).status, 404, path);
   }
   assert.equal((await fetch(base + "/%zz")).status, 400);
-  assert.equal((await fetch(base, { method: "POST" })).status, 405);
-  const head = await fetch(base, { method: "HEAD" });
+  assert.equal((await fetch(base + "/", { method: "POST" })).status, 405);
+  const head = await fetch(base + "/", { method: "HEAD" });
   assert.equal(head.status, 200);
   assert.equal(await head.text(), "");
-  console.log(`PASS: HTTP entry point, ${visited.size} modules, CSS/assets, HEAD and invalid requests`);
+  console.log(`PASS: ${mount || "/"} HTTP entry point, ${visited.size} modules, CSS/assets, HEAD and invalid requests`);
 } finally {
   server.closeAllConnections();
   await new Promise(resolve => server.close(resolve));
+}
 }

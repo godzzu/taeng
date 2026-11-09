@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 const source = await readFile(new URL("../js/core/date.js", import.meta.url), "utf8");
 const dateUrl = "data:text/javascript;base64," + Buffer.from(source).toString("base64");
-const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, millisecondsUntilKoreanMidnight, toKoreanDateTime } = await import(dateUrl);
+const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar } = await import(dateUrl);
 const originalTimezone = process.env.TZ;
 try {
   for (const timezone of ["UTC", "America/Los_Angeles", "Asia/Seoul"]) {
@@ -18,6 +18,13 @@ try {
     assert.equal(millisecondsUntilKoreanMidnight(new Date("2027-05-14T14:59:59.999Z")), 1);
     assert.equal(millisecondsUntilKoreanMidnight(new Date("2027-05-14T15:00:00Z")), 86400000);
     assert.match(formatKoreanDate("2027-05-15"), /토요일/);
+    const may = getWeddingCalendar("2027-05-15");
+    assert.equal(may.days[14].column, 6);
+    assert.equal(may.selectedDay, 15);
+    assert.equal(may.weeks, 6);
+    assert.equal(getWeddingCalendar("2028-02-29").days.length, 29);
+    assert.equal(getWeddingCalendar("2027-02-01").days.length, 28);
+    assert.equal(getWeddingCalendar("2028-12-31").month, 12);
   }
 } finally {
   if (originalTimezone === undefined) delete process.env.TZ;
@@ -34,9 +41,14 @@ console.log("PASS: Korea midnight, today/past, leap day, year boundary, DST inde
 
 // Rendering and timer lifecycle without a browser dependency.
 const nodes = new Map();
+const makeNode = () => ({ textContent: "", dataset: {}, hidden: false, children: [], attributes: {},
+  setAttribute(key, value) { this.attributes[key] = value; },
+  append(...nodes) { this.children.push(...nodes); },
+  replaceChildren(...nodes) { this.children = nodes; }
+});
 const section = {
   querySelector(selector) {
-    if (!nodes.has(selector)) nodes.set(selector, { textContent: "", dataset: {}, hidden: false });
+    if (!nodes.has(selector)) nodes.set(selector, makeNode());
     return nodes.get(selector);
   }
 };
@@ -44,6 +56,7 @@ const listeners = new Set(), timers = new Map();
 let timerId = 0;
 globalThis.document = {
   hidden: false, querySelector: () => section,
+  createElementNS: () => makeNode(),
   addEventListener: (event, callback) => listeners.add(callback),
   removeEventListener: (event, callback) => listeners.delete(callback)
 };
@@ -60,12 +73,16 @@ const config = {
 };
 initWeddingInfo(config);
 assert.equal(section.querySelector('[data-field="dday"]').textContent, config.labels.ddayToday);
-assert(section.querySelector('[data-field="hall"]').hidden);
-assert.equal(section.querySelector('[data-field="address"]').textContent, "서울\n2층");
+assert(!nodes.has('[data-field="hall"]'));
+assert(!nodes.has('[data-field="address"]'));
+const calendarSvg = section.querySelector('[data-field="calendar"]').children[0];
+assert.equal(calendarSvg.attributes.role, "img");
+assert.equal(calendarSvg.children.filter(n => n.attributes.class === "calendar-selected").length, 1);
 assert.equal(timers.size, 1);
 assert.equal(listeners.size, 1);
 initWeddingInfo(config);
 assert.equal(timers.size, 1);
+assert.equal(section.querySelector('[data-field="calendar"]').children.length, 1);
 assert.equal(listeners.size, 1);
 document.hidden = true;
 [...listeners][0]();

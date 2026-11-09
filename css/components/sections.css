@@ -8,7 +8,7 @@
 .button-row { display: flex; flex-wrap: wrap; gap: var(--grid-gap); justify-content: center; margin-top: 20px; }
 .account-list, .contact-list { display: grid; gap: 14px; margin: 26px auto 0; max-width: var(--card-width); }
 .account-card, .contact-card { background: var(--color-surface); border: 1px var(--border-style) var(--color-border); border-radius: var(--radius-card); padding: var(--card-padding); text-align: left; }
-.account-card { align-items: center; display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: space-between; }
+.account-card { min-width: 0; }
 .account-card p, .contact-card p { color: var(--color-muted); font-size: .88rem; }
 .contact-actions { display: flex; gap: 8px; margin-top: 12px; }
 .guestbook-form { display: grid; gap: 9px; margin: 24px auto 0; max-width: var(--card-width); text-align: left; }
@@ -30,7 +30,6 @@
   padding-block: clamp(32px, 7vw, 64px) var(--space-7);
   min-height: calc(100svh - 52px);
 }
-#hero .section-inner { width: 100%; max-width: 480px; }
 #hero .section-inner::before {
   width: min(var(--hero-decoration-width), 42%);
   height: clamp(48px, 14vw, 80px);
@@ -71,8 +70,8 @@
 #hero .hero-date {
   display: block;
   color: var(--color-muted);
-  font-size: .9375rem;
-  line-height: 1.9;
+  font-size: .8125rem;
+  line-height: 1.7;
   white-space: pre-line;
 }
 #hero .hero-scroll {
@@ -91,7 +90,6 @@
 #hero .hero-scroll:hover [data-field="scroll-label"] { text-decoration: underline; text-underline-offset: 5px; }
 #hero .hero-scroll-icon { flex: none; }
 #invitation { scroll-margin-top: 80px; }
-#invitation .section-inner { max-width: 520px; }
 #invitation .section-inner::before {
   width: calc(var(--decoration-width) * 1.35);
   height: calc(var(--decoration-height) * 1.35);
@@ -121,6 +119,9 @@
   font-size: .8125rem;
 }
 #invitation .family-parents { display: block; font-weight: 500; white-space: pre-line; }
+#invitation .family-person { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; vertical-align: middle; }
+#invitation .family-person-name { min-width: 0; overflow-wrap: anywhere; }
+#invitation .memorial-flower { display: block; width: 36px; height: 40px; flex: 0 0 36px; background: var(--memorial-flower-image) center / contain no-repeat; }
 #invitation .family-relation {
   color: var(--color-heading);
   font-family: var(--font-display);
@@ -147,7 +148,6 @@
 
 /* SECTION 03: readable date and venue details, shared by both templates. */
 #wedding-info { scroll-margin-top: 80px; }
-#wedding-info .section-inner { max-width: 560px; }
 #wedding-info .date-large {
   display: block;
   font-family: var(--font-display);
@@ -162,21 +162,34 @@
   font-size: 1.0625rem;
   color: var(--color-text);
 }
-#wedding-info .info-card { margin-top: var(--space-6); }
-#wedding-info [data-field="venue"] {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.25rem, 5vw, 1.625rem);
-  line-height: 1.6;
+#wedding-info .info-card {
+  /* Keep the calendar card inside even the inward curves of decorative frames. */
+  width: calc(100% - 24px);
+  max-width: 360px;
+  min-width: 0;
+  margin: var(--space-6) auto 0;
+  padding: clamp(12px, 3vw, 20px);
 }
-#wedding-info [data-field="hall"] { font-size: 1rem; white-space: pre-line; }
-#wedding-info .wedding-address {
+#hero [data-field="venue"] {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: .8125rem;
+  line-height: 1.7;
   color: var(--color-muted);
-  margin-top: var(--space-4);
-  font-size: .9375rem;
-  line-height: 1.9;
-  white-space: pre-line;
 }
+#hero .hero-summary {
+  margin-top: var(--space-5);
+  letter-spacing: .16em;
+  text-align: center;
+}
+.wedding-calendar { width: 100%; max-width: 280px; margin: 0 auto; }
+.wedding-calendar svg { display: block; width: 100%; height: auto; overflow: visible; }
+.wedding-calendar text { text-anchor: middle; fill: var(--color-text); font-family: var(--font-body); }
+.wedding-calendar .calendar-month { font-size: 22px; font-family: var(--font-display); fill: var(--color-heading); }
+.wedding-calendar .calendar-weekday { font-size: 13px; fill: var(--color-muted); }
+.wedding-calendar .calendar-day { font-size: 16px; font-variant-numeric: tabular-nums; }
+.wedding-calendar .calendar-selected { fill: var(--color-action); }
+.wedding-calendar .is-wedding { fill: var(--color-on-action); font-weight: 700; }
 #wedding-info .dday {
   display: table;
   max-width: 100%;
@@ -277,25 +290,60 @@
   padding: var(--space-5); text-align: center;
   color: var(--color-muted); font-size: .9375rem; line-height: 1.9;
 }
-#location [data-field="transport"], #location [data-field="parking"] {
-  white-space: pre-wrap; line-height: 1.9; font-size: .9375rem;
-  margin-top: var(--space-4);
+#location .travel-guide { display: grid; gap: 28px; margin-top: 32px; text-align: left; scroll-margin-top: 90px; }
+#location .travel-item { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start; }
+#location .travel-icon {
+  display: grid; place-items: center; width: 48px; height: 48px;
+  border-radius: 50%; background: var(--color-action); color: var(--color-on-action);
 }
-#location .button-row { justify-content: flex-start; gap: var(--space-3); }
-#location .button-row .button { flex: 1 1 180px; }
+#location .travel-icon svg { width: 28px; height: 28px; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+#location .travel-copy { min-width: 0; }
+#location .travel-copy h3 { color: var(--color-heading); font-family: var(--font-display); font-size: 1rem; font-weight: 500; margin: 2px 0 8px; }
+#location .travel-copy p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.9; font-size: .8125rem; color: var(--color-text); }
+@media (max-width: 430px) {
+  #location .travel-item { grid-template-columns: 36px minmax(0, 1fr); gap: 10px; }
+  #location .travel-icon { width: 36px; height: 36px; }
+  #location .travel-icon svg { width: 24px; height: 24px; }
+}
+#location .map-links { justify-content: center; gap: 8px; margin-top: 12px; }
+#location .map-links .map-link {
+  flex: 0 1 auto;
+  max-width: 100%;
+  min-height: 44px;
+  gap: 6px;
+  padding: 6px 10px;
+  font-size: .75rem;
+  line-height: 1.4;
+}
+#location .map-link img { width: 24px; height: 24px; flex: none; object-fit: contain; border-radius: 5px; }
 
 /* SECTION 06 / 07: legible numbers and touch-friendly actions. */
 #account, #contact { scroll-margin-top: 80px; }
-#account .account-details { min-width: 0; flex: 1 1 200px; }
+#account .account-group { min-width: 0; background: var(--color-surface); border: 1px var(--border-style) var(--color-border); border-radius: var(--radius-control); box-shadow: var(--shadow-soft); }
+#account .account-group-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 16px; cursor: pointer; list-style: none; color: var(--color-heading); text-align: left; font-size: .9rem; }
+#account .account-group-toggle::-webkit-details-marker { display: none; }
+#account .account-group-toggle::after { content: ""; width: 8px; height: 8px; flex: 0 0 8px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; transform: rotate(45deg); margin: -4px 4px 0 0; }
+#account .account-group[open] > .account-group-toggle::after { transform: rotate(225deg); margin-top: 4px; }
+#account .account-group-content { display: grid; gap: 12px; padding: 12px; border-top: 1px var(--divider-style) var(--color-border); background: var(--color-soft); border-radius: 0 0 var(--radius-control) var(--radius-control); }
+#account .account-group .account-card { padding: clamp(12px, 3vw, 20px); }
+#account .account-card-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; margin-bottom: 16px; }
+#account .account-card-header > * { min-width: 0; overflow-wrap: anywhere; }
+#account .account-payment { display: flex; align-items: center; gap: 8px; padding: 8px 8px 8px 12px; border-radius: var(--radius-control); background: var(--color-soft); }
+#account .account-details { min-width: 0; flex: 1; }
+#account .account-copy-button { flex: 0 0 44px; width: 44px; min-height: 44px; padding: 8px; border: 0; background: transparent; color: var(--color-action); box-shadow: none; }
+#account .account-copy-icon { display: block; position: relative; width: 20px; height: 20px; }
+#account .account-copy-icon::before, #account .account-copy-icon::after { content: ""; position: absolute; width: 11px; height: 12px; border: 1px solid currentColor; border-radius: 3px; }
+#account .account-copy-icon::before { top: 1px; left: 2px; }
+#account .account-copy-icon::after { bottom: 1px; right: 1px; background: var(--color-soft); }
 #account .account-side, #contact .contact-name {
   color: var(--color-heading); font-family: var(--font-display); font-size: 1.125rem;
 }
-#account .account-bank { margin-top: var(--space-2); }
+#account .account-bank { margin: 0; }
 #account .account-number, #contact .contact-phone {
   color: var(--color-text); font-size: 1rem; font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere; user-select: text;
 }
-#account .account-holder { margin-top: var(--space-1); }
+#account .account-holder { margin: 0; }
 #account .account-copy-fallback {
   flex-basis: 100%; min-width: 0; margin-top: var(--space-3);
   border-top: 1px var(--divider-style) var(--color-border); padding-top: var(--space-4);
@@ -331,3 +379,4 @@
 #guestbook .guestbook-date { display: block; color: var(--color-muted); font-size: .8125rem; margin-top: var(--space-2); }
 #guestbook .guestbook-message { white-space: pre-wrap; overflow-wrap: anywhere; margin-top: var(--space-4); line-height: 1.9; }
 #guestbook [data-guestbook-list-status] { margin: var(--space-4) 0; }
+

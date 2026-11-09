@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 70" fill="none">
+  <path d="M65 40C88 56 109 49 137 25c28-29 33 3 10 10-29-1-18-37-1-12 25 23 45 27 67 13" stroke="#22396F" stroke-width="1.5" stroke-dasharray="3 5"/>
+  <!-- Side-profile departure and arrival silhouettes, based on the supplied reference. -->
+  <g fill="#010736">
+    <g transform="translate(8 12)">
+      <path d="M3 21 10 19 17 23 24 19 11 9 16 7 33 15 43 11Q52 7 57 12Q59 14 55 16L14 31Q11 32 9 29Z"/>
+      <rect x="5" y="38" width="47" height="4" rx="2"/>
+    </g>
+    <g transform="translate(219 12)">
+      <path d="M4 9 10 10 15 18 22 19 18 2 23 3 32 20 44 23Q55 26 56 31Q56 34 52 33L10 27Q7 27 7 24Z"/>
+      <rect x="5" y="38" width="47" height="4" rx="2"/>
+    </g>
+  </g>
+</svg>

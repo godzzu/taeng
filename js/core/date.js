@@ -56,3 +56,18 @@ export function toKoreanDateTime(date, time) {
   parseTime(time);
   return `${date}T${time}:00+09:00`;
 }
+
+// Read the configured Korean calendar date without visitor-local timezone shifts.
+export function getWeddingCalendar(value) {
+  const date = parseDate(value);
+  const year = date.getUTCFullYear(), month = date.getUTCMonth() + 1;
+  const first = new Date(date);
+  first.setUTCDate(1);
+  const last = new Date(first);
+  last.setUTCMonth(last.getUTCMonth() + 1);
+  last.setUTCDate(0);
+  const offset = first.getUTCDay(), count = last.getUTCDate();
+  return { year, month, selectedDay: date.getUTCDate(),
+    weeks: Math.ceil((offset + count) / 7),
+    days: Array.from({ length: count }, (_, i) => ({ day: i + 1, column: (offset + i) % 7, row: Math.floor((offset + i) / 7) })) };
+}

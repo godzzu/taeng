@@ -23,7 +23,7 @@ function image(value) {
 }
 export function getWeddingConfig(source = weddingConfig) {
   const input = object(source);
-  const result = { templateId: ["wedding-floral", "wedding-sketch"].includes(input.templateId) ? input.templateId : "wedding-floral" };
+  const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket"].includes(input.templateId) ? input.templateId : "wedding-floral" };
   for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook", "footer", "share"]) {
     const section = object(input[key]);
     result[key] = { visible: visible(section.visible), title: text(section.title), subtitle: text(section.subtitle), description: text(section.description) };
@@ -39,14 +39,27 @@ export function getWeddingConfig(source = weddingConfig) {
   result.hero.image = image(input.hero?.image);
   result.hero.linkLabel = text(input.hero?.linkLabel);
   result.invitation.message = text(input.invitation?.message);
-  result.invitation.parents = items(input.invitation?.parents, row => Object.fromEntries(["label", "father", "mother", "relation"].map(key => [key, text(row[key])])));
+  // Resolve the person before filtering hidden rows so names never swap sides.
+  const familyRows = Array.isArray(input.invitation?.parents) ? input.invitation.parents.map((row, index) => row && ({
+    ...row, person: row.person || (index === 0 ? "groom" : index === 1 ? "bride" : "")
+  })) : [];
+  result.invitation.parents = items(familyRows, row => ({
+    ...Object.fromEntries(["label", "father", "mother", "relation"].map(key => [key, text(row[key])])),
+    fatherDeceased: row.fatherDeceased === true,
+    motherDeceased: row.motherDeceased === true,
+    name: row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""
+  }));
   for (const key of ["venue", "hall", "address"]) result.weddingInfo[key] = text(input.weddingInfo?.[key]);
   result.weddingInfo.showDday = visible(input.weddingInfo?.showDday);
   result.gallery.items = items(input.gallery?.items, image).filter(item => item.src);
   result.gallery.visible &&= result.gallery.items.length > 0;
-  for (const key of ["transport", "parking"]) {
+  const travelTitles = { car: "자차", transport: "대중교통 · 버스", subway: "지하철", parking: "주차" };
+  for (const key of ["car", "transport", "subway", "parking"]) {
     const value = object(input.location?.[key]);
-    result.location[key] = { visible: visible(value.visible), text: text(value.text) };
+    result.location[key] = { visible: visible(value.visible), title: text(value.title) || travelTitles[key], text: text(value.text) };
+  }
+  if (input.location?.car && !result.location.car.text) {
+    result.location.car.text = [result.weddingInfo.venue ? `내비게이션에서 '${result.weddingInfo.venue}'을 검색해 주세요.` : "", result.weddingInfo.address].filter(Boolean).join("\n");
   }
   const coords = object(input.location?.coordinates);
   const validCoord = (value, max) => typeof value === "number" && Number.isFinite(value) && Math.abs(value) <= max;
@@ -55,7 +68,11 @@ export function getWeddingConfig(source = weddingConfig) {
     provider: ["kakao", "naver"].includes(row.provider) ? row.provider : "",
     label: text(row.label), url: url(row.url)
   })).filter(row => row.url || row.provider);
-  result.account.items = items(input.account?.items, row => Object.fromEntries(["label", "bank", "holder", "number"].map(key => [key, text(row[key])]))).filter(row => row.number);
+  result.account.groupTitles = Object.fromEntries(Object.entries({ groom: "신랑측 마음 전하는 곳", bride: "신부측 마음 전하는 곳", other: "마음 전하는 곳" }).map(([key, fallback]) => [key, text(input.account?.groupTitles?.[key]) || fallback]));
+  result.account.items = items(input.account?.items, row => ({
+    ...Object.fromEntries(["label", "bank", "holder", "number"].map(key => [key, text(row[key])])),
+    side: ["groom", "bride", "other"].includes(row.side) ? row.side : text(row.label).includes("신랑") ? "groom" : text(row.label).includes("신부") ? "bride" : "other"
+  })).filter(row => row.number);
   result.account.visible &&= result.account.items.length > 0;
   result.contact.items = items(input.contact?.items, row => ({
     label: text(row.label), name: text(row.name) || (row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""),

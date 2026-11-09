@@ -35,6 +35,7 @@ npm start
 - 템플릿 ID: `wedding.config.js`의 `templateId`
   - `wedding-floral`
   - `wedding-sketch`
+  - `wedding-ticket`
 
 ## 이미지 교체
 
@@ -49,8 +50,8 @@ npm start
 - [x] 계좌번호 복사 및 토스트
 - [x] 전화 및 문자 링크
 - [x] 지도 서비스 외부 링크
-- [x] 청첩장 주소 복사
-- [ ] 카카오톡 SDK 공유(앱 키 설정 후 구현)
+- [x] 카카오톡 공유 버튼
+- [x] Kakao JavaScript SDK 공유 및 정적 OG 메타 생성
 - [x] Supabase 방명록 등록/조회 코드 및 DB 구조(프로젝트 연결 필요)
 
 ## GitHub Pages 배포
@@ -74,3 +75,15 @@ GitHub Pages에 올라간 JS 설정은 공개됩니다. 카카오 JavaScript 키
 ## 방명록
 
 Supabase 연결과 승인 운영 방법은 [방명록 설정](docs/guestbook.md)을 참고하세요.
+
+## 카카오톡 공유
+
+배포 전에 npm run build:meta를 실행하세요. 키·도메인 설정은 [카카오 공유 안내](docs/kakao-share.md)에 정리했습니다.
+
+## 통합 점검
+
+화면 크기별 결과, 수정 사항, 외부 서비스 확인 범위는 [최종 배포 체크리스트](docs/pre-deployment-checklist.md)를 참고하세요.
+
+## 방명록 관리자 페이지
+
+`admin.html`에서 방명록 ID/비밀번호 로그인, 공개·비공개 전환, 삭제, 전체 CSV 저장을 지원합니다. 사용 전 Supabase SQL 설치와 관리자 비밀번호 설정이 필요합니다. 자세한 절차는 [관리자 설치 안내](docs/guestbook-admin.md)를 참고하세요.

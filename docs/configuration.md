@@ -21,9 +21,7 @@ D-day는 `weddingInfo.showDday`로 표시 여부를 바꿉니다.
 `js/core/config-view.js`와 각 섹션 모듈이 렌더링을 담당합니다.
 유효하지 않은 날짜·시간은 명시적인 오류를 발생시킵니다. 외부 링크는 HTTP(S), 이미지는 HTTP(S) 또는 상대 경로를 받습니다.
 
-카카오 SDK는 아직 연결하지 않았습니다. `getKakaoSharePayload(config, baseUrl)`로 제목·설명·절대 썸네일 URL을 가진 데이터를 얻을 수 있습니다.
-현재 공유 버튼은 주소를 복사합니다. 브라우저의 OG 메타도 설정으로 갱신하지만,
-JavaScript를 실행하지 않는 공유 크롤러의 미리보기에는 배포 시 정적 메타 생성 또는 서버 렌더링이 별도로 필요합니다.
+카카오 JavaScript SDK 공유를 지원합니다. 설정·도메인 등록·정적 OG 생성은 [카카오 공유 안내](kakao-share.md)를 참고하세요.
 
 검증: `node tests/config.test.mjs`
 
@@ -85,3 +83,31 @@ contact.items에 양가 부모님 연락처 항목을 추가했습니다. 실제
 전화는 tel:, 문자는 sms: 링크로 기기의 연결 앱을 엽니다.
 
 검증: node tests/account-contact.test.mjs
+
+## 부모님 고인 표시
+
+`invitation.parents`의 각 행에서 기존 이름은 그대로 입력하고, `fatherDeceased`(아버지) 또는 `motherDeceased`(어머니)를 `true`로 설정합니다. 생략하거나 `false`이면 일반 이름으로 표시됩니다. 문자열이 아닌 boolean 값을 사용합니다.
+
+```js
+{ visible: true, person: "groom", label: "신랑 측",
+  father: "홍OO", fatherDeceased: true,
+  mother: "김OO", motherDeceased: false, relation: "장남" }
+```
+
+고인 이름 앞에 36×40px 템플릿별 하얀 국화꽃 SVG를 표시하며 스크린 리더에는 “고인”으로 안내합니다. 이름이 비어 있으면 꽃과 불필요한 구분선도 표시하지 않습니다. Floral·Sketch·Ticket에 공통 적용됩니다. 기본 설정은 모두 false입니다.
+
+연락처는 별도 설정입니다. 해당 부모님의 연락처를 숨기려면 `contact.items`에서 해당 항목의 `visible`을 `false`로 설정합니다. 이름이 같다는 이유로 다른 항목을 자동 변경하지 않습니다.
+
+
+
+## 계좌 안내 드롭다운
+
+계좌는 `account.items` 배열로 관리하며 각 항목의 `side`로 묶습니다. `groom`은 신랑 측, `bride`는 신부 측, `other`는 기타 계좌입니다. `label`에는 신랑, 신랑 아버지, 신부 어머니 등 관계를 입력하고 `holder`에는 예금주를 입력합니다. 계좌가 없는 그룹은 표시하지 않습니다.
+
+```js
+{ visible: true, side: "groom", label: "신랑 아버지", bank: "OO은행", holder: "홍OO", number: "001-234-567" }
+```
+
+그룹 제목은 `account.groupTitles.groom`, `.bride`, `.other`에서 변경합니다. 기존 설정의 side가 생략되면 label에 포함된 신랑/신부로 분류하고, 어느 쪽도 없으면 기타 그룹으로 표시합니다. 계좌를 임의로 누락하지 않습니다.
+
+처음에는 접혀 있으며 기본 HTML details/summary를 사용해 터치와 키보드로 펼칠 수 있습니다. 각 그룹은 독립적으로 열립니다. 복사 아이콘은 접근성 이름과 44px 터치 영역을 제공하고, 기존 복사 토스트와 수동 선택 대체 처리를 유지합니다.

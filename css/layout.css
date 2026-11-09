@@ -6,13 +6,17 @@
 .brand { font-family: var(--font-display); font-size: .9rem; text-decoration: none; }
 .site-header nav { display: flex; gap: 16px; }
 .site-header nav a { font-size: .75rem; text-decoration: none; }
-.section { padding: var(--section-space) var(--page-gutter); text-align: center; }
-.section-inner { margin: 0 auto; max-width: var(--content-width); }
+.section {
+  padding: var(--section-space) var(--page-gutter);
+  padding-left: max(var(--page-gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--page-gutter), env(safe-area-inset-right, 0px));
+  text-align: center;
+  min-width: 0;
+}
+.section-inner { width: 100%; min-width: 0; margin: 0 auto; max-width: var(--content-width); }
+.section-inner > * { min-width: 0; }
 .section-soft { background: var(--color-soft) var(--paper-image); background-size: var(--paper-size); }
 .hero { align-items: center; display: grid; min-height: min(820px, 92svh); }
-.site-footer { padding: 54px 20px; text-align: center; }
-.site-footer p:first-child { font-family: var(--font-display); font-size: 1.2rem; }
-.site-footer p:nth-child(2) { color: var(--color-muted); font-size: .85rem; margin: 8px 0 20px; }
 .toast { background: var(--color-overlay); border-radius: var(--radius-button); bottom: 24px; color: var(--color-on-overlay); left: 50%; opacity: 0; padding: 10px 18px; pointer-events: none; position: fixed; transform: translate(-50%, 12px); transition: var(--motion-duration); z-index: 20; }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 .image-dialog { background: var(--color-overlay); border: 0; color: var(--color-on-overlay); height: min(90dvh, 900px); max-height: 90dvh; max-width: min(94vw, 900px); padding: 48px 56px 36px; width: 94vw; }
@@ -36,7 +40,7 @@
 }
 
 /* Decorative pseudo-elements keep the same section DOM for every template. */
-.section-inner::before, .site-footer::before {
+.section-inner::before {
   content: "";
   display: block;
   width: var(--decoration-width);

@@ -1,4 +1,30 @@
-import { formatKoreanDate, formatKoreanTime, getWeddingDayState, millisecondsUntilKoreanMidnight, toKoreanDateTime } from "../core/date.js";
+import { formatKoreanDate, formatKoreanTime, getWeddingDayState, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar } from "../core/date.js";
+
+function renderCalendar(container, weddingDate) {
+  const calendar = getWeddingCalendar(weddingDate);
+  const svgNode = (tag, attrs = {}, text = "") => {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, String(value));
+    node.textContent = text;
+    return node;
+  };
+  const svg = svgNode("svg", {
+    viewBox: `0 0 280 ${100 + calendar.weeks * 36}`, role: "img",
+    "aria-label": `${calendar.year}년 ${calendar.month}월 달력. ${formatKoreanDate(weddingDate)}, 결혼식 날짜 표시.`,
+    focusable: "false"
+  });
+  svg.append(svgNode("text", { x: 140, y: 26, class: "calendar-month" }, `${calendar.year}. ${String(calendar.month).padStart(2, "0")}`));
+  ["일", "월", "화", "수", "목", "금", "토"].forEach((day, i) => {
+    svg.append(svgNode("text", { x: 20 + i * 40, y: 62, class: "calendar-weekday" }, day));
+  });
+  for (const { day, column, row } of calendar.days) {
+    const x = 20 + column * 40, y = 98 + row * 36;
+    const selected = day === calendar.selectedDay;
+    if (selected) svg.append(svgNode("circle", { cx: x, cy: y - 5, r: 16, class: "calendar-selected" }));
+    svg.append(svgNode("text", { x, y, class: selected ? "calendar-day is-wedding" : "calendar-day" }, day));
+  }
+  container.replaceChildren(svg);
+}
 
 let dispose;
 export function initWeddingInfo(config) {
@@ -19,11 +45,7 @@ export function initWeddingInfo(config) {
   const time = section.querySelector('[data-field="time"]');
   time.textContent = formatKoreanTime(weddingTime);
   time.dateTime = toKoreanDateTime(weddingDate, weddingTime);
-  for (const key of ["venue", "hall", "address"]) {
-    const node = section.querySelector(`[data-field="${key}"]`);
-    node.textContent = info[key];
-    node.hidden = !info[key];
-  }
+  renderCalendar(section.querySelector('[data-field="calendar"]'), weddingDate);
   const dday = section.querySelector('[data-field="dday"]');
   dday.hidden = !info.showDday;
   let timer;

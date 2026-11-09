@@ -1,40 +1,97 @@
 html[data-theme="wedding-sketch"] {
-  --color-primary: #222222;
-  --color-secondary: #666666;
-  --color-background: #ffffff;
-  --color-surface: #ffffff;
-  --color-soft: #fafafa;
-  --color-text: #222222;
-  --color-muted: #606060;
-  --color-border: #777777;
-  --color-accent: #f1f1f1;
-  --color-heading: #222222;
-  --color-action: #222222;
-  --color-action-hover: #444444;
-  --color-focus: #222222;
-  --color-overlay: #111111;
+  --memorial-flower-image: url("../../assets/images/templates/sketch/memorial-chrysanthemum.svg");
+  --color-primary: #758fc1;
+  --color-secondary: #9ec9b2;
+  --color-background: #faf5e9;
+  --color-surface: #fffaf0;
+  --color-soft: #f3f3e8;
+  --color-text: #394d68;
+  --color-muted: #536681;
+  --color-border: #9aadc6;
+  --color-accent: #e5eee4;
+  --color-heading: #536e9b;
+  --color-action: #4f6b98;
+  --color-action-hover: #3d567e;
+  --color-focus: #4f6b98;
+  --color-overlay: #283951;
   --font-display: "Nanum Pen Script", "Segoe Print", "HYGungSo", "Apple Chancery", "Batang", cursive;
   --font-size-heading: clamp(1.9rem, 6vw, 2.5rem);
   --letter-spacing: 0;
   --eyebrow-spacing: .16em;
-  --section-space: clamp(64px, 10vw, 104px);
+  --font-script: "Allura", "Segoe Script", cursive;
+  --section-space: clamp(24px, 5vw, 48px);
+  --page-gutter: clamp(16px, 4vw, 28px);
   --heading-gap: 24px;
   --card-padding: clamp(18px, 5vw, 24px);
   --grid-gap: 8px;
-  --radius-card: 3px 8px 4px 7px;
-  --radius-control: 3px;
-  --radius-button: 4px 8px 5px 7px;
-  --radius-image: 2px;
-  --shadow-soft: 2px 3px 0 #eeeeee;
-  --button-shadow: 2px 2px 0 #dedede;
+  --radius-card: 22px 16px 25px 18px / 15px 22px 18px 24px;
+  --radius-control: 8px 12px 7px 10px;
+  --radius-button: 18px 13px 19px 14px / 12px 18px 13px 17px;
+  --radius-image: 16px 22px 14px 20px;
+  --shadow-soft: none;
+  --button-shadow: none;
   --divider-width: 56px;
-  --divider-style: dashed;
-  --divider-color: #777777;
+  --divider-style: solid;
+  --divider-color: #9ec9b2;
   --paper-image: url("../../assets/images/templates/sketch/paper.svg");
   --paper-size: 180px 180px;
-  --decoration-image: url("../../assets/images/templates/sketch/flowers.svg");
-  --decoration-width: 82px;
-  --decoration-height: 52px;
+  --decoration-image: url("../../assets/images/templates/sketch/rings.svg");
+  --sketch-bouquet: url("../../assets/images/templates/sketch/bouquet.svg");
+  --sketch-ribbon: url("../../assets/images/templates/sketch/ribbon.svg");
+  --sketch-frame: url("../../assets/images/templates/sketch/curve-frame.svg");
+  --decoration-width: 110px;
+  --decoration-height: 80px;
   --hero-decoration-width: 210px;
   --hero-decoration-height: 134px;
+}
+
+/* Pen-drawn paper panels share the existing section DOM. */
+html[data-theme="wedding-sketch"] .section { background: none; }
+html[data-theme="wedding-sketch"] .section-inner {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 60px clamp(38px, 12vw, 68px) 72px;
+}
+html[data-theme="wedding-sketch"] .section-inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--sketch-frame) center / 100% 100% no-repeat;
+  z-index: -1;
+  pointer-events: none;
+}
+html[data-theme="wedding-sketch"] .section + .section::before { display: none; }
+html[data-theme="wedding-sketch"] .brand {
+  font-family: var(--font-script); font-size: 1.7rem;
+}
+html[data-theme="wedding-sketch"] .eyebrow {
+  font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.3rem);
+  text-transform: lowercase; letter-spacing: 0; line-height: 1.3;
+  color: var(--color-heading);
+}
+html[data-theme="wedding-sketch"] #hero .section-inner::before {
+  background-image: var(--sketch-bouquet);
+  width: min(190px, 65%); height: 164px;
+}
+html[data-theme="wedding-sketch"] #hero h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; }
+html[data-theme="wedding-sketch"] #hero .hero-names { font-size: clamp(2rem, 7vw, 2.7rem); }
+html[data-theme="wedding-sketch"] #hero .hero-image { padding: 5px; max-height: 330px; border-width: 1.5px; }
+html[data-theme="wedding-sketch"] #invitation .memorial-flower {
+  width: 1.5em;
+  height: 1.7em;
+  flex-basis: 1.5em;
+}
+html[data-theme="wedding-sketch"] #invitation .invitation-message {
+  font-family: var(--font-display); font-size: clamp(1.3rem, 5vw, 1.55rem); line-height: 1.85;
+}
+html[data-theme="wedding-sketch"] #invitation .section-inner::before,
+html[data-theme="wedding-sketch"] #guestbook .section-inner::before { background-image: var(--sketch-ribbon); }
+html[data-theme="wedding-sketch"] #gallery .section-inner::before,
+html[data-theme="wedding-sketch"] #invitation .family-relation { font-size: 1.6rem; }
+html[data-theme="wedding-sketch"] .button { border-width: 1.5px; }
+html[data-theme="wedding-sketch"] #location .travel-icon { background: transparent; color: var(--color-heading); border: 1.5px solid var(--color-secondary); border-radius: 45% 55% 48% 52%; transform: rotate(-4deg); }
+html[data-theme="wedding-sketch"] #location .travel-copy h3 { font-size: 1.5rem; line-height: 1.2; }
+@media (max-width: 359px) {
+  html[data-theme="wedding-sketch"] .section-inner { padding-inline: 32px; }
 }

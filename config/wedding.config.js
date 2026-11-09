@@ -1,7 +1,7 @@
 // 콘텐츠 전용 설정. visible: false로 섹션 또는 개별 항목을 숨깁니다.
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
-  templateId: "wedding-sketch",
+  templateId: "wedding-floral",
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
   hero: {
     visible: true, title: "소중한 분들을 초대합니다", subtitle: "WE ARE GETTING MARRIED",
@@ -12,8 +12,9 @@ export const weddingConfig = {
     visible: true, title: "초대합니다", subtitle: "INVITATION",
     message: "서로의 이름을 부르며 살아온 두 사람이\n이제 하나의 이름으로 새로운 시작을 합니다.\n따뜻한 마음으로 축복해 주세요.",
     parents: [
-      { visible: true, label: "신랑 측", father: "홍OO", mother: "김OO", relation: "장남" },
-      { visible: true, label: "신부 측", father: "김OO", mother: "박OO", relation: "장녀" }
+      // 고인인 부모님만 fatherDeceased 또는 motherDeceased를 true로 설정합니다.
+      { visible: true, person: "groom", label: "신랑 측", father: "홍OO", fatherDeceased: true, mother: "김OO", motherDeceased: false, relation: "장남" },
+      { visible: true, person: "bride", label: "신부 측", father: "김OO", fatherDeceased: false, mother: "박OO", motherDeceased: false, relation: "장녀" }
     ]
   },
   // 장소 정보는 이곳에서 한 번만 입력합니다. 오시는 길에서도 공유합니다.
@@ -32,22 +33,26 @@ export const weddingConfig = {
   },
   location: {
     visible: true, title: "오시는 길", subtitle: "LOCATION",
-    transport: { visible: true, text: "대중교통: OO역에서 도보 5분" },
-    parking: { visible: true, text: "주차: 건물 내 주차장 이용 가능" },
+    // 자차 text를 비우면 예식장 이름과 주소로 자동 안내합니다.
+    car: { visible: true, title: "자차", text: "" },
+    transport: { visible: true, title: "대중교통 · 버스", text: "위 지도 앱에서 출발지를 입력한 뒤 대중교통 경로를 확인해 주세요." },
+    subway: { visible: true, title: "지하철", text: "위 지도 앱에서 지하철 경로와 도착역 출구를 확인해 주세요." },
+    parking: { visible: true, title: "주차", text: "건물 내 주차장 이용 가능\n주차 등록 및 이용 시간은 예식장에 확인해 주세요." },
     // 실제 예식장 좌표를 입력하세요. 미설정은 null입니다.
-    coordinates: { latitude: null, longitude: null },
+    coordinates: { latitude: 37.5671332722828, longitude: 126.826736284866 },
     links: [
-      { visible: true, provider: "kakao", label: "카카오맵 길찾기", url: "" },
+      { visible: true, provider: "kakao", label: "카카오맵 길찾기", url: "https://map.kakao.com/link/map/1089036510" },
       // 네이버 지도에서 목적지를 지정한 후 복사한 공유 URL을 넣으세요.
-      { visible: true, provider: "naver", label: "네이버 지도 길찾기", url: "" }
+      { visible: true, provider: "naver", label: "네이버 지도 길찾기", url: "https://map.naver.com/v5/search/보타닉파크웨딩" }
     ]
   },
   account: {
     visible: true, title: "마음 전하실 곳", subtitle: "ACCOUNT",
     description: "축하의 마음을 전하실 분들을 위해 계좌 정보를 안내합니다.",
+    groupTitles: { groom: "신랑측 마음 전하는 곳", bride: "신부측 마음 전하는 곳", other: "마음 전하는 곳" },
     items: [
-      { visible: true, label: "신랑 측", bank: "OO은행", holder: "홍길동", number: "000-000-000000" },
-      { visible: true, label: "신부 측", bank: "OO은행", holder: "김하나", number: "000-000-000000" }
+      { visible: true, side: "groom", label: "신랑", bank: "OO은행", holder: "홍길동", number: "000-000-000000" },
+      { visible: true, side: "bride", label: "신부", bank: "OO은행", holder: "김하나", number: "000-000-000000" }
     ]
   },
   contact: {
@@ -70,7 +75,7 @@ export const weddingConfig = {
   share: {
     visible: true,
     // 빈 문자열이면 이름과 날짜로 자동 생성합니다. 직접 입력하면 해당 문구를 사용합니다.
-    title: "", description: "", url: "",
+    title: "", description: "", url: "https://godzzu.github.io/wd_letter/",
     image: { visible: true, src: "./assets/images/og/wedding.png", alt: "결혼식 초대장" }
   },
   labels: {

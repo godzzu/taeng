@@ -117,4 +117,3 @@ export function initKakaoShare(config, appConfig, dependencies = {}) {
   }, { signal: events.signal });
   void prepare();
 }
-

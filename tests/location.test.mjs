@@ -14,6 +14,10 @@ class Node {
   async click() { for (const h of this.handlers) if (h.name === "click" && !h.signal?.aborted) await h.fn(); }
 }
 const config = getWeddingConfig();
+config.location.links = [
+  { provider: "kakao", label: "카카오맵 길찾기", url: "" },
+  { provider: "naver", label: "네이버 지도 길찾기", url: "" }
+];
 config.location.coordinates = { latitude: 37.5, longitude: 127.1 };
 config.weddingInfo.venue = "꽃 & 마음 / 웨딩";
 config.weddingInfo.address = "서울 테스트로 1\n2층";
@@ -22,6 +26,12 @@ assert.equal(links[0].url, "https://map.kakao.com/link/to/" + encodeURIComponent
 assert.match(links[1].url, /map.naver.com\/p\/search\//);
 config.location.links[1].url = "https://naver.me/example";
 assert.equal(getMapLinks(config)[1].url, "https://naver.me/example");
+config.location.links[1].url = "https://map.naver.com/v5/search/wedding";
+assert.equal(getMapLinks(config)[1].label, config.labels.naverSearch);
+config.location.links[0].url = "https://map.kakao.com/link/map/123";
+assert.equal(getMapLinks(config)[0].label, config.labels.kakaoSearch);
+assert.equal(getMapLinks(config)[0].url, config.location.links[0].url);
+config.location.links[0].url = "";
 const container = new Node(), status = new Node();
 let calls = 0;
 let service = initMapService({ config, container, status }, () => { calls++; });

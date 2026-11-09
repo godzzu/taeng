@@ -1,0 +1,149 @@
+/* Boarding-pass skin: no section markup or behavior is replaced. */
+@font-face {
+  font-family: "Tway Air";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html[data-theme="wedding-ticket"] {
+  --memorial-flower-image: url("../../assets/images/templates/ticket/memorial-chrysanthemum.svg");
+  --color-primary: #010736;
+  --color-secondary: #22396f;
+  --color-background: #0d1c42;
+  --color-surface: #FFF3E3;
+  --color-soft: #FFF3E3;
+  --color-text: #0d1c42;
+  --color-muted: #22396f;
+  --color-border: #22396f;
+  --color-accent: #FFF3E3;
+  --color-heading: #010736;
+  --color-action: #010736;
+  --color-action-hover: #22396f;
+  --color-on-action: #FFF3E3;
+  --color-focus: #22396f;
+  --color-overlay: #010736;
+  --color-on-overlay: #FFF3E3;
+  --font-body: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --font-ticket: "Share Tech Mono", "Courier New", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
+  --font-display: var(--font-ticket);
+  --font-title: "Tway Air", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  --font-size-heading: clamp(1.4rem, 5vw, 2rem);
+  --section-space: clamp(24px, 5vw, 48px);
+  --page-gutter: clamp(16px, 4vw, 28px);
+  --card-padding: clamp(16px, 4vw, 24px);
+  --radius-card: 2px;
+  --radius-control: 2px;
+  --radius-button: 3px;
+  --radius-image: 0;
+  --shadow-soft: none;
+  --button-shadow: none;
+  --divider-style: dashed;
+  --divider-color: #22396f;
+  --paper-image: none;
+  --hero-wash: none;
+  --decoration-image: url("../../assets/images/templates/ticket/stamp.svg");
+  --decoration-width: 64px;
+  --decoration-height: 64px;
+  --ticket-flight: url("../../assets/images/templates/ticket/flight.svg");
+  --ticket-barcode: url("../../assets/images/templates/ticket/barcode.svg");
+  --ticket-inset: clamp(24px, 6vw, 48px);
+}
+html[data-theme="wedding-ticket"] .site-header { color: var(--color-surface); }
+html[data-theme="wedding-ticket"] .site-header :focus-visible { outline-color: var(--color-surface); }
+html[data-theme="wedding-ticket"] .brand {
+  font-family: var(--font-title);
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+html[data-theme="wedding-ticket"] .hero-date,
+html[data-theme="wedding-ticket"] .wedding-calendar .calendar-day {
+  font-family: var(--font-ticket);
+  font-variant-numeric: tabular-nums;
+}
+html[data-theme="wedding-ticket"] h1,
+html[data-theme="wedding-ticket"] h2 {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: .04em;
+}
+html[data-theme="wedding-ticket"] .section { background: none; }
+html[data-theme="wedding-ticket"] .section-inner {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  padding: 56px var(--ticket-inset) 72px;
+  background: var(--color-surface);
+  /* Repeated navy semicircles mimic punched paper without clipping focus rings. */
+  background-image: radial-gradient(circle at 0 12px, var(--color-background) 7px, transparent 7.5px), radial-gradient(circle at 100% 12px, var(--color-background) 7px, transparent 7.5px);
+  background-size: 100% 32px;
+}
+html[data-theme="wedding-ticket"] .section-inner::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px dashed var(--color-border);
+  pointer-events: none;
+  z-index: -1;
+}
+html[data-theme="wedding-ticket"] .section + .section::before { display: none; }
+html[data-theme="wedding-ticket"] .eyebrow {
+  font-family: var(--font-ticket);
+  font-size: .75rem;
+  font-weight: 400;
+  letter-spacing: .18em;
+}
+html[data-theme="wedding-ticket"] #hero .section-inner {
+  padding-top: 52px;
+  background-image: radial-gradient(circle at 0 0, var(--color-background) 18px, transparent 18.5px), radial-gradient(circle at 100% 0, var(--color-background) 18px, transparent 18.5px), radial-gradient(circle at 0 100%, var(--color-background) 18px, transparent 18.5px), radial-gradient(circle at 100% 100%, var(--color-background) 18px, transparent 18.5px);
+  background-size: 100% 100%;
+}
+html[data-theme="wedding-ticket"] #hero .section-inner::after {
+  border: 3px double var(--color-primary);
+  inset: 12px;
+  border-radius: 14px;
+}
+html[data-theme="wedding-ticket"] #hero .section-inner::before {
+  background-image: var(--ticket-flight);
+  width: min(260px, 100%);
+  height: 66px;
+  margin-bottom: 24px;
+}
+html[data-theme="wedding-ticket"] #hero h1 { font-size: clamp(1.4rem, 5vw, 2rem); }
+html[data-theme="wedding-ticket"] #hero .hero-image {
+  max-height: 320px;
+  padding: 6px;
+  border: 1px solid var(--color-border);
+}
+html[data-theme="wedding-ticket"] #hero .hero-scroll {
+  display: flex;
+  border-top: 2px dashed var(--color-border);
+  margin-top: 32px;
+  padding-top: 26px;
+}
+html[data-theme="wedding-ticket"] #hero .hero-scroll::before {
+  content: "";
+  display: block;
+  width: 160px;
+  max-width: 100%;
+  height: 28px;
+  margin-bottom: 12px;
+  background: var(--ticket-barcode) center / contain no-repeat;
+  pointer-events: none;
+}
+html[data-theme="wedding-ticket"] #invitation .invitation-message { font-family: var(--font-body); line-height: 2.3; }
+html[data-theme="wedding-ticket"] #invitation .memorial-flower {
+  width: 1.5em;
+  height: 1.7em;
+  flex-basis: 1.5em;
+}
+html[data-theme="wedding-ticket"] .info-card,
+html[data-theme="wedding-ticket"] .account-group,
+html[data-theme="wedding-ticket"] .account-card,
+html[data-theme="wedding-ticket"] .contact-card,
+html[data-theme="wedding-ticket"] .guestbook-card { border-style: dashed; }
+html[data-theme="wedding-ticket"] .button:not(.button-primary):hover { background: var(--color-action); color: var(--color-on-action); }
+html[data-theme="wedding-ticket"] #location .travel-icon { background: transparent; color: var(--color-primary); border: 3px double var(--color-primary); border-radius: 5px; }

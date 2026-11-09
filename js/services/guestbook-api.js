@@ -2,7 +2,7 @@ export const GUESTBOOK_LIMITS = Object.freeze({ name: 30, message: 300 });
 export function validateGuestbookEntry({ name = "", message = "" }) {
   name = String(name).trim();
   message = String(message).replace(/\r\n?/g, "\n").trim();
-  const invalid = !name || name.length > 30 ? "name" : !message || message.length > 300 ? "message" : null;
+  const invalid = !name || name.length > GUESTBOOK_LIMITS.name ? "name" : !message || message.length > GUESTBOOK_LIMITS.message ? "message" : null;
   return { name, message, invalid };
 }
 export class GuestbookError extends Error {

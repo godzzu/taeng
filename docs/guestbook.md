@@ -68,3 +68,7 @@ client_id는 로컬 저장값이므로 저장소 삭제·직접 API 요청으로
 
 공식 참고: [Supabase 데이터베이스 함수](https://supabase.com/docs/guides/database/functions),
 [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security).
+
+## 웹 관리자 페이지 추가
+
+Supabase Table Editor 대신 `admin.html`에서도 조회·공개 전환·삭제·CSV 저장이 가능합니다. 최초 DB 설치와 관리자 비밀번호 설정은 [관리자 설치 안내](guestbook-admin.md)를 확인하세요. 기존 방명록 데이터와 공개 API는 유지됩니다.

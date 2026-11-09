@@ -18,8 +18,11 @@ export function initHero(config) {
   });
   section.querySelector('[data-field="names"]').replaceChildren(names[0], " ", heart, " ", names[1]);
   const date = section.querySelector('[data-field="date"]');
-  date.textContent = `${config.basic.dateLabel}\n${config.basic.timeLabel}`;
-  date.dateTime = `${config.basic.weddingDate}T${config.basic.weddingTime}:00+09:00`;
+  date.textContent = config.basic.weddingDate.replaceAll("-", ".");
+  date.dateTime = config.basic.weddingDate;
+  const venue = section.querySelector('[data-field="venue"]');
+  venue.textContent = config.weddingInfo.venue ? `- ${config.weddingInfo.venue} -` : "";
+  venue.hidden = !config.weddingInfo.venue;
   const scroll = section.querySelector(".hero-scroll");
   scroll.hidden = !config.invitation.visible;
   section.querySelector('[data-field="scroll-label"]').textContent = config.hero.linkLabel;

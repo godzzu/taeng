@@ -1,4 +1,4 @@
-import { createGuestbookApi, validateGuestbookEntry } from "../services/guestbook-api.js";
+import { createGuestbookApi, validateGuestbookEntry, GUESTBOOK_LIMITS } from "../services/guestbook-api.js";
 import { createElement } from "../core/utils.js";
 
 let disposeGuestbook;
@@ -16,6 +16,8 @@ export function initGuestbook(config, settings = {}) {
   const form = section.querySelector("[data-guestbook-form]");
   const name = form.elements.namedItem("name"), message = form.elements.namedItem("message");
   name.readOnly = message.readOnly = false;
+  name.maxLength = GUESTBOOK_LIMITS.name;
+  message.maxLength = GUESTBOOK_LIMITS.message;
   const submit = form.querySelector('button[type="submit"]');
   const status = section.querySelector('[data-field="guestbook-status"]');
   const list = section.querySelector('[data-field="guestbook-list"]');
@@ -28,8 +30,8 @@ export function initGuestbook(config, settings = {}) {
   list.replaceChildren();
   const on = (node, event, fn) => node.addEventListener(event, fn, { signal: lifecycle.signal });
   const count = () => {
-    section.querySelector("[data-name-count]").textContent = `${name.value.length} / 30`;
-    section.querySelector("[data-message-count]").textContent = `${message.value.length} / 300`;
+    section.querySelector("[data-name-count]").textContent = `${name.value.length} / ${GUESTBOOK_LIMITS.name}`;
+    section.querySelector("[data-message-count]").textContent = `${message.value.length} / ${GUESTBOOK_LIMITS.message}`;
   };
   for (const input of [name, message]) on(input, "input", () => {
     input.setCustomValidity(""); input.removeAttribute("aria-invalid"); count();

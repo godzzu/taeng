@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>방명록 관리</title>
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body>
+  <main class="admin-shell">
+    <header><p class="eyebrow">WEDDING GUESTBOOK</p><h1>방명록 관리</h1><p>소중한 축하 메시지를 확인하고 간직하세요.</p></header>
+    <section id="login-panel" class="panel" aria-labelledby="login-title">
+      <h2 id="login-title">신랑·신부 로그인</h2>
+      <form id="admin-login">
+        <label for="board-id">방명록 ID</label>
+        <input id="board-id" name="board" autocomplete="username" required maxlength="100" autocapitalize="none" spellcheck="false">
+        <label for="board-password">비밀번호</label>
+        <input id="board-password" name="password" type="password" autocomplete="current-password" required>
+        <button type="submit">로그인</button>
+      </form>
+      <p class="hint">발급받은 방명록 ID와 비밀번호를 입력하세요. 새로고침하거나 2시간이 지나면 다시 로그인해야 합니다.</p>
+    </section>
+    <section id="manage-panel" hidden aria-labelledby="manage-title">
+      <div class="toolbar"><h2 id="manage-title" tabindex="-1">받은 메시지</h2><button id="logout" type="button" class="secondary">로그아웃</button></div>
+      <p id="board-label"></p>
+      <div class="toolbar controls">
+        <button id="refresh" type="button" class="secondary">새로고침</button>
+        <button id="export" type="button">전체 목록 CSV 저장</button>
+      </div>
+      <p class="hint">공개한 글만 청첩장에 표시됩니다. 파일에는 비공개 글도 포함됩니다.</p>
+      <div id="entries" aria-label="방명록 목록"></div>
+      <button id="more" type="button" class="secondary" hidden>더 보기</button>
+    </section>
+    <p id="admin-status" role="status" aria-live="polite" aria-atomic="true"></p>
+    <a class="home-link" href="./index.html">청첩장으로 돌아가기</a>
+  </main>
+  <script type="module" src="./js/admin.js"></script>
+</body>
+</html>

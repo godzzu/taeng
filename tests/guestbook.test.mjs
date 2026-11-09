@@ -5,6 +5,8 @@ assert.equal(validateGuestbookEntry({ name: "  ", message: "hi" }).invalid, "nam
 assert.equal(validateGuestbookEntry({ name: "A", message: "x".repeat(301) }).invalid, "message");
 assert.equal(validateGuestbookEntry({ name: " A ", message: "a\r\nb" }).message, "a\nb");
 assert(!createGuestbookApi({}).configured);
+assert(createGuestbookApi(settings).configured);
+assert(!createGuestbookApi({ ...settings, supabaseUrl: settings.supabaseUrl + "/functions/v1/guestbook" }).configured);
 assert(!createGuestbookApi({ ...settings, supabasePublishableKey: "sb_secret_test" }).configured);
 const entry = { name: "<img src=x onerror=alert(1)>", message: "<script>alert(1)</script>\n축하합니다", clientId: "00000000-0000-4000-8000-000000000001", requestId: "00000000-0000-4000-8000-000000000002" };
 let calls = [];

@@ -21,14 +21,30 @@ export function initAccount(config) {
   list.replaceChildren();
   if (section.hidden) return;
 
+  const groups = new Map();
+  for (const side of ["groom", "bride", "other"]) {
+    if (!config.account.items.some(account => account.side === side)) continue;
+    const group = createElement("details", "account-group");
+    const summary = createElement("summary", "account-group-toggle", config.account.groupTitles[side]);
+    const content = createElement("div", "account-group-content");
+    group.append(summary, content);
+    list.append(group);
+    groups.set(side, content);
+  }
   config.account.items.forEach(account => {
     const card = createElement("div", "account-card");
+    const header = createElement("div", "account-card-header");
+    header.append(createElement("strong", "account-side", account.label));
+    header.append(createElement("p", "account-holder", account.holder));
+    const payment = createElement("div", "account-payment");
     const details = createElement("div", "account-details");
-    details.append(createElement("strong", "account-side", account.label));
     details.append(createElement("p", "account-bank", account.bank));
     details.append(createElement("p", "account-number", account.number));
-    details.append(createElement("p", "account-holder", `${config.labels.accountHolder} · ${account.holder}`));
-    const button = createElement("button", "button button-small", config.labels.copyAccount);
+    const button = createElement("button", "button button-small account-copy-button");
+    const copyIcon = createElement("span", "account-copy-icon");
+    copyIcon.setAttribute("aria-hidden", "true");
+    button.append(copyIcon);
+    button.title = config.labels.copyAccount;
     button.type = "button";
     button.setAttribute("aria-label", `${account.label} ${account.holder} ${account.bank} ${config.labels.copyAccount}`);
     const fallback = createElement("div", "account-copy-fallback");
@@ -61,7 +77,8 @@ export function initAccount(config) {
         showToast(config.labels.copyFailed);
       } finally { if (active) button.disabled = false; }
     }, { signal: events.signal });
-    card.append(details, button, fallback);
-    list.append(card);
+    payment.append(details, button);
+    card.append(header, payment, fallback);
+    groups.get(account.side).append(card);
   });
 }

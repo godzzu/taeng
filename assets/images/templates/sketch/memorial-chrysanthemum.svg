@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 112" fill="none">
+  <title>곡선으로 그린 두 송이의 흰 국화</title>
+  <defs>
+    <g id="flower" fill="#ffffff" stroke="#758fc1" stroke-width=".85" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-110.0 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-91.7 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-73.3 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-55.0 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-36.7 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-18.3 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(0.0 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(18.3 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(36.7 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(55.0 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(73.3 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(91.7 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(110.0 0 8) translate(0 8) scale(1) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-97.0 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-72.6 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-48.1 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-23.7 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(0.8 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(25.2 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(49.7 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(74.1 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(98.6 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(123.0 0 8) translate(0 8) scale(0.72) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-118.0 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-81.3 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-44.7 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(-8.0 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(28.7 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(65.3 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+      <path d="M0 11 C-5 6 -7 -12 -3 -18 C0 -23 5 -19 5 -13 C6 -4 4 6 0 11Z" transform="rotate(102.0 0 8) translate(0 8) scale(0.45) translate(0 -8)"/>
+    </g>
+  </defs>
+  <g stroke="#39835c" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 107 C28 91 35 94 44 78 S60 59 69 43 M19 108 C28 94 24 85 31 74 S38 66 36 61" stroke-width="2"/>
+    <path d="M42 78 C49 65 61 62 69 66 C72 67 72 70 76 70 C81 70 83 74 85 78 C80 76 78 79 74 77 C72 82 67 77 65 80 C61 82 57 77 54 79 C49 80 46 79 42 78Z" fill="#39835c" stroke-width=".9"/>
+    <path d="M31 85 C22 82 19 74 19 62 C23 66 25 63 27 69 C31 66 30 73 34 74 C38 78 36 83 31 85Z" fill="#39835c" stroke-width=".9"/>
+    <path d="M64 44 C71 49 76 43 84 44 C81 51 70 55 64 49Z" fill="#39835c" stroke-width=".9"/>
+  </g>
+  <path d="M44 77 Q59 70 77 75 M55 74 Q56 69 61 68 M63 73 Q67 78 71 78 M31 83 Q25 75 23 68 M27 78 Q23 76 22 73" stroke="#bbdac5" stroke-width=".8" stroke-linecap="round"/>
+  <use href="#flower" transform="translate(68 31) rotate(16)"/>
+  <use href="#flower" transform="translate(36 57) rotate(-15) scale(.69)"/>
+</svg>

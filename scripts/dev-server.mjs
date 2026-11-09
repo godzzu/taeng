@@ -38,7 +38,7 @@ export function createDevServer() {
     if (pathname === "/") pathname = "/index.html";
     const segments = pathname.slice(1).split("/");
     if (/[\\\u0000:]/.test(pathname) || segments.some(part => part.startsWith(".")) ||
-        (pathname !== "/index.html" && !publicFolders.has(segments[0]))) {
+        (!["/index.html", "/admin.html"].includes(pathname) && !publicFolders.has(segments[0]))) {
       sendError(404, "Not found");
       return;
     }

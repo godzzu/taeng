@@ -33,7 +33,17 @@ export function getMapLinks(config) {
   const name = config.weddingInfo.venue || config.weddingInfo.address;
   const query = config.weddingInfo.address || name;
   return links.map(link => {
-    if (link.url) return link;
+    if (link.url) {
+      // A configured place/search URL must not promise turn-by-turn directions.
+      const url = new URL(link.url);
+      if (url.hostname === "map.kakao.com" && /^\/link\/(map|search)\//.test(url.pathname)) {
+        return { ...link, label: config.labels.kakaoSearch };
+      }
+      if (url.hostname === "map.naver.com" && /^\/(v5|p)\/search\//.test(url.pathname)) {
+        return { ...link, label: config.labels.naverSearch };
+      }
+      return link;
+    }
     if (link.provider === "kakao" && coordinates) {
       return { ...link, url: `https://map.kakao.com/link/to/${encodeURIComponent(name)},${coordinates.latitude},${coordinates.longitude}` };
     }

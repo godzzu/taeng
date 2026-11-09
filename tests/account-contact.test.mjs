@@ -38,13 +38,19 @@ raw.contact.items.push(
 const config = getWeddingConfig(raw);
 assert.equal(config.contact.items.length, 3);
 assert.equal(config.contact.items[2].dialNumber, "+821012345678");
-for (const templateId of ["wedding-floral", "wedding-sketch"]) {
+const accountCards = () => account.querySelector('[data-field="accounts"]').children.flatMap(group => group.children[1].children);
+for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket"]) {
   config.templateId = templateId;
   initAccount(config); initContact(config);
-  const cards = account.querySelector('[data-field="accounts"]').children;
+  const groups = account.querySelector('[data-field="accounts"]').children;
+  assert.equal(groups.length, 2);
+  assert.equal(groups[0].children[0].textContent, config.account.groupTitles.groom);
+  assert.equal(groups[0].children[1].children.length, 2);
+  const cards = accountCards();
   assert.equal(cards.length, 3);
-  const [details, button, fallback] = cards[2].children;
-  assert.equal(details.children[2].textContent, "001-234-567");
+  const [, payment, fallback] = cards[1].children;
+  const [details, button] = payment.children;
+  assert.equal(details.children[1].textContent, "001-234-567");
   let copied;
   navigator.clipboard.writeText = async text => { copied = text; };
   await button.click();
@@ -71,7 +77,7 @@ for (const templateId of ["wedding-floral", "wedding-sketch"]) {
 }
 let resolveCopy;
 navigator.clipboard.writeText = () => new Promise(resolve => { resolveCopy = resolve; });
-const oldButton = account.querySelector('[data-field="accounts"]').children[0].children[1];
+const oldButton = accountCards()[0].children[1].children[1];
 const pending = oldButton.click();
 initAccount(config);
 toast.textContent = "unchanged";

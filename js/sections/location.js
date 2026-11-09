@@ -17,10 +17,12 @@ export function initLocation(config, appConfig = {}) {
   section.querySelector('[data-field="location-venue"]').textContent = config.weddingInfo.venue;
   address.textContent = config.weddingInfo.address;
   address.hidden = !config.weddingInfo.address;
-  for (const key of ["transport", "parking"]) {
-    const node = section.querySelector(`[data-field="${key}"]`);
-    node.textContent = config.location[key].text;
-    node.hidden = !config.location[key].visible || !config.location[key].text;
+  for (const key of ["car", "transport", "subway", "parking"]) {
+    const item = config.location[key];
+    const node = section.querySelector(`[data-travel="${key}"]`);
+    node.querySelector("h3").textContent = item.title;
+    node.querySelector("p").textContent = item.text;
+    node.hidden = !item.visible || !item.text;
   }
   const copy = section.querySelector("[data-copy-address]");
   const feedback = section.querySelector("[data-address-status]");
@@ -39,14 +41,31 @@ export function initLocation(config, appConfig = {}) {
   }, { signal: events.signal });
   const links = section.querySelector('[data-field="map-links"]');
   links.replaceChildren();
-  getMapLinks(config).forEach(({ label, url }) => {
+  const mapBrands = {
+    kakao: { name: "카카오맵", image: "./assets/images/logo/kakao_map.png" },
+    naver: { name: "네이버지도", image: "./assets/images/logo/naver_map.png" }
+  };
+  getMapLinks(config).forEach(({ provider, label, url }) => {
+    const brand = mapBrands[provider];
+    const name = brand?.name || label;
     const anchor = document.createElement("a");
-    anchor.className = "button button-primary";
+    anchor.className = "button button-small map-link";
     anchor.href = url;
     anchor.target = "_blank";
     anchor.rel = "noopener noreferrer";
-    anchor.textContent = label;
-    anchor.setAttribute("aria-label", `${label} (${config.labels.mapNewWindow})`);
+    if (brand) {
+      const logo = document.createElement("img");
+      logo.src = brand.image;
+      logo.alt = "";
+      logo.width = logo.height = 24;
+      logo.decoding = "async";
+      logo.onerror = () => { logo.hidden = true; };
+      anchor.append(logo);
+    }
+    const text = document.createElement("span");
+    text.textContent = name;
+    anchor.append(text);
+    anchor.setAttribute("aria-label", `${name} (${config.labels.mapNewWindow})`);
     links.append(anchor);
   });
   links.hidden = !links.children.length;
