@@ -1,4 +1,6 @@
 html[data-theme="wedding-floral"] {
+  --music-icon-stroke: 1.5;
+  --music-icon-fill-opacity: .2;
   --memorial-flower-image: url("../../assets/images/templates/floral/memorial-chrysanthemum-watercolor.png");
   --color-primary: #b7cdde;
   --color-secondary: #a9b6ac;

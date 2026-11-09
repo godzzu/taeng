@@ -4,8 +4,6 @@
   padding: 12px max(20px, calc((100vw - var(--content-width)) / 2)); position: sticky; top: 0; z-index: 5;
 }
 .brand { font-family: var(--font-display); font-size: .9rem; text-decoration: none; }
-.site-header nav { display: flex; gap: 16px; }
-.site-header nav a { font-size: .75rem; text-decoration: none; }
 .section {
   padding: var(--section-space) var(--page-gutter);
   padding-left: max(var(--page-gutter), env(safe-area-inset-left, 0px));
@@ -28,10 +26,6 @@
 .dialog-next { right: 12px; top: 48%; }
 .dialog-counter { bottom: 8px; left: 0; position: absolute; right: 0; text-align: center; }
 @media (max-width: 520px) {
-  .site-header { justify-content: center; }
-  .site-header nav { display: none; }
-
-
   .image-dialog { padding: 42px 34px 34px; }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -1,4 +1,7 @@
 html[data-theme="wedding-sketch"] {
+  --music-icon-stroke: 1.8;
+  --music-icon-fill: none;
+  --music-icon-tilt: -4deg;
   --memorial-flower-image: url("../../assets/images/templates/sketch/memorial-chrysanthemum.svg");
   --color-primary: #758fc1;
   --color-secondary: #9ec9b2;

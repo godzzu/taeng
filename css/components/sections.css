@@ -1,5 +1,9 @@
-.music-toggle { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 8; min-height: 44px; padding: 8px 14px; border: 1px var(--border-style) var(--color-border); border-radius: var(--radius-button); background: var(--color-surface); color: var(--color-action); box-shadow: var(--shadow-soft); font-family: var(--font-body); font-size: .8rem; cursor: pointer; }
-.music-toggle[aria-pressed="true"] { background: var(--color-action); color: var(--color-on-action); }
+.music-toggle { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 44px; width: 44px; height: 44px; margin-left: auto; padding: 10px; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+.music-toggle:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+.music-toggle svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: var(--music-icon-stroke, 1.8); stroke-linecap: round; stroke-linejoin: round; transform: rotate(var(--music-icon-tilt, 0deg)); }
+.music-toggle .music-speaker { fill: var(--music-icon-fill, currentColor); fill-opacity: var(--music-icon-fill-opacity, 1); }
+.music-toggle .music-icon-sounding, .music-toggle[aria-pressed="true"] .music-icon-muted { display: none; }
+.music-toggle[aria-pressed="true"] .music-icon-sounding { display: block; }
 .date-large { font-family: var(--font-display); font-size: 1.5rem; }
 .info-card { background: var(--color-surface); border: 1px var(--border-style) var(--color-border); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); margin: 28px auto 0; max-width: var(--card-width); padding: var(--card-padding); }
 .info-card h3 { margin-bottom: 8px; }

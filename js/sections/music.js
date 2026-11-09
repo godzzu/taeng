@@ -11,7 +11,7 @@ export function initMusic(config, settings, { load = getMusic, makeAudio = () =>
   button.hidden = true;
   function update() {
     const playing = pending || (audio && !audio.paused);
-    button.textContent = playing ? '♫ 음악 정지' : '♫ 음악 재생';
+    button.title = playing ? '배경음악 정지' : '배경음악 재생';
     button.setAttribute('aria-label', playing ? '배경음악 정지' : '배경음악 재생');
     button.setAttribute('aria-pressed', String(!!playing));
   }

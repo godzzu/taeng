@@ -8,6 +8,8 @@
 }
 
 html[data-theme="wedding-ticket"] {
+  --music-icon-stroke: 1.7;
+  --music-icon-fill: currentColor;
   --memorial-flower-image: url("../../assets/images/templates/ticket/memorial-chrysanthemum.svg");
   --color-primary: #010736;
   --color-secondary: #22396f;

@@ -41,8 +41,10 @@ try {
   await service.ready; assert.equal(button.hidden, false); assert.equal(audio.playCalls, 0); assert.equal(audio.preload, 'none');
   button.dispatchEvent(new Event('click')); await flush(); assert.equal(audio.paused, false);
   assert.equal(button.attributes['aria-pressed'], 'true');
+  assert.equal(button.attributes['aria-label'], '배경음악 정지');
   audio.currentTime = 15; button.dispatchEvent(new Event('click')); await flush();
   assert.equal(audio.currentTime, 0); assert.equal(audio.paused, true);
+  assert.equal(button.attributes['aria-label'], '배경음악 재생');
   audio.fail = true; button.dispatchEvent(new Event('click')); await flush(); assert.equal(notices.length, 1);
   audio.fail = false; button.dispatchEvent(new Event('click')); await flush();
   document.hidden = true; document.dispatchEvent(new Event('visibilitychange')); assert.equal(audio.paused, true);

@@ -30,11 +30,16 @@
 <body>
   <header class="site-header">
     <a class="brand" href="#hero" data-aria="home" data-copy="brand"></a>
-    <nav data-aria="navigation">
-      <a href="#wedding-info" data-copy="weddingNav"></a>
-      <a href="#gallery" data-copy="galleryNav"></a>
-      <a href="#location" data-copy="locationNav"></a>
-    </nav>
+    <button class="music-toggle" type="button" data-music-toggle aria-label="배경음악 재생" aria-pressed="false" hidden>
+      <svg class="music-icon-muted" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M6 9H3v6h4l5 4v-6M9 7l3-2v3"/>
+        <path d="M16 9c1.5 1.8 1.5 4.2 0 6M19 6c3 3.3 3 8.7 0 12M2 2l20 20"/>
+      </svg>
+      <svg class="music-icon-sounding" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="music-speaker" d="M3 9h4l5-4v14l-5-4H3Z"/>
+        <path d="M16 9c1.5 1.8 1.5 4.2 0 6M19 6c3 3.3 3 8.7 0 12"/>
+      </svg>
+    </button>
   </header>
 
   <main id="main-content">
@@ -163,7 +168,6 @@
     </section>
   </main>
 
-  <button class="music-toggle" type="button" data-music-toggle aria-pressed="false" hidden>♫ 음악 재생</button>
   <div class="toast" role="status" aria-live="polite" data-toast></div>
   <dialog class="image-dialog" data-gallery-dialog data-aria="galleryDialog">
     <button class="dialog-close" type="button" data-dialog-close data-aria="galleryClose" autofocus>×</button>
