@@ -23,12 +23,14 @@ function image(value) {
 }
 export function getWeddingConfig(source = weddingConfig) {
   const input = object(source);
+  const music = { visible: input.music?.visible !== false, key: text(input.music?.key) };
   const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket"].includes(input.templateId) ? input.templateId : "wedding-floral" };
   for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook", "footer", "share"]) {
     const section = object(input[key]);
     result[key] = { visible: visible(section.visible), title: text(section.title), subtitle: text(section.subtitle), description: text(section.description) };
   }
   const basic = object(input.basic);
+  result.music = music;
   const date = text(basic.weddingDate);
   const time = text(basic.weddingTime);
   result.basic = {

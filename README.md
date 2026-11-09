@@ -87,3 +87,7 @@ Supabase 연결과 승인 운영 방법은 [방명록 설정](docs/guestbook.md)
 ## 방명록 관리자 페이지
 
 `admin.html`에서 방명록 ID/비밀번호 로그인, 공개·비공개 전환, 삭제, 전체 CSV 저장을 지원합니다. 사용 전 Supabase SQL 설치와 관리자 비밀번호 설정이 필요합니다. 자세한 절차는 [관리자 설치 안내](docs/guestbook-admin.md)를 참고하세요.
+
+## 청첩장 배경음악
+
+Supabase에 등록된 음원을 config/wedding.config.js의 music.key로 선택합니다. 해당 곡의 재생·정지 버튼을 표시하며 관리자 업로드 기능은 없습니다. [음악 설정 안내](docs/music.md)를 확인하세요.

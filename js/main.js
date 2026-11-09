@@ -9,6 +9,7 @@ import { initLocation } from "./sections/location.js";
 import { initAccount } from "./sections/account.js";
 import { initContact } from "./sections/contact.js";
 import { initGuestbook } from "./sections/guestbook.js";
+import { initMusic } from "./sections/music.js";
 import { appConfig } from "../config/app.config.js";
 
 function initializeWedding() {
@@ -25,6 +26,7 @@ function initializeWedding() {
   initAccount(config);
   initContact(config);
   initGuestbook(config, appConfig);
+  initMusic(config, appConfig);
 
 }
 

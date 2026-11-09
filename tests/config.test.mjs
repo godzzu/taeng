@@ -10,6 +10,9 @@ const { getWeddingConfig } = await import(moduleUrl(core.replace('"../../config/
 const source = structuredClone(weddingConfig);
 source.share.url = ""; // Exercise current-page fallback independently of deployment settings.
 const config = getWeddingConfig(source);
+assert.deepEqual(getWeddingConfig({ ...source, music: { visible: true, key: ' piano-01 ' } }).music, { visible: true, key: 'piano-01' });
+assert.deepEqual(getWeddingConfig({ ...source, music: undefined }).music, { visible: true, key: '' });
+assert.equal(getWeddingConfig({ ...source, music: { visible: false, key: 'piano-01' } }).music.visible, false);
 assert.equal(config.invitation.parents[0].name, source.basic.groomName);
 assert.equal(config.invitation.parents[1].name, source.basic.brideName);
 const memorialSource = structuredClone(source);

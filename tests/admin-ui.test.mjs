@@ -10,6 +10,9 @@ class Node {
   querySelector() { return nodes.get("login-button"); }
   focus() { document.activeElement = this; }
   click() { this.handlers.click?.(); }
+  pause() {}
+  load() {}
+  removeAttribute(key) { delete this.attributes[key]; }
 }
 const ids = ["#admin-login", "#admin-status", "#entries", "#more", "#manage-panel", "#login-panel", "#board-label", "#board-password", "#board-id", "#manage-title", "#refresh", "#logout", "#export", "login-button"];
 const nodes = new Map(ids.map(id => [id, new Node()]));

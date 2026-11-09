@@ -1,6 +1,7 @@
 // 콘텐츠 전용 설정. visible: false로 섹션 또는 개별 항목을 숨깁니다.
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
+  music: { visible: true, key: "atlasaudio" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
   templateId: "wedding-floral",
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
   hero: {

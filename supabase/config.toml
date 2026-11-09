@@ -1,0 +1,3 @@
+project_id = "wd_letter"
+
+# Background music is read from the catalog via SQL RPC. No upload function is used.
