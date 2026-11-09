@@ -30,7 +30,7 @@ assert.equal(getWeddingConfig(hiddenFamily).invitation.parents[0].name, source.b
 for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket"]) {
   assert.equal(getWeddingConfig({ ...source, templateId }).templateId, templateId);
 }
-assert.equal(config.gallery.items.length, 3);
+assert.equal(config.gallery.items.length, 6);
 const accountSource = structuredClone(source);
 accountSource.account.items = [
   { label: "신랑 아버지", number: "001" },
@@ -57,7 +57,7 @@ source.hero.image.src = "data:text/html,unsafe";
 let changed = getWeddingConfig(source);
 assert.match(changed.share.title, /새 이름/);
 assert.equal(changed.basic.timeLabel, "오전 12시");
-assert.equal(changed.gallery.items.length, 2);
+assert.equal(changed.gallery.items.length, 5);
 assert.equal(changed.account.visible, false);
 assert.deepEqual(changed.location.coordinates, { latitude: 0, longitude: 0 });
 assert.equal(changed.location.links.length, 2);

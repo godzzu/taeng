@@ -47,6 +47,15 @@
   margin: var(--space-3) 0 var(--space-5);
   white-space: pre-line;
 }
+#hero .hero-media { position: relative; margin: 0 auto var(--space-6); isolation: isolate; }
+#hero .hero-sparkles { display: none; position: absolute; inset: 0 5%; pointer-events: none; }
+#hero .hero-sparkles span { position: absolute; width: 14px; height: 14px; opacity: 0; background: #fffef5; clip-path: polygon(50% 0, 60% 38%, 100% 50%, 60% 62%, 50% 100%, 40% 62%, 0 50%, 40% 38%); }
+#hero .hero-sparkles span:nth-child(1) { left: 18%; top: 24%; animation-delay: -1s; }
+#hero .hero-sparkles span:nth-child(2) { left: 72%; top: 20%; width: 10px; height: 10px; animation-delay: -3.4s; }
+#hero .hero-sparkles span:nth-child(3) { left: 85%; top: 53%; animation-delay: -2.2s; }
+#hero .hero-sparkles span:nth-child(4) { left: 12%; top: 65%; width: 10px; height: 10px; animation-delay: -4.7s; }
+#hero .hero-sparkles span:nth-child(5) { left: 32%; top: 82%; width: 12px; height: 12px; animation-delay: -.2s; }
+#hero .hero-sparkles span:nth-child(6) { left: 69%; top: 76%; width: 9px; height: 9px; animation-delay: -3s; }
 #hero .hero-image {
   display: block;
   width: 100%;
@@ -58,7 +67,7 @@
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-soft);
   background: var(--color-accent);
-  margin: 0 auto var(--space-6);
+  margin: 0 auto;
 }
 #hero .hero-names {
   display: flex;
@@ -139,13 +148,19 @@
   #invitation .family-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #invitation .family-item:only-child { grid-column: 1 / -1; }
 }
-/* A single entrance, never an infinite animation; content is visible without motion. */
+/* Gentle entrance and decorative twinkles are disabled for reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
+  #hero .hero-sparkles { display: block; }
+  #hero .hero-sparkles span { animation-name: wedding-sparkle; animation-duration: 5.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
   #hero .section-inner > * { animation: wedding-hero-enter 700ms ease-out backwards; }
-  #hero .hero-image { animation-delay: 80ms; }
+  #hero .hero-media { animation-delay: 80ms; }
   #hero .hero-names { animation-delay: 160ms; }
   #hero .hero-date { animation-delay: 220ms; }
   #hero .hero-scroll { animation-delay: 280ms; }
+}
+@keyframes wedding-sparkle {
+  0%, 55%, 100% { opacity: 0; transform: scale(.45) rotate(-12deg); }
+  25% { opacity: .8; transform: scale(1) rotate(8deg); }
 }
 @keyframes wedding-hero-enter {
   from { opacity: 0; transform: translateY(8px); }

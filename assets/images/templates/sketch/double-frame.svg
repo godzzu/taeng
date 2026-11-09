@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" fill="none">
+  <g stroke="#91a8cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 7C70 5 120 9 180 7S290 8 353 7C355 80 351 121 353 180S352 290 353 353C290 355 240 351 180 353S70 352 7 353C5 290 9 240 7 180S8 70 7 7Z"/>
+    <path d="M43 21C91 22 137 20 180 21S269 20 317 21Q321 39 339 43C338 91 340 137 339 180S340 269 339 317Q321 321 317 339C269 338 223 340 180 339S91 340 43 339Q39 321 21 317C22 269 20 223 21 180S20 91 21 43Q39 39 43 21Z"/>
+  </g>
+  <defs>
+    <path id="heart" d="M26 30C9 25 13 15 20 21C19 12 30 13 26 30Z" fill="none" stroke="#91a8cc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </defs>
+  <use href="#heart"/>
+  <use href="#heart" transform="translate(360 0) scale(-1 1)"/>
+  <use href="#heart" transform="translate(0 360) scale(1 -1)"/>
+  <use href="#heart" transform="translate(360 360) scale(-1 -1)"/>
+</svg>

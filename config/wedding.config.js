@@ -2,15 +2,15 @@
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
   music: { visible: true, key: "atlasaudio" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
-  templateId: "wedding-ticket",
+  templateId: "wedding-sketch",
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
   hero: {
-    visible: true, title: "소중한 분들을 초대합니다", subtitle: "WE ARE GETTING MARRIED",
+    visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
     image: { visible: true, src: "./assets/images/gallery/photo-01.svg", alt: "신랑 신부의 웨딩 사진" },
     linkLabel: "초대장 열기"
   },
   invitation: {
-    visible: true, title: "초대합니다", subtitle: "INVITATION",
+    visible: true, title: "", subtitle: "INVITATION",
     message: "서로의 이름을 부르며 살아온 두 사람이\n이제 하나의 이름으로 새로운 시작을 합니다.\n따뜻한 마음으로 축복해 주세요.",
     parents: [
       // 고인인 부모님만 fatherDeceased 또는 motherDeceased를 true로 설정합니다.
@@ -20,16 +20,19 @@ export const weddingConfig = {
   },
   // 장소 정보는 이곳에서 한 번만 입력합니다. 오시는 길에서도 공유합니다.
   weddingInfo: {
-    visible: true, title: "소중한 약속의 날", subtitle: "WEDDING DAY",
+    visible: true, title: "", subtitle: "WEDDING DAY",
     venue: "보타닉파크웨딩", hall: "2층 그랜드홀", address: "서울특별시 강서구 마곡중앙5로 6 보타닉푸르지오시티 L층",
     showDday: true
   },
   gallery: {
-    visible: true, title: "우리의 순간", subtitle: "GALLERY",
+    visible: true, title: "", subtitle: "GALLERY",
     items: [
       { visible: true, src: "./assets/images/gallery/photo-01.svg", alt: "웨딩 사진 샘플 1" },
       { visible: true, src: "./assets/images/gallery/photo-02.svg", alt: "웨딩 사진 샘플 2" },
-      { visible: true, src: "./assets/images/gallery/photo-03.svg", alt: "웨딩 사진 샘플 3" }
+      { visible: true, src: "./assets/images/gallery/photo-03.svg", alt: "웨딩 사진 샘플 3" },
+      { visible: true, src: "./assets/images/gallery/photo-04.svg", alt: "웨딩 샘플 4: 아치 안의 결혼반지" },
+      { visible: true, src: "./assets/images/gallery/photo-05.svg", alt: "웨딩 샘플 5: 리본으로 묶은 꽃다발" },
+      { visible: true, src: "./assets/images/gallery/photo-06.svg", alt: "웨딩 샘플 6: 하트가 담긴 편지" }
     ]
   },
   location: {

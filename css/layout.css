@@ -55,6 +55,14 @@
   pointer-events: none;
 }
 .hero { background-image: var(--hero-wash); }
+@media (prefers-reduced-motion: no-preference) {
+  .section-fade-up { animation: section-fade-up 700ms cubic-bezier(.22, 1, .36, 1) both; }
+  .section-fade-up:focus-within { animation: none; }
+}
+@keyframes section-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
 .hero .section-inner::before {
   width: min(var(--hero-decoration-width), 100%);
   height: var(--hero-decoration-height);

@@ -41,7 +41,8 @@ html[data-theme="wedding-sketch"] {
   --decoration-image: url("../../assets/images/templates/sketch/rings.svg");
   --sketch-bouquet: url("../../assets/images/templates/sketch/bouquet.svg");
   --sketch-ribbon: url("../../assets/images/templates/sketch/ribbon.svg");
-  --sketch-frame: url("../../assets/images/templates/sketch/curve-frame.svg");
+  --sketch-frame: url("../../assets/images/templates/sketch/double-frame.svg");
+  --sketch-frame-arrow: url("../../assets/images/templates/sketch/frame-arrow.svg");
   --decoration-width: 110px;
   --decoration-height: 80px;
   --hero-decoration-width: 210px;
@@ -60,7 +61,15 @@ html[data-theme="wedding-sketch"] .section-inner::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--sketch-frame) center / 100% 100% no-repeat;
+  /* Nine-slice border keeps hearts and corner curves proportional on long sections. */
+  box-sizing: border-box;
+  border: 36px solid transparent;
+  border-image: var(--sketch-frame) 48 / 36px / 0 stretch;
+  background-image: var(--sketch-frame-arrow), var(--sketch-frame-arrow);
+  background-position: center 28px, center calc(100% - 28px);
+  background-size: min(180px, 50%) 16px;
+  background-repeat: no-repeat;
+  background-origin: border-box;
   z-index: -1;
   pointer-events: none;
 }

@@ -54,6 +54,10 @@ const close = dialog.querySelector("[data-dialog-close]");
 for (const templateId of ["wedding-floral", "wedding-sketch"]) {
   const config = getWeddingConfig(); config.templateId = templateId;
   initGallery(config);
+  assert.equal(grid.children.length, config.gallery.items.length);
+  // Use a fixed three-image fixture for navigation and wrap-around assertions.
+  config.gallery.items = config.gallery.items.slice(0, 3);
+  initGallery(config);
   assert.equal(grid.children.length, 3);
   const thumb = grid.children[1];
   assert.equal(thumb.children[0].loading, "lazy");

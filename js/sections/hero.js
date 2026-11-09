@@ -28,8 +28,10 @@ export function initHero(config) {
   section.querySelector('[data-field="scroll-label"]').textContent = config.hero.linkLabel;
   scroll.setAttribute("aria-label", config.hero.linkLabel || config.invitation.title);
   const img = section.querySelector('[data-field="hero-image"]');
+  const media = section.querySelector('[data-hero-media]');
   img.hidden = !config.hero.image.visible || !config.hero.image.src;
-  img.onerror = () => { img.hidden = true; };
+  media.hidden = img.hidden;
+  img.onerror = () => { img.hidden = true; media.hidden = true; };
   if (!img.hidden) {
     img.src = config.hero.image.src;
     img.alt = config.hero.image.alt;

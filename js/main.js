@@ -1,6 +1,7 @@
 import { getWeddingConfig } from "./core/config.js";
 import { renderConfig } from "./core/config-view.js";
 import { applyTheme } from "./core/theme.js";
+import { initSectionMotion } from "./core/section-motion.js";
 import { initHero } from "./sections/hero.js";
 import { initInvitation } from "./sections/invitation.js";
 import { initWeddingInfo } from "./sections/wedding-info.js";
@@ -27,6 +28,7 @@ function initializeWedding() {
   initContact(config);
   initGuestbook(config, appConfig);
   initMusic(config, appConfig);
+  initSectionMotion();
 
 }
 
