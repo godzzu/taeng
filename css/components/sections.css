@@ -33,7 +33,8 @@
 
 /* SECTION 01 / 02: all colors, fonts and ornaments come from the active theme. */
 #hero {
-  padding-block: clamp(32px, 7vw, 64px) var(--space-7);
+  padding-block: clamp(12px, 3vw, 24px) var(--space-7);
+  align-items: start;
   min-height: calc(100svh - 52px);
 }
 #hero .section-inner::before {
