@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" fill="none">
+  <defs><linearGradient id="gold" x1="0" y1="0" x2="360" y2="360" gradientUnits="userSpaceOnUse"><stop stop-color="#a66c22"/><stop offset=".20" stop-color="#ddbb60"/><stop offset=".28" stop-color="#fff2bd"/><stop offset=".34" stop-color="#dfbd68"/><stop offset=".48" stop-color="#b5842c"/><stop offset=".68" stop-color="#e7c774"/><stop offset=".74" stop-color="#fff5ce"/><stop offset=".80" stop-color="#d8b15b"/><stop offset="1" stop-color="#a87827"/></linearGradient></defs>
+  <g stroke="url(#gold)">
+    <path d="M54 8H306L352 54V306L306 352H54L8 306V54Z" stroke-width="2.5"/>
+    <path d="M58 17H302L343 58V302L302 343H58L17 302V58Z" stroke-width=".85"/>
+    <path d="M8 43V8H43M317 8H352V43M352 317V352H317M43 352H8V317" stroke-width="1"/>
+    <path d="m28 28 6-2-2 6-6 2Z M326 26l6 2 2 6-6-2Z M332 332l-6 2 2-6 6-2Z M26 326l6 2 2 6-6-2Z" fill="url(#gold)"/>
+  </g>
+  <path d="M54 8H306L352 54M352 306 306 352H54L8 306" stroke="#fff5d3" stroke-width=".55" opacity=".7"/>
+</svg>

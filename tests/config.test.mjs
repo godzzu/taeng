@@ -27,7 +27,7 @@ assert.equal(memorial[0].father, source.invitation.parents[0].father);
 const hiddenFamily = structuredClone(source);
 hiddenFamily.invitation.parents[0].visible = false;
 assert.equal(getWeddingConfig(hiddenFamily).invitation.parents[0].name, source.basic.brideName);
-for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket"]) {
+for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"]) {
   assert.equal(getWeddingConfig({ ...source, templateId }).templateId, templateId);
 }
 assert.equal(config.gallery.items.length, 6);
@@ -97,7 +97,7 @@ globalThis.document = {
   }
 };
 globalThis.getComputedStyle = () => ({ getPropertyValue: () => " #0d1c42 " });
-for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding-ticket"]) {
+for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding-marble", "wedding-autumn", "wedding-ticket"]) {
   assert.equal(applyTheme(id), id);
   assert.equal(document.documentElement.dataset.theme, id);
   assert.equal(themeMeta.content, "#0d1c42");
@@ -105,4 +105,4 @@ for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding
 assert.equal(applyTheme("unknown"), "wedding-floral");
 delete globalThis.document;
 delete globalThis.getComputedStyle;
-console.log("PASS: three-theme switching, theme-color and fallback without section rendering");
+console.log("PASS: five-theme switching, theme-color and fallback without section rendering");

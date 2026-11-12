@@ -24,7 +24,7 @@ function image(value) {
 export function getWeddingConfig(source = weddingConfig) {
   const input = object(source);
   const music = { visible: input.music?.visible !== false, key: text(input.music?.key) };
-  const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket"].includes(input.templateId) ? input.templateId : "wedding-floral" };
+  const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"].includes(input.templateId) ? input.templateId : "wedding-floral" };
   for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook", "footer", "share"]) {
     const section = object(input[key]);
     result[key] = { visible: visible(section.visible), title: text(section.title), subtitle: text(section.subtitle), description: text(section.description) };
@@ -76,10 +76,20 @@ export function getWeddingConfig(source = weddingConfig) {
     side: ["groom", "bride", "other"].includes(row.side) ? row.side : text(row.label).includes("신랑") ? "groom" : text(row.label).includes("신부") ? "bride" : "other"
   })).filter(row => row.number);
   result.account.visible &&= result.account.items.length > 0;
-  result.contact.items = items(input.contact?.items, row => ({
-    label: text(row.label), name: text(row.name) || (row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""),
-    phone: text(row.phone), dialNumber: text(row.phone).replace(/[()\s.-]/g, "")
-  })).filter(row => /^\+?\d{3,15}$/.test(row.dialNumber));
+  const contactRoles = { "신랑": "groom", "신랑 아버지": "groomFather", "신랑 어머니": "groomMother", "신부": "bride", "신부 아버지": "brideFather", "신부 어머니": "brideMother" };
+  const contactOrder = Object.values(contactRoles);
+  // Contact details are opt-in: missing or non-boolean flags never publish a number.
+  const contactRows = Array.isArray(input.contact?.items) ? input.contact.items.filter(row => row?.visible === true) : [];
+  result.contact.items = items(contactRows, row => {
+    const person = contactOrder.includes(row.person) ? row.person : contactRoles[text(row.label)] || "";
+    const side = person.startsWith("groom") ? "groom" : person.startsWith("bride") ? "bride" : "other";
+    const family = familyRows.find(item => item?.person === side);
+    const fallbackName = person === "groom" ? result.basic.groomName : person === "bride" ? result.basic.brideName
+      : person.endsWith("Father") ? text(family?.father) : person.endsWith("Mother") ? text(family?.mother) : "";
+    return { person, side, label: text(row.label), name: text(row.name) || fallbackName,
+      phone: text(row.phone), dialNumber: text(row.phone).replace(/[()\s.-]/g, "") };
+  }).filter(row => /^\+?\d{3,15}$/.test(row.dialNumber))
+    .sort((a, b) => (contactOrder.indexOf(a.person) < 0 ? 99 : contactOrder.indexOf(a.person)) - (contactOrder.indexOf(b.person) < 0 ? 99 : contactOrder.indexOf(b.person)));
   result.contact.visible &&= result.contact.items.length > 0;
   result.guestbook.visible = input.guestbook?.visible === true;
   result.footer.message = text(input.footer?.message);

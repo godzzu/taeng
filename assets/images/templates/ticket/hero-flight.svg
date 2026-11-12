@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" fill="none">
+  <!-- Wide, low lowercase cursive l: one continuous loop with a smooth entry and exit. -->
+  <path d="M14 138C78 140 265 65 240 44C215 22 139 69 173 104C204 136 277 145 386 138" stroke="#fff3e3" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="3 6"/>
+  <g>
+    <path d="M11 0Q11-2 7-2H2L-3-8Q-4-9-5-8L-4-2H-8L-10-4Q-12-5-11-2L-10 0-11 2Q-12 5-10 4L-8 2H-4L-5 8Q-4 9-3 8L2 2H7Q11 2 11 0Z" fill="#fff3e3" stroke="#22396f" stroke-width="1" stroke-linejoin="round"/>
+    <animateMotion dur="12s" repeatCount="indefinite" rotate="auto" calcMode="linear" keyTimes="0;.08;.88;1" keyPoints="0;0;1;1" path="M14 138C78 140 265 65 240 44C215 22 139 69 173 104C204 136 277 145 386 138"/>
+    <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.08;.84;.9;1" dur="12s" repeatCount="indefinite"/>
+  </g>
+</svg>

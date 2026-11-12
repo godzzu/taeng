@@ -31,7 +31,6 @@ html[data-theme="wedding-ticket"] {
   --font-ticket: "Share Tech Mono", "Courier New", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
   --font-display: var(--font-ticket);
   --font-title: "Tway Air", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  --font-size-heading: clamp(1.4rem, 5vw, 2rem);
   --section-space: clamp(24px, 5vw, 48px);
   --page-gutter: clamp(16px, 4vw, 28px);
   --card-padding: clamp(16px, 4vw, 24px);
@@ -114,7 +113,6 @@ html[data-theme="wedding-ticket"] #hero .section-inner::before {
   height: 66px;
   margin-bottom: 24px;
 }
-html[data-theme="wedding-ticket"] #hero h1 { font-size: clamp(1.4rem, 5vw, 2rem); }
 html[data-theme="wedding-ticket"] #hero .hero-image {
   max-height: 320px;
   padding: 6px;
@@ -137,6 +135,13 @@ html[data-theme="wedding-ticket"] #hero .hero-scroll::before {
   pointer-events: none;
 }
 html[data-theme="wedding-ticket"] #invitation .invitation-message { font-family: var(--font-body); line-height: 2.3; }
+/* Match the shared Wedding Day date/time size. */
+html[data-theme="wedding-ticket"] #hero .hero-names,
+html[data-theme="wedding-ticket"] #invitation .invitation-message,
+html[data-theme="wedding-ticket"] #invitation .family-relation,
+html[data-theme="wedding-ticket"] #location .travel-copy h3 {
+  font-size: 1.0625rem;
+}
 html[data-theme="wedding-ticket"] #invitation .memorial-flower {
   width: 1.5em;
   height: 1.7em;
@@ -149,3 +154,10 @@ html[data-theme="wedding-ticket"] .contact-card,
 html[data-theme="wedding-ticket"] .guestbook-card { border-style: dashed; }
 html[data-theme="wedding-ticket"] .button:not(.button-primary):hover { background: var(--color-action); color: var(--color-on-action); }
 html[data-theme="wedding-ticket"] #location .travel-icon { background: transparent; color: var(--color-primary); border: 3px double var(--color-primary); border-radius: 5px; }
+
+/* A small plane draws a wide lowercase cursive l across the lower part of the photo. */
+html[data-theme="wedding-ticket"] #hero .hero-flight { border-radius: 0; }
+html[data-theme="wedding-ticket"] #hero .hero-flight img { position: absolute; width: 100%; height: auto; bottom: 8%; filter: drop-shadow(0 1px 2px #01073644); }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme="wedding-ticket"] #hero .hero-flight { display: block; }
+}

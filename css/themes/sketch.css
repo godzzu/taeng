@@ -1,3 +1,19 @@
+/* Maru Buri by NAVER: https://hangeul.naver.com/font */
+@font-face {
+  font-family: "MaruBuri";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "MaruBuri";
+  src: url("https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 html[data-theme="wedding-sketch"] {
   --music-icon-stroke: 1.8;
   --music-icon-fill: none;
@@ -17,8 +33,7 @@ html[data-theme="wedding-sketch"] {
   --color-action-hover: #3d567e;
   --color-focus: #4f6b98;
   --color-overlay: #283951;
-  --font-display: "Nanum Pen Script", "Segoe Print", "HYGungSo", "Apple Chancery", "Batang", cursive;
-  --font-size-heading: clamp(1.9rem, 6vw, 2.5rem);
+  --font-display: "MaruBuri", "Batang", "Songti SC", Georgia, serif;
   --letter-spacing: 0;
   --eyebrow-spacing: .16em;
   --font-script: "Allura", "Segoe Script", cursive;
@@ -90,8 +105,11 @@ html[data-theme="wedding-sketch"] #hero .section-inner::before {
   background-image: var(--sketch-bouquet);
   width: min(160px, 55%); height: 138px;
 }
-html[data-theme="wedding-sketch"] #hero h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.3; }
-html[data-theme="wedding-sketch"] #hero .hero-names { font-size: clamp(2rem, 7vw, 2.7rem); }
+html[data-theme="wedding-sketch"] #hero h1 { line-height: 1.3; }
+html[data-theme="wedding-sketch"] #hero .hero-names,
+html[data-theme="wedding-sketch"] #invitation .invitation-message,
+html[data-theme="wedding-sketch"] #invitation .family-relation,
+html[data-theme="wedding-sketch"] #location .travel-copy h3 { font-size: 1.0625rem; }
 html[data-theme="wedding-sketch"] #hero .hero-image { padding: 5px; max-height: 330px; border-width: 1.5px; }
 html[data-theme="wedding-sketch"] #invitation .memorial-flower {
   width: 1.5em;
@@ -99,15 +117,17 @@ html[data-theme="wedding-sketch"] #invitation .memorial-flower {
   flex-basis: 1.5em;
 }
 html[data-theme="wedding-sketch"] #invitation .invitation-message {
-  font-family: var(--font-display); font-size: clamp(1.3rem, 5vw, 1.55rem); line-height: 1.85;
+  font-family: var(--font-display); line-height: 1.85;
 }
 html[data-theme="wedding-sketch"] #invitation .section-inner::before,
 html[data-theme="wedding-sketch"] #guestbook .section-inner::before { background-image: var(--sketch-ribbon); }
-html[data-theme="wedding-sketch"] #gallery .section-inner::before,
-html[data-theme="wedding-sketch"] #invitation .family-relation { font-size: 1.6rem; }
+html[data-theme="wedding-sketch"] #wedding-info .date-large,
+html[data-theme="wedding-sketch"] #wedding-info .wedding-time { color: var(--color-heading); }
 html[data-theme="wedding-sketch"] .button { border-width: 1.5px; }
 html[data-theme="wedding-sketch"] #location .travel-icon { background: transparent; color: var(--color-heading); border: 1.5px solid var(--color-secondary); border-radius: 45% 55% 48% 52%; transform: rotate(-4deg); }
-html[data-theme="wedding-sketch"] #location .travel-copy h3 { font-size: 1.5rem; line-height: 1.2; }
+html[data-theme="wedding-sketch"] #location .travel-copy h3 { line-height: 1.2; }
+html[data-theme="wedding-sketch"] #account .account-side,
+html[data-theme="wedding-sketch"] #contact .contact-name { font-size: 1.0125rem; }
 @media (max-width: 359px) {
   html[data-theme="wedding-sketch"] .section-inner { padding-inline: 32px; }
 }

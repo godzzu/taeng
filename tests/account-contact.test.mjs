@@ -17,9 +17,9 @@ class Node {
   select() { this.selected = true; }
   setSelectionRange(start, end) { this.selection = [start, end]; }
 }
-const account = new Node(), contact = new Node(), toast = new Node();
+const account = new Node(), contact = new Node(), trigger = new Node(), toast = new Node();
 globalThis.document = {
-  querySelector: selector => selector === "#account" ? account : selector === "#contact" ? contact : toast,
+  querySelector: selector => selector === "#account" ? account : selector === "[data-contact-dialog]" ? contact : selector === "[data-contact-open]" ? trigger : toast,
   createElement: () => new Node(), activeElement: null
 };
 const timers = new Map(); let nextTimer = 0;
@@ -37,9 +37,9 @@ raw.contact.items.push(
 );
 const config = getWeddingConfig(raw);
 assert.equal(config.contact.items.length, 3);
-assert.equal(config.contact.items[2].dialNumber, "+821012345678");
+assert.equal(config.contact.items[1].dialNumber, "+821012345678");
 const accountCards = () => account.querySelector('[data-field="accounts"]').children.flatMap(group => group.children[1].children);
-for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket"]) {
+for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"]) {
   config.templateId = templateId;
   initAccount(config); initContact(config);
   const groups = account.querySelector('[data-field="accounts"]').children;
@@ -71,9 +71,9 @@ for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket"])
   assert.equal(timers.size, 1);
   const people = contact.querySelector('[data-field="contacts"]').children;
   assert.equal(people.length, 3);
-  assert.equal(people[2].children[2].children[0].href, "tel:+821012345678");
-  assert.equal(people[2].children[2].children[1].href, "sms:+821012345678");
-  assert.match(people[2].children[2].children[0].attributes["aria-label"], /신랑 어머니/);
+  assert.equal(people[1].children[2].children[0].href, "tel:+821012345678");
+  assert.equal(people[1].children[2].children[1].href, "sms:+821012345678");
+  assert.match(people[1].children[2].children[0].attributes["aria-label"], /신랑 어머니/);
 }
 let resolveCopy;
 navigator.clipboard.writeText = () => new Promise(resolve => { resolveCopy = resolve; });
@@ -84,7 +84,50 @@ toast.textContent = "unchanged";
 resolveCopy(); await pending; assert.equal(toast.textContent, "unchanged");
 config.account.visible = config.contact.visible = false;
 initAccount(config); initContact(config);
-assert(account.hidden && contact.hidden);
+assert(account.hidden && trigger.hidden);
 assert.equal(contact.querySelector('[data-field="contacts"]').children.length, 0);
 assert.equal(account.querySelector('[data-field="accounts"]').children.length, 0);
+// Native modal lifecycle: scroll styles and focus are restored on every close path.
+const style = () => ({ values: new Map(), getPropertyValue(k) { return this.values.get(k)?.[0] || ""; }, getPropertyPriority(k) { return this.values.get(k)?.[1] || ""; }, setProperty(k, v, p = "") { this.values.set(k, [v, p]); }, removeProperty(k) { this.values.delete(k); } });
+document.documentElement = { style: style() };
+document.body = { style: style() };
+document.body.style.setProperty("position", "relative", "important");
+window.scrollX = 0; window.scrollY = 230;
+window.scrollTo = (x, y) => { assert.equal(x, 0); assert.equal(y, 230); };
+const dispatch = (node, type, event = {}) => { for (const h of node.handlers) if (h.name === type && !h.signal?.aborted) h.fn(event); };
+contact.showModal = () => { contact.open = true; };
+contact.close = () => { contact.open = false; dispatch(contact, "close"); };
+config.contact.visible = true;
+initContact(config);
+await trigger.click();
+assert(contact.open);
+assert.equal(document.body.style.getPropertyValue("position"), "fixed");
+assert.equal(document.activeElement, contact.querySelector("[data-contact-close]"));
+dispatch(contact, "cancel", { preventDefault() {} });
+assert(!contact.open);
+assert.equal(document.activeElement, trigger);
+assert.equal(document.body.style.getPropertyValue("position"), "relative");
+assert.equal(document.body.style.getPropertyPriority("position"), "important");
+await trigger.click();
+dispatch(contact, "pointerdown", { target: contact });
+dispatch(contact, "click", { target: contact });
+assert(!contact.open);
+await trigger.click();
+await contact.querySelector("[data-contact-close]").click();
+assert(!contact.open);
+await trigger.click();
+initContact(config);
+assert(!contact.open);
+assert.equal(document.documentElement.style.getPropertyValue("overflow"), "");
+const privateConfig = structuredClone(weddingConfig);
+privateConfig.contact.items = [
+  { person: "groomFather", phone: "01012345678" },
+  { person: "brideMother", visible: "true", phone: "01012345678" },
+  { person: "groomMother", visible: true, phone: "01012345678" }
+];
+const normalized = getWeddingConfig(privateConfig);
+assert.equal(normalized.contact.items.length, 1);
+assert.equal(normalized.contact.items[0].person, "groomMother");
+assert.equal(normalized.contact.items[0].name, privateConfig.invitation.parents[0].mother);
+console.log("PASS: contact modal open/close/ESC/backdrop/reinitialization, focus and scroll restore, explicit privacy opt-in");
 console.log("PASS: multiple accounts, exact copied number, denied/missing Clipboard API, manual selection, parent contact visibility, tel/sms, toast timer and async cleanup.");

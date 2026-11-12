@@ -26,7 +26,8 @@ export function initLocation(config, appConfig = {}) {
   }
   const copy = section.querySelector("[data-copy-address]");
   const feedback = section.querySelector("[data-address-status]");
-  copy.textContent = config.labels.copyAddress;
+  copy.setAttribute("aria-label", config.labels.copyAddress || "주소 복사");
+  copy.title = config.labels.copyAddress || "주소 복사";
   copy.hidden = !config.weddingInfo.address;
   copy.disabled = false;
   feedback.textContent = "";

@@ -1,6 +1,6 @@
 // 설정을 화면에 연결하는 계층. config.js는 DOM에 의존하지 않습니다.
 export function renderConfig(config) {
-  const ids = { hero: "hero", invitation: "invitation", weddingInfo: "wedding-info", gallery: "gallery", location: "location", account: "account", contact: "contact", guestbook: "guestbook" };
+  const ids = { hero: "hero", invitation: "invitation", weddingInfo: "wedding-info", gallery: "gallery", location: "location", account: "account", guestbook: "guestbook" };
   for (const [key, id] of Object.entries(ids)) {
     const section = document.getElementById(id);
     const data = config[key];

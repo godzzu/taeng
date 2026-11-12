@@ -19,8 +19,8 @@
   --color-on-overlay: #ffffff;
   --font-body: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
   --font-display: "Batang", "Songti SC", Georgia, serif;
-  --font-size-heading: clamp(1.75rem, 6vw, 2.35rem);
-  --font-size-hero: clamp(2rem, 8vw, 3.8rem);
+  --font-size-heading: clamp(1.12rem, 4vw, 1.6rem);
+  --font-size-hero: var(--font-size-heading);
   --line-height-body: 1.9;
   --letter-spacing: .015em;
   --eyebrow-spacing: .22em;

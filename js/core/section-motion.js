@@ -10,8 +10,10 @@ export function initSectionMotion() {
       entry.target.classList.add("section-fade-up");
       current.unobserve(entry.target);
     }
-  }, { threshold: 0 });
-  for (const id of ["account", "contact", "guestbook"]) {
+  // Wait until the section has entered the viewport so its entrance is visible.
+  // A pixel inset also works for sections taller than the viewport.
+  }, { threshold: 0, rootMargin: "0px 0px -48px 0px" });
+  for (const id of ["account", "guestbook"]) {
     const section = document.getElementById(id);
     if (!section || section.hidden) continue;
     const content = section.querySelector(".section-inner");

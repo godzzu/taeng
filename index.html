@@ -16,7 +16,7 @@
   <title>홍길동 ♥ 김하나 결혼합니다</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Nanum+Pen+Script&family=Noto+Serif+KR:wght@400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@1,400&family=Noto+Serif+KR:wght@400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/reset.css">
   <link rel="stylesheet" href="./css/variables.css">
   <link rel="stylesheet" href="./css/common.css">
@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="./css/themes/floral.css">
   <link rel="stylesheet" href="./css/themes/sketch.css">
   <link rel="stylesheet" href="./css/themes/ticket.css">
+  <link rel="stylesheet" href="./css/themes/marble.css">
+  <link rel="stylesheet" href="./css/themes/autumn.css">
   <link rel="stylesheet" href="./css/components/sections.css">
   <link rel="stylesheet" href="./css/components/buttons.css">
 </head>
@@ -49,7 +51,20 @@
         <h1 id="hero-title"></h1>
         <div class="hero-media" data-hero-media hidden>
           <img class="hero-image" data-field="hero-image" alt="" hidden fetchpriority="high" decoding="async">
+          <div class="hero-petals" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="hero-particles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="hero-flight" aria-hidden="true">
+            <img src="./assets/images/templates/ticket/hero-flight.svg" alt="" width="400" height="200" decoding="async">
+          </div>
           <div class="hero-sparkles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
             <span></span><span></span><span></span><span></span><span></span><span></span>
           </div>
         </div>
@@ -73,6 +88,7 @@
         <h2 id="invitation-title"></h2>
         <p class="invitation-message" data-field="message"></p>
         <ul class="family-grid" data-field="families" role="list"></ul>
+        <button class="button contact-open" type="button" data-contact-open aria-haspopup="dialog" aria-controls="contact-dialog" hidden>축하연락하기</button>
       </div>
     </section>
 
@@ -95,8 +111,12 @@
         <h2 id="location-title"></h2>
         <div class="info-card">
           <h3 data-field="location-venue"></h3>
-          <p data-field="location-address"></p>
-          <button class="button button-small" type="button" data-copy-address></button>
+          <p class="location-address-line">
+            <span data-field="location-address"></span>
+            <button class="address-copy-button" type="button" data-copy-address aria-label="주소 복사" title="주소 복사">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M5 16H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </p>
           <p class="location-copy-status" data-address-status role="status" aria-live="polite"></p>
           <div class="location-map-frame">
             <div class="location-map" data-location-map hidden></div>
@@ -142,14 +162,6 @@
       </div>
     </section>
 
-    <section id="contact" class="section section-soft" aria-labelledby="contact-title">
-      <div class="section-inner">
-        <p class="eyebrow"></p>
-        <h2 id="contact-title"></h2>
-        <div class="contact-list" data-field="contacts"></div>
-      </div>
-    </section>
-
     <section id="guestbook" class="section" aria-labelledby="guestbook-title">
       <div class="section-inner">
         <p class="eyebrow"></p>
@@ -174,6 +186,15 @@
   </main>
 
   <div class="toast" role="status" aria-live="polite" data-toast></div>
+  <dialog id="contact-dialog" class="contact-dialog" data-contact-dialog aria-labelledby="contact-dialog-title">
+    <div class="contact-dialog-panel">
+      <header class="contact-dialog-header">
+        <h2 id="contact-dialog-title" data-contact-title>축하연락하기</h2>
+        <button class="contact-dialog-close" type="button" data-contact-close aria-label="연락처 닫기" autofocus>×</button>
+      </header>
+      <div class="contact-dialog-list" data-field="contacts"></div>
+    </div>
+  </dialog>
   <dialog class="image-dialog" data-gallery-dialog data-aria="galleryDialog">
     <button class="dialog-close" type="button" data-dialog-close data-aria="galleryClose" autofocus>×</button>
     <button class="dialog-nav dialog-prev" type="button" data-dialog-prev data-aria="galleryPrev">‹</button>

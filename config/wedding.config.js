@@ -1,8 +1,8 @@
 // 콘텐츠 전용 설정. visible: false로 섹션 또는 개별 항목을 숨깁니다.
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
-  music: { visible: true, key: "atlasaudio" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
-  templateId: "wedding-sketch",
+  music: { visible: true, key: "atlasaudio2" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
+  templateId: "wedding-floral",
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
   hero: {
     visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
@@ -36,7 +36,7 @@ export const weddingConfig = {
     ]
   },
   location: {
-    visible: true, title: "오시는 길", subtitle: "LOCATION",
+    visible: true, title: "오시는 길", subtitle: "", //LOCATION
     // 자차 text를 비우면 예식장 이름과 주소로 자동 안내합니다.
     car: { visible: true, title: "자차", text: "" },
     transport: { visible: true, title: "대중교통 · 버스", text: "위 지도 앱에서 출발지를 입력한 뒤 대중교통 경로를 확인해 주세요." },
@@ -51,7 +51,7 @@ export const weddingConfig = {
     ]
   },
   account: {
-    visible: true, title: "마음 전하실 곳", subtitle: "ACCOUNT",
+    visible: true, title: "마음 전하실 곳", subtitle: "", //ACCOUNT
     description: "축하의 마음을 전하실 분들을 위해 계좌 정보를 안내합니다.",
     groupTitles: { groom: "신랑측 마음 전하는 곳", bride: "신부측 마음 전하는 곳", other: "마음 전하는 곳" },
     items: [
@@ -60,19 +60,19 @@ export const weddingConfig = {
     ]
   },
   contact: {
-    visible: true, title: "연락하기", subtitle: "CONTACT",
+    visible: true, title: "축하연락하기", subtitle: "CONTACT",
     items: [
       { visible: true, label: "신랑", name: "", person: "groom", phone: "010-4966-1988" },
       { visible: true, label: "신부", name: "", person: "bride", phone: "010-4966-1988" },
       // 부모님 연락처는 실제 정보를 입력하고 visible을 true로 변경하세요.
-      { visible: false, label: "신랑 아버지", name: "", phone: "" },
-      { visible: false, label: "신랑 어머니", name: "", phone: "" },
-      { visible: false, label: "신부 아버지", name: "", phone: "" },
-      { visible: false, label: "신부 어머니", name: "", phone: "" }
+      { visible: false, label: "신랑 아버지", person: "groomFather", name: "", phone: "" },
+      { visible: false, label: "신랑 어머니", person: "groomMother", name: "", phone: "" },
+      { visible: false, label: "신부 아버지", person: "brideFather", name: "", phone: "" },
+      { visible: false, label: "신부 어머니", person: "brideMother", name: "", phone: "" }
     ]
   },
   guestbook: {
-    visible: true, title: "축하의 마음을 남겨주세요", subtitle: "GUESTBOOK",
+    visible: true, title: "축하의 마음을 남겨주세요", subtitle: "", //GUESTBOOK
     description: "따뜻한 축하 메시지를 남겨주세요."
   },
   footer: { visible: true, message: "축복해 주셔서 감사합니다." },
