@@ -1,13 +1,12 @@
- .site-header {
-  align-items: center; background: color-mix(in srgb, var(--color-background) 90%, transparent);
-  backdrop-filter: blur(12px); display: flex; justify-content: space-between;
-  padding: 12px max(20px, calc((100vw - var(--content-width)) / 2)); position: sticky; top: 0; z-index: 5;
+#main-content {
+  width: 100%; max-width: var(--content-width); margin-inline: auto;
 }
 .brand { font-family: var(--font-display); font-size: .9rem; text-decoration: none; }
 .section {
-  padding: var(--section-space) var(--page-gutter);
-  padding-left: max(var(--page-gutter), env(safe-area-inset-left, 0px));
-  padding-right: max(var(--page-gutter), env(safe-area-inset-right, 0px));
+  width: 100%; max-width: var(--content-width); margin: 0 auto;
+  padding: var(--section-space) 0;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
   text-align: center;
   min-width: 0;
 }

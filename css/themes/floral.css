@@ -16,9 +16,10 @@ html[data-theme="wedding-floral"] {
   --color-action-hover: #385469;
   --color-focus: #49677e;
   --color-overlay: #263c4b;
-  --font-display: "Noto Serif KR", "Batang", "Songti SC", Georgia, serif;
+  --font-body: "MaruBuri", "Batang", "Songti SC", Georgia, serif;
+  --font-display: var(--font-body);
   --font-script: "Allura", "Segoe Script", cursive;
-  --section-space: clamp(24px, 5vw, 48px);
+  --section-space: 0px;
   --page-gutter: clamp(16px, 4vw, 28px);
   --card-padding: clamp(16px, 4vw, 24px);
   --radius-card: 4px;
@@ -30,11 +31,9 @@ html[data-theme="wedding-floral"] {
   --divider-color: #c5ccc6;
   --paper-image: url("../../assets/images/templates/floral/paper.svg");
   --paper-size: 180px 180px;
-  --floral-corner: url("../../assets/images/templates/floral/blue-watercolor-corner.png");
   --floral-frame: #dedbd1;
-  --floral-ornament-size: clamp(140px, 38vw, 210px);
   --floral-panel-padding: clamp(24px, 6vw, 48px);
-  --decoration-image: var(--floral-corner);
+  --decoration-image: none;
   --hero-wash: radial-gradient(ellipse at 10% 15%, #dce8f080, transparent 50%);
 }
 
@@ -45,46 +44,65 @@ html[data-theme="wedding-floral"] .section-inner {
   isolation: isolate;
   width: 100%;
   padding: 88px var(--floral-panel-padding) 112px;
-  background: var(--floral-corner) left bottom / var(--floral-ornament-size) auto no-repeat,
-    radial-gradient(ellipse at 100% 0, #dce8ef65, transparent 45%),
+  background: radial-gradient(ellipse at 100% 0, #dce8ef65, transparent 45%),
     var(--color-background) var(--paper-image);
   box-shadow: 0 8px 36px rgb(70 90 105 / 5%);
 }
-html[data-theme="wedding-floral"] .section-inner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: var(--floral-ornament-size);
-  height: var(--floral-ornament-size);
-  margin: 0;
-  background: var(--floral-corner) left bottom / contain no-repeat;
-  transform: rotate(180deg);
-  z-index: -1;
-  pointer-events: none;
-}
+html[data-theme="wedding-floral"] .section-inner::before { display: none; }
 html[data-theme="wedding-floral"] .section-inner::after {
   content: "";
   position: absolute;
-  inset: 12px;
+  inset: 0;
   border: 1px solid var(--floral-frame);
-  box-shadow: inset 0 0 0 3px var(--color-background), inset 0 0 0 4px #e8e5dc, 1px 2px 3px #65747d12;
+  box-shadow: none;
   pointer-events: none;
   z-index: -1;
 }
 html[data-theme="wedding-floral"] .section + .section::before { display: none; }
-html[data-theme="wedding-floral"] #hero .section-inner { padding-top: 128px; padding-bottom: 100px; }
-html[data-theme="wedding-floral"] #hero .section-inner::after { inset: 38px 12px 12px; border-radius: 240px 240px 0 0; }
-html[data-theme="wedding-floral"] #hero .section-inner::before,
-html[data-theme="wedding-floral"] #invitation .section-inner::before {
-  width: var(--floral-ornament-size); height: var(--floral-ornament-size); margin: 0;
+html[data-theme="wedding-floral"] #hero .section-inner {
+  padding-top: 72px; padding-bottom: 32px; display: flex; flex-direction: column;
+  background: var(--color-background) var(--paper-image);
 }
+html[data-theme="wedding-floral"] #hero .section-inner:has(.hero-media:not([hidden])) { min-height: clamp(580px, 145vw, 680px); }
+html[data-theme="wedding-floral"] #hero .section-inner::after { inset: 0; border-radius: 240px 240px 0 0; box-shadow: none; z-index: 2; }
+/* Count only visible sections, so optional sections do not break the alternation. */
+html[data-theme="wedding-floral"] #main-content > .section:nth-child(even of .section:not([hidden])) .section-inner::after {
+  box-shadow: inset 0 0 0 3px var(--color-background), inset 0 0 0 4px var(--floral-frame);
+}
+
+html[data-theme="wedding-floral"] #hero .section-inner > :not(.hero-media) { position: relative; z-index: 2; }
+html[data-theme="wedding-floral"] #hero .hero-media {
+  position: absolute; inset: 0; margin: 0;
+  border-radius: 240px 240px 0 0; overflow: hidden; z-index: 0;
+  animation: none;
+}
+html[data-theme="wedding-floral"] #hero .hero-media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, #fffefa55, #fffefaab 20%, #fffefa08 40%, #fffefa55 60%, #fffefaeb 76%, #fffefa 100%);
+}
+html[data-theme="wedding-floral"] #hero .hero-names {
+  margin-top: auto; padding-top: 32px; align-items: center;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(.98rem, 3.5vw, 1.295rem);
+  letter-spacing: .12em;
+}
+html[data-theme="wedding-floral"] #hero .hero-summary { margin-top: 0; }
+html[data-theme="wedding-floral"] #hero .hero-summary::before {
+  content: ""; display: block; width: 1px; height: 26px;
+  margin: 0 auto 20px; background: var(--color-muted); opacity: .55;
+}
+html[data-theme="wedding-floral"] #hero .hero-heart { display: inline-block; font-size: 0; }
+html[data-theme="wedding-floral"] #hero .hero-heart::before { content: "·"; font-size: clamp(.98rem, 3.5vw, 1.295rem); }
+
+
+html[data-theme="wedding-floral"] #hero .hero-floral-corner { display: none; }
 html[data-theme="wedding-floral"] #hero h1 { margin-bottom: 32px; }
 html[data-theme="wedding-floral"] #hero .hero-image {
-  width: 90%; border-radius: 180px 180px 3px 3px; max-height: 340px; padding: 5px;
-  background: var(--color-surface); box-shadow: 0 0 0 3px #fffefa, 0 0 0 4px var(--color-border);
+  width: 100%; height: 100%; max-height: none; aspect-ratio: auto;
+  border: 0; border-radius: 0; padding: 0; object-fit: cover;
+  background: var(--color-surface); box-shadow: none;
 }
-html[data-theme="wedding-floral"] #invitation .section-inner::after { border-radius: 120px 120px 0 0 / 48px 48px 0 0; }
+html[data-theme="wedding-floral"] #invitation .section-inner::after { border-radius: 0; }
 html[data-theme="wedding-floral"] #invitation .invitation-message { font-family: var(--font-display); line-height: 2.35; }
 html[data-theme="wedding-floral"] #invitation .memorial-flower {
   width: 1.5em;
@@ -92,6 +110,16 @@ html[data-theme="wedding-floral"] #invitation .memorial-flower {
   flex-basis: 1.5em;
 }
 html[data-theme="wedding-floral"] .eyebrow { color: var(--color-action); font-family: Georgia, serif; font-style: italic; letter-spacing: .15em; font-size: .75rem; }
+html[data-theme="wedding-floral"] #hero .eyebrow { font-size: .975rem; font-weight: 700; animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme="wedding-floral"] #hero .hero-subtitle-letter {
+    animation: floral-letter-write 180ms ease-out var(--letter-delay) both;
+  }
+}
+@keyframes floral-letter-write {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 html[data-theme="wedding-floral"] .brand { font-family: var(--font-script); font-size: 1.5rem; }
 html[data-theme="wedding-floral"] .button:not(.button-primary) { border-color: #879dab; background: #fffefaeb; }
 html[data-theme="wedding-floral"] .button:not(.button-primary):hover { background: var(--color-accent); }
@@ -103,8 +131,8 @@ html[data-theme="wedding-floral"] #location .travel-icon { background: var(--col
 
 /* Clip falling petals to the arched photo, leaving its frame unobscured. */
 html[data-theme="wedding-floral"] #hero .hero-petals {
-  position: absolute; inset: 6px calc(5% + 6px); z-index: 1;
-  overflow: hidden; border-radius: 180px 180px 2px 2px; pointer-events: none;
+  position: absolute; inset: 6px; z-index: 1;
+  overflow: hidden; border-radius: 240px 240px 0 0; pointer-events: none;
 }
 html[data-theme="wedding-floral"] .hero-petals span {
   position: absolute; top: 0; left: var(--petal-left); width: 14px; height: 100%;

@@ -23,7 +23,7 @@ html[data-theme="wedding-autumn"] {
   --color-overlay: #3f3027;
   --font-display: "HS Autumn Thoughts 2.0", "Noto Serif KR", "Batang", serif;
   --font-script: "Cormorant Garamond", "HS Autumn Thoughts 2.0", Georgia, serif;
-  --section-space: clamp(24px, 5vw, 48px);
+  --section-space: 0px;
   --page-gutter: clamp(16px, 4vw, 28px);
   --card-padding: clamp(14px, 4vw, 24px);
   --radius-card: 10px;

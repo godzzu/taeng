@@ -16,7 +16,7 @@ html[data-theme="wedding-marble"] {
   --color-overlay: #302a21;
   --font-display: "Noto Serif KR", "Batang", Georgia, serif;
   --font-script: "Allura", "Segoe Script", cursive;
-  --section-space: clamp(24px, 5vw, 48px);
+  --section-space: 0px;
   --page-gutter: clamp(16px, 4vw, 28px);
   --card-padding: clamp(14px, 4vw, 24px);
   --radius-card: 3px;

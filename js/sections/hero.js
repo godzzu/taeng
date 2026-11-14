@@ -4,7 +4,26 @@ export function initHero(config) {
   section.hidden = !config.hero.visible;
   section.querySelector("h1").textContent = config.hero.title;
   const subtitle = section.querySelector(".eyebrow");
-  subtitle.textContent = config.hero.subtitle;
+  const subtitleText = document.createElement("span");
+  subtitleText.className = "hero-subtitle-text";
+  subtitleText.textContent = config.hero.subtitle;
+  const subtitleVisual = document.createElement("span");
+  subtitleVisual.setAttribute("aria-hidden", "true");
+  let characterIndex = 0;
+  for (const word of config.hero.subtitle.split(/(\s+)/)) {
+    if (/^\s+$/.test(word)) { subtitleVisual.append(document.createTextNode(word)); continue; }
+    const wordNode = document.createElement("span");
+    wordNode.className = "hero-subtitle-word";
+    for (const character of Array.from(word)) {
+      const letter = document.createElement("span");
+      letter.className = "hero-subtitle-letter";
+      letter.textContent = character;
+      letter.style.setProperty("--letter-delay", `${Math.min(characterIndex++ * 85, 5000)}ms`);
+      wordNode.append(letter);
+    }
+    subtitleVisual.append(wordNode);
+  }
+  subtitle.replaceChildren(subtitleText, subtitleVisual);
   subtitle.hidden = !config.hero.subtitle;
   const heart = document.createElement("span");
   heart.textContent = "♥";
@@ -23,10 +42,6 @@ export function initHero(config) {
   const venue = section.querySelector('[data-field="venue"]');
   venue.textContent = config.weddingInfo.venue ? `- ${config.weddingInfo.venue} -` : "";
   venue.hidden = !config.weddingInfo.venue;
-  const scroll = section.querySelector(".hero-scroll");
-  scroll.hidden = !config.invitation.visible;
-  section.querySelector('[data-field="scroll-label"]').textContent = config.hero.linkLabel;
-  scroll.setAttribute("aria-label", config.hero.linkLabel || config.invitation.title);
   const img = section.querySelector('[data-field="hero-image"]');
   const media = section.querySelector('[data-hero-media]');
   img.hidden = !config.hero.image.visible || !config.hero.image.src;

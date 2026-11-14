@@ -6,16 +6,23 @@ export const weddingConfig = {
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
   hero: {
     visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
-    image: { visible: true, src: "./assets/images/gallery/photo-01.svg", alt: "신랑 신부의 웨딩 사진" },
-    linkLabel: "초대장 열기"
+    image: { visible: true, src: "./assets/images/gallery/sample01.jpg", alt: "신랑 신부의 웨딩 사진" }
   },
   invitation: {
     visible: true, title: "", subtitle: "INVITATION",
     message: "서로의 이름을 부르며 살아온 두 사람이\n이제 하나의 이름으로 새로운 시작을 합니다.\n따뜻한 마음으로 축복해 주세요.",
     parents: [
       // 고인인 부모님만 fatherDeceased 또는 motherDeceased를 true로 설정합니다.
-      { visible: true, person: "groom", label: "신랑 측", father: "홍OO", fatherDeceased: true, mother: "김OO", motherDeceased: false, relation: "장남" },
-      { visible: true, person: "bride", label: "신부 측", father: "김OO", fatherDeceased: false, mother: "박OO", motherDeceased: false, relation: "장녀" }
+      // image.src에 개인 사진 경로를 입력합니다. 사진 영역을 숨기려면 image.visible: false.
+      // 여러 장은 해당 항목에 images: [{ src: "./assets/images/groom-1.jpg", alt: "신랑 사진 1" }, { src: "./assets/images/groom-2.jpg", alt: "신랑 사진 2" }] 추가.
+      // images 배열이 있으면 image.src 대신 사용하며 5초마다 전환합니다. 사진별 visible: false로 제외 가능.
+      // description을 입력하면 자동 부모님/관계 문구 대신 해당 설명을 표시합니다.
+      { visible: true, person: "groom", label: "신랑", father: "홍OO", fatherDeceased: true, mother: "김OO", motherDeceased: false, relation: "장남",
+        images: [{ visible: true, src: "./assets/images/thumb/groom01.png", alt: "신랑 사진 1" }, { visible: true, src: "./assets/images/thumb/groom02.png", alt: "신랑 사진 2" }], description: "" },
+        //image: { visible: true, src: "", alt: "신랑 사진" }, description: "" },
+      { visible: true, person: "bride", label: "신부", father: "김OO", fatherDeceased: false, mother: "박OO", motherDeceased: false, relation: "장녀",
+        //image: { visible: true, src: "", alt: "신부 사진" }, description: "" }
+        images: [{ visible: true, src: "./assets/images/thumb/bride01.png", alt: "신부 사진 1" }, { visible: true, src: "./assets/images/thumb/bride02.png", alt: "신부 사진 2" }], description: "" }
     ]
   },
   // 장소 정보는 이곳에서 한 번만 입력합니다. 오시는 길에서도 공유합니다.

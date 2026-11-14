@@ -30,8 +30,6 @@
   <link rel="stylesheet" href="./css/components/buttons.css">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#hero" data-aria="home" data-copy="brand"></a>
     <button class="music-toggle" type="button" data-music-toggle aria-label="배경음악 재생" aria-pressed="false" hidden>
       <svg class="music-icon-muted" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M6 9H3v6h4l5 4v-6M9 7l3-2v3"/>
@@ -42,11 +40,11 @@
         <path d="M16 9c1.5 1.8 1.5 4.2 0 6M19 6c3 3.3 3 8.7 0 12"/>
       </svg>
     </button>
-  </header>
 
   <main id="main-content">
     <section id="hero" class="section hero" aria-labelledby="hero-title">
       <div class="section-inner" data-section-content>
+        <span class="hero-floral-corner" aria-hidden="true"></span>
         <p class="eyebrow"></p>
         <h1 id="hero-title"></h1>
         <div class="hero-media" data-hero-media hidden>
@@ -73,12 +71,6 @@
           <p data-field="venue"></p>
           <time class="hero-date" data-field="date"></time>
         </div>
-        <a class="text-link hero-scroll" href="#invitation">
-          <span data-field="scroll-label"></span>
-          <svg class="hero-scroll-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true" focusable="false">
-            <path d="M12 4v15m-6-6 6 6 6-6" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
       </div>
     </section>
 

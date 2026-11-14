@@ -1,5 +1,9 @@
 import { createElement } from "../core/utils.js";
+import { initFamilySlideshow } from "../core/family-slideshow.js";
+let disposePhotos = [];
 export function initInvitation(config) {
+  disposePhotos.forEach(dispose => dispose());
+  disposePhotos = [];
   const section = document.querySelector("#invitation");
   if (!section) return;
   section.hidden = !config.invitation.visible;
@@ -14,10 +18,25 @@ export function initInvitation(config) {
   families.replaceChildren();
   config.invitation.parents.forEach(data => {
     const parents = [[data.father, data.fatherDeceased], [data.mother, data.motherDeceased]].filter(([name]) => name);
-    if (!parents.length && !data.relation && !data.name) return;
+    if (!parents.length && !data.relation && !data.name && !data.description && !data.image?.src) return;
     const item = createElement("li", "family-item");
-    if (data.label) item.append(createElement("span", "family-label", data.label));
-    if (parents.length) {
+    if (data.person === "bride") item.setAttribute("data-family-side", "bride");
+    if (data.image?.visible) {
+      const photo = createElement("div", "family-photo");
+      const fallback = createElement("span", "family-photo-fallback", data.image.alt || `${data.name || data.label} 사진`);
+      photo.append(fallback);
+      const images = data.images ?? (data.image.src ? [data.image] : []);
+      if (images.length && !section.hidden) disposePhotos.push(initFamilySlideshow(photo, fallback, images));
+      item.append(photo);
+    }
+    const heading = createElement("div", "family-heading");
+    if (data.label) heading.append(createElement("span", "family-label", data.label));
+    if (data.name) heading.append(createElement("strong", "family-relation", data.name));
+    item.append(heading);
+    if (data.description) {
+      item.append(createElement("p", "family-description", data.description));
+    } else if (parents.length || data.relation) {
+      const description = createElement("p", "family-description");
       const names = createElement("strong", "family-parents");
       parents.forEach(([name, deceased], index) => {
         if (index) names.append(createElement("span", "family-separator", " · "));
@@ -31,10 +50,10 @@ export function initInvitation(config) {
         person.append(createElement("span", "family-person-name", name));
         names.append(person);
       });
-      item.append(names);
+      if (parents.length) description.append(names);
+      if (data.relation) description.append(createElement("span", "family-relationship", `${parents.length ? "의 " : ""}${data.relation}`));
+      item.append(description);
     }
-    const relation = [data.relation, data.name].filter(Boolean).join(" ");
-    if (relation) item.append(createElement("p", "family-relation", relation));
     families.append(item);
   });
   families.hidden = !families.children.length;

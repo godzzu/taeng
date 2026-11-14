@@ -15,6 +15,16 @@ assert.deepEqual(getWeddingConfig({ ...source, music: undefined }).music, { visi
 assert.equal(getWeddingConfig({ ...source, music: { visible: false, key: 'piano-01' } }).music.visible, false);
 assert.equal(config.invitation.parents[0].name, source.basic.groomName);
 assert.equal(config.invitation.parents[1].name, source.basic.brideName);
+const portraitSource = structuredClone(source);
+portraitSource.invitation.parents[0].image = { visible: true, src: "javascript:alert(1)", alt: "신랑 사진" };
+portraitSource.invitation.parents[1].image = { visible: false, src: "./assets/images/bride.jpg", alt: "신부 사진" };
+portraitSource.invitation.parents[0].description = " 부모님의 장남\n새로운 시작 ";
+const portraits = getWeddingConfig(portraitSource).invitation.parents;
+assert.equal(portraits[0].image.src, "");
+assert.equal(portraits[1].image.visible, false);
+assert.equal(portraits[0].description, "부모님의 장남\n새로운 시작");
+portraitSource.invitation.parents[0].images = [{ src: './one.jpg' }, { src: './hidden.jpg', visible: false }, { src: 'javascript:alert(1)' }, { src: './two.jpg' }];
+assert.deepEqual(getWeddingConfig(portraitSource).invitation.parents[0].images.map(item => item.src), ['./one.jpg', './two.jpg']);
 const memorialSource = structuredClone(source);
 memorialSource.invitation.parents[0].fatherDeceased = true;
 memorialSource.invitation.parents[0].motherDeceased = "false";

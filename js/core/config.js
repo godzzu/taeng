@@ -39,16 +39,19 @@ export function getWeddingConfig(source = weddingConfig) {
     timeLabel: formatKoreanTime(time)
   };
   result.hero.image = image(input.hero?.image);
-  result.hero.linkLabel = text(input.hero?.linkLabel);
   result.invitation.message = text(input.invitation?.message);
   // Resolve the person before filtering hidden rows so names never swap sides.
   const familyRows = Array.isArray(input.invitation?.parents) ? input.invitation.parents.map((row, index) => row && ({
     ...row, person: row.person || (index === 0 ? "groom" : index === 1 ? "bride" : "")
   })) : [];
   result.invitation.parents = items(familyRows, row => ({
+    person: row.person === "groom" || row.person === "bride" ? row.person : "",
     ...Object.fromEntries(["label", "father", "mother", "relation"].map(key => [key, text(row[key])])),
     fatherDeceased: row.fatherDeceased === true,
     motherDeceased: row.motherDeceased === true,
+    image: image(row.image),
+    images: Array.isArray(row.images) ? items(row.images, image).filter(item => item.src) : undefined,
+    description: text(row.description),
     name: row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""
   }));
   for (const key of ["venue", "hall", "address"]) result.weddingInfo[key] = text(input.weddingInfo?.[key]);
