@@ -85,7 +85,7 @@ export const weddingConfig = {
   share: {
     // 빈 문자열이면 이름과 날짜로 자동 생성합니다. 직접 입력하면 해당 문구를 사용합니다.
     title: "홍길동 ♥ 김하나 결혼합니다", description: "우리의 소중한 날을 함께해 주세요.", url: "https://godzzu.github.io/taeng/",
-    image: { visible: true, src: "./assets/images/og/wedding_thumbnail.png", alt: "홍길동과 김하나의 청첩장" }
+    image: { visible: true, src: "./assets/images/og/wedding_thumb.png", alt: "홍길동과 김하나의 청첩장" }
   },
   labels: {
     copyAccount: "계좌번호 복사", accountCopied: "계좌번호가 복사되었습니다.",
