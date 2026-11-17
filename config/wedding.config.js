@@ -29,7 +29,7 @@ export const weddingConfig = {
   weddingInfo: {
     visible: true, title: "", subtitle: "WEDDING DAY",
     venue: "보타닉파크웨딩", hall: "2층 그랜드홀", address: "서울특별시 강서구 마곡중앙5로 6 보타닉푸르지오시티 L층",
-    showDday: true
+    showCountdown: true
   },
   gallery: {
     visible: true, title: "", subtitle: "GALLERY",

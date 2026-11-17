@@ -29,7 +29,7 @@
 .date-large { font-family: var(--font-display); font-size: 1.5rem; }
 .info-card { background: var(--color-surface); border: 1px var(--border-style) var(--color-border); border-radius: var(--radius-card); box-shadow: var(--shadow-soft); margin: 28px auto 0; max-width: var(--card-width); padding: var(--card-padding); }
 .info-card h3 { margin-bottom: 8px; }
-.dday { color: var(--color-action); font-weight: 700; margin-top: 16px; }
+
 .gallery-grid { display: grid; gap: var(--grid-gap); grid-template-columns: repeat(3, 1fr); margin-top: var(--heading-gap); }
 .gallery-item { aspect-ratio: 1; background: var(--color-accent); border: 0; border-radius: var(--radius-image); overflow: hidden; padding: 0; }
 .gallery-item img { height: 100%; object-fit: cover; width: 100%; }
@@ -271,26 +271,14 @@
 .wedding-calendar .calendar-day { font-size: 16px; font-variant-numeric: tabular-nums; }
 .wedding-calendar .calendar-selected { fill: var(--color-action); }
 .wedding-calendar .is-wedding { fill: var(--color-on-action); font-weight: 700; }
-#wedding-info .dday {
-  display: table;
-  max-width: 100%;
-  margin: var(--space-6) auto 0;
-  padding: var(--space-2) var(--space-5);
-  border: 1px var(--divider-style) var(--color-border);
-  border-radius: var(--radius-button);
-  background: var(--color-accent);
-  color: var(--color-action);
-  font-size: 1rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.8;
-}
-#wedding-info .dday[data-state="today"] {
-  background: var(--color-action);
-  border-color: var(--color-action);
-  color: var(--color-on-action);
-}
-#wedding-info .dday[data-state="past"] { background: transparent; color: var(--color-muted); }
+/* Countdown outside the calendar card, using shared theme tokens. */
+.wedding-countdown { box-sizing: border-box; width: calc(100% - 24px); max-width: 360px; margin: var(--space-6) auto 0; padding: 20px clamp(10px, 3vw, 20px); border: 1px var(--divider-style, solid) var(--color-border); border-radius: var(--radius-card); background: var(--color-surface); text-align: center; font-family: var(--font-body); }
+.countdown-message { margin: 0 0 18px; color: var(--color-text); font-size: .875rem; line-height: 1.9; white-space: pre-line; overflow-wrap: anywhere; }
+.countdown-units { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 2px; }
+.countdown-units > div { min-width: 0; }
+.countdown-units strong { display: block; font-size: clamp(1.125rem, 5vw, 1.5rem); line-height: 1.4; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--color-heading); overflow-wrap: anywhere; }
+.countdown-units > div > span { display: block; margin-top: 6px; font-size: .75rem; color: var(--color-muted); }
+.countdown-separator { align-self: start; font-size: clamp(1.125rem, 5vw, 1.5rem); line-height: 1.4; color: var(--color-muted); }
 
 /* SECTION 04: thumbnail feedback and accessible theme-aware viewer. */
 #gallery .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

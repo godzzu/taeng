@@ -1,4 +1,4 @@
-import { formatKoreanDate, formatKoreanTime, getWeddingDayState, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar } from "../core/date.js";
+import { formatKoreanDate, formatKoreanTime, getWeddingDayState, getWeddingCountdown, toKoreanDateTime, getWeddingCalendar } from "../core/date.js";
 
 function renderCalendar(container, weddingDate) {
   const calendar = getWeddingCalendar(weddingDate);
@@ -46,25 +46,34 @@ export function initWeddingInfo(config) {
   time.textContent = formatKoreanTime(weddingTime);
   time.dateTime = toKoreanDateTime(weddingDate, weddingTime);
   renderCalendar(section.querySelector('[data-field="calendar"]'), weddingDate);
-  const dday = section.querySelector('[data-field="dday"]');
-  dday.hidden = !info.showDday;
+  const countdown = section.querySelector('[data-field="countdown"]');
+  const message = section.querySelector('[data-field="countdown-message"]');
+  const fields = Object.fromEntries(["days", "hours", "minutes", "seconds"].map(unit =>
+    [unit, section.querySelector('[data-field="countdown-' + unit + '"]')]));
+  const enabled = info.showCountdown !== false;
+  countdown.hidden = !enabled;
   let timer;
   function refresh() {
     window.clearTimeout(timer);
     const now = new Date();
-    const { daysRemaining, status } = getWeddingDayState(weddingDate, now);
-    const label = status === "upcoming" ? `D-${daysRemaining}`
-      : status === "today" ? config.labels.ddayToday
-      : config.labels.ddayPast.replace("{days}", Math.abs(daysRemaining));
-    dday.dataset.state = status;
-    if (dday.textContent !== label) dday.textContent = label;
-    // Date-based D-day stays "today" even after the ceremony time.
-    if (info.visible && info.showDday && !document.hidden) {
-      timer = window.setTimeout(refresh, millisecondsUntilKoreanMidnight(now) + 50);
+    const remaining = getWeddingCountdown(weddingDate, weddingTime, now);
+    const { daysRemaining } = getWeddingDayState(weddingDate, now);
+    const couple = config.basic.groomName + "♥" + config.basic.brideName;
+    const label = remaining.finished
+      ? couple + (daysRemaining < 0 ? "의 결혼식에 함께해 주셔서 감사합니다." : "의 결혼식이 시작되었습니다.")
+      : daysRemaining === 0 ? couple + "의 결혼식이 오늘입니다."
+      : couple + "의 결혼식까지\n" + daysRemaining + "일 남았습니다.";
+    if (message.textContent !== label) message.textContent = label;
+    for (const [unit, field] of Object.entries(fields)) {
+      const value = String(remaining[unit]).padStart(2, "0");
+      if (field.textContent !== value) field.textContent = value;
+    }
+    if (info.visible && enabled && !document.hidden && !remaining.finished) {
+      timer = window.setTimeout(refresh, 1000 - now.getMilliseconds());
     }
   }
   refresh();
-  if (info.visible && info.showDday) document.addEventListener("visibilitychange", refresh);
+  if (info.visible && enabled) document.addEventListener("visibilitychange", refresh);
   dispose = () => {
     window.clearTimeout(timer);
     document.removeEventListener("visibilitychange", refresh);

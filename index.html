@@ -92,7 +92,18 @@
         <time class="wedding-time" data-field="time"></time>
         <div class="info-card">
           <div class="wedding-calendar" data-field="calendar"></div>
-          <p class="dday" data-field="dday" role="status" aria-live="polite" aria-atomic="true"></p>
+        </div>
+        <div class="wedding-countdown" data-field="countdown">
+          <p class="countdown-message" data-field="countdown-message" role="status" aria-live="polite"></p>
+          <div class="countdown-units" role="group" aria-label="예식까지 남은 시간" aria-live="off">
+            <div><strong data-field="countdown-days">00</strong><span>일</span></div>
+            <span class="countdown-separator" aria-hidden="true">:</span>
+            <div><strong data-field="countdown-hours">00</strong><span>시간</span></div>
+            <span class="countdown-separator" aria-hidden="true">:</span>
+            <div><strong data-field="countdown-minutes">00</strong><span>분</span></div>
+            <span class="countdown-separator" aria-hidden="true">:</span>
+            <div><strong data-field="countdown-seconds">00</strong><span>초</span></div>
+          </div>
         </div>
       </div>
     </section>

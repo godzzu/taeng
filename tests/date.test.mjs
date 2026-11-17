@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 const source = await readFile(new URL("../js/core/date.js", import.meta.url), "utf8");
 const dateUrl = "data:text/javascript;base64," + Buffer.from(source).toString("base64");
-const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar } = await import(dateUrl);
+const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar, getWeddingCountdown } = await import(dateUrl);
 const originalTimezone = process.env.TZ;
 try {
   for (const timezone of ["UTC", "America/Los_Angeles", "Asia/Seoul"]) {
@@ -67,12 +67,12 @@ globalThis.window = {
 const renderSource = await readFile(new URL("../js/sections/wedding-info.js", import.meta.url), "utf8");
 const { initWeddingInfo } = await import("data:text/javascript;base64," + Buffer.from(renderSource.replace('"../core/date.js"', JSON.stringify(dateUrl))).toString("base64"));
 const config = {
-  basic: { weddingDate: getKoreanDate(), weddingTime: "12:30" },
-  weddingInfo: { visible: true, showDday: true, title: "약속의 날", subtitle: "WEDDING DAY", venue: "예식장", hall: "", address: "서울\n2층" },
+  basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2099-05-15", weddingTime: "12:30" },
+  weddingInfo: { visible: true, showCountdown: true, title: "약속의 날", subtitle: "WEDDING DAY", venue: "예식장", hall: "", address: "서울\n2층" },
   labels: { ddayToday: "오늘, 결혼합니다", ddayPast: "결혼식이 {days}일 지났습니다" }
 };
 initWeddingInfo(config);
-assert.equal(section.querySelector('[data-field="dday"]').textContent, config.labels.ddayToday);
+assert.equal(section.querySelector('[data-field="countdown-message"]').textContent, '홍길동♥김하나의 결혼식까지\n' + getWeddingDayState(config.basic.weddingDate).daysRemaining + '일 남았습니다.');
 assert(!nodes.has('[data-field="hall"]'));
 assert(!nodes.has('[data-field="address"]'));
 const calendarSvg = section.querySelector('[data-field="calendar"]').children[0];
@@ -90,9 +90,24 @@ assert.equal(timers.size, 0);
 document.hidden = false;
 [...listeners][0]();
 assert.equal(timers.size, 1);
-config.weddingInfo.showDday = false;
+config.weddingInfo.showCountdown = false;
 initWeddingInfo(config);
-assert(section.querySelector('[data-field="dday"]').hidden);
+assert(section.querySelector('[data-field="countdown"]').hidden);
 assert.equal(timers.size, 0);
 assert.equal(listeners.size, 0);
 console.log("PASS: section content, optional fields, live refresh, background/resume and timer cleanup");
+
+for (const timezone of ["UTC", "America/Los_Angeles", "Asia/Seoul"]) {
+  process.env.TZ = timezone;
+  assert.deepEqual(getWeddingCountdown("2027-05-15", "12:30", new Date("2027-05-14T03:29:59Z")), { days: 1, hours: 0, minutes: 0, seconds: 1, finished: false });
+  assert.deepEqual(getWeddingCountdown("2027-05-15", "12:30", new Date("2027-05-15T03:30:00Z")), { days: 0, hours: 0, minutes: 0, seconds: 0, finished: true });
+  assert.equal(getWeddingCountdown("2027-05-15", "12:30", new Date("2027-05-16T00:00:00Z")).days, 0);
+}
+if (originalTimezone === undefined) delete process.env.TZ; else process.env.TZ = originalTimezone;
+config.weddingInfo.showCountdown = true;
+config.basic.weddingDate = "2000-01-01";
+initWeddingInfo(config);
+assert.equal(timers.size, 0);
+assert.equal(section.querySelector('[data-field="countdown-seconds"]').textContent, '00');
+assert.match(section.querySelector('[data-field="countdown-message"]').textContent, /감사합니다/);
+console.log('PASS: countdown Korea-time instant, rollover, completion and past-date timer stop');

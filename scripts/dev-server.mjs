@@ -2,6 +2,7 @@ import { createServer } from "node:http";
 import { readFile, realpath } from "node:fs/promises";
 import { dirname, extname, isAbsolute, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { writePublicConfig } from "./build-config.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const publicFolders = new Set(["assets", "config", "css", "js"]);
@@ -73,6 +74,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     console.error("사용법: npm start -- --port 8000 (1~65535)");
     process.exitCode = 1;
   } else {
+    await writePublicConfig();
     const server = createDevServer();
     server.on("error", error => {
       console.error(error.code === "EADDRINUSE"

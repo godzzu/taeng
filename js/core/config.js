@@ -55,7 +55,7 @@ export function getWeddingConfig(source = weddingConfig) {
     name: row.person === "groom" ? result.basic.groomName : row.person === "bride" ? result.basic.brideName : ""
   }));
   for (const key of ["venue", "hall", "address"]) result.weddingInfo[key] = text(input.weddingInfo?.[key]);
-  result.weddingInfo.showDday = visible(input.weddingInfo?.showDday);
+  result.weddingInfo.showCountdown = visible(input.weddingInfo?.showCountdown);
   result.gallery.items = items(input.gallery?.items, image).filter(item => item.src);
   result.gallery.visible &&= result.gallery.items.length > 0;
   const travelTitles = { car: "자차", transport: "대중교통 · 버스", subway: "지하철", parking: "주차" };

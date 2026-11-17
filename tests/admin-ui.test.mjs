@@ -40,6 +40,13 @@ globalThis.fetch = async (url, options) => {
 };
 const flush = () => new Promise(resolve => setImmediate(resolve));
 try {
+  // This UI test uses a mocked API and must not depend on local credentials.
+  const { publicEnv } = await import("../config/public-env.js");
+  Object.assign(publicEnv, {
+    guestbookProvider: "supabase",
+    supabaseUrl: "https://example.supabase.co",
+    supabasePublishableKey: "sb_publishable_test"
+  });
   await import("../js/admin.js");
   nodes.get("#board-id").value = "default"; nodes.get("#board-password").value = "test-password";
   nodes.get("#admin-login").handlers.submit({ preventDefault() {} }); await flush();

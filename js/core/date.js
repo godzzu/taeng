@@ -57,6 +57,17 @@ export function toKoreanDateTime(date, time) {
   return `${date}T${time}:00+09:00`;
 }
 
+export function getWeddingCountdown(date, time, now = new Date()) {
+  getKoreanDate(now); // Validate the current instant.
+  const remaining = new Date(toKoreanDateTime(date, time)).getTime() - now.getTime();
+  const total = Math.max(0, Math.ceil(remaining / 1000));
+  return {
+    days: Math.floor(total / 86400), hours: Math.floor(total / 3600) % 24,
+    minutes: Math.floor(total / 60) % 60, seconds: total % 60,
+    finished: remaining <= 0
+  };
+}
+
 // Read the configured Korean calendar date without visitor-local timezone shifts.
 export function getWeddingCalendar(value) {
   const date = parseDate(value);

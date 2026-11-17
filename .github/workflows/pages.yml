@@ -1,0 +1,37 @@
+name: Deploy wedding invitation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: wedding-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build static site
+        run: npm run build
+        env:
+          PUBLIC_KAKAO_JAVASCRIPT_KEY: ${{ secrets.PUBLIC_KAKAO_JAVASCRIPT_KEY }}
+          PUBLIC_KAKAO_MAP_JAVASCRIPT_KEY: ${{ secrets.PUBLIC_KAKAO_MAP_JAVASCRIPT_KEY }}
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          PUBLIC_GUESTBOOK_PROVIDER: ${{ vars.PUBLIC_GUESTBOOK_PROVIDER || 'supabase' }}
+          PUBLIC_GUESTBOOK_WEDDING_ID: ${{ vars.PUBLIC_GUESTBOOK_WEDDING_ID || 'default' }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
