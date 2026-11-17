@@ -3,7 +3,7 @@
 export const weddingConfig = {
   music: { visible: true, key: "atlasaudio2" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
   templateId: "wedding-floral",
-  basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-05-15", weddingTime: "12:30" },
+  basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-11-06", weddingTime: "11:00" },
   hero: {
     visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
     image: { visible: true, src: "./assets/images/gallery/sample01.jpg", alt: "신랑 신부의 웨딩 사진" }
@@ -84,8 +84,8 @@ export const weddingConfig = {
   },
   share: {
     // 빈 문자열이면 이름과 날짜로 자동 생성합니다. 직접 입력하면 해당 문구를 사용합니다.
-    title: "", description: "", url: "https://godzzu.github.io/wd_letter/",
-    image: { visible: true, src: "./assets/images/og/wedding.png", alt: "결혼식 초대장" }
+    title: "홍길동 ♥ 김하나 결혼합니다", description: "우리의 소중한 날을 함께해 주세요.", url: "https://godzzu.github.io/taeng/",
+    image: { visible: true, src: "./assets/images/og/wedding_thumb.png", alt: "홍길동과 김하나의 청첩장" }
   },
   labels: {
     copyAccount: "계좌번호 복사", accountCopied: "계좌번호가 복사되었습니다.",
