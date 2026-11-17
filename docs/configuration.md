@@ -9,29 +9,29 @@
 - `gallery.items`, `account.items`, `contact.items`, `location.links`: 순서대로 표시되는 배열.
 - `location.coordinates`: latitude/longitude 숫자. 미설정은 null. 카카오 지도와 목적지 길찾기에 사용하는 WGS84 좌표입니다.
 - `contact.items[].person`: groom 또는 bride. name이 비어 있으면 basic의 이름을 사용합니다.
-- `share`: 카카오 공유 title/description/url/image. 제목·설명은 빈 문자열이면 자동 생성, URL은 빈 문자열이면 현재 주소 사용.
-- `footer`: 감사 문구. 이름은 basic에서 자동 반영됩니다.
-- `labels`: 버튼, 내비게이션, 입력 안내 및 상태 메시지.
+- `share`: 링크 미리보기용 title/description/url/image. 제목·설명은 빈 문자열이면 자동 생성, URL은 빈 문자열이면 현재 주소 사용.
+- `labels`: 버튼, 입력 안내 및 상태 메시지.
 
 섹션과 배열 항목은 `visible: false`로 숨깁니다. 이미지와 교통·주차 안내도 같은 방식입니다.
 빈 갤러리·계좌·연락처 목록은 섹션을 자동으로 숨깁니다. 방명록은 기본 표시되며 Supabase 연결 전에는 입력이 비활성화됩니다. 연결 방법은 [방명록 설정](guestbook.md)을 참고하세요.
-D-day는 `weddingInfo.showDday`로 표시 여부를 바꿉니다.
+카운트다운은 `weddingInfo.showCountdown`으로 표시 여부를 바꿉니다.
 
 `js/core/config.js`는 DOM 없이 설정을 검증·정규화하고 독립된 객체를 반환합니다.
 `js/core/config-view.js`와 각 섹션 모듈이 렌더링을 담당합니다.
 유효하지 않은 날짜·시간은 명시적인 오류를 발생시킵니다. 외부 링크는 HTTP(S), 이미지는 HTTP(S) 또는 상대 경로를 받습니다.
 
-카카오 JavaScript SDK 공유를 지원합니다. 설정·도메인 등록·정적 OG 생성은 [카카오 공유 안내](kakao-share.md)를 참고하세요.
+공유 버튼과 SDK는 제거되었습니다. 정적 OG 생성과 링크 미리보기 설정은 [OG 안내](kakao-share.md)를 참고하세요.
 
 검증: `node tests/config.test.mjs`
 
-## 예식 정보와 D-day
+## 예식 정보와 카운트다운
 
-날짜 처리 공통 유틸리티는 js/core/date.js에 있습니다. 표시 요일·시간과 D-day는 Asia/Seoul 기준이며 방문자의 기기 시간대에 영향을 받지 않습니다.
-D-day는 예식 시각까지 남은 24시간 단위가 아니라 한국 달력상의 날짜 차이입니다.
-예식 당일에는 labels.ddayToday, 다음 날부터 labels.ddayPast의 {days}를 지난 일수로 치환합니다.
-페이지가 열려 있으면 한국 자정에 갱신하고, 숨겨진 탭에서 돌아왔을 때도 다시 계산합니다.
-홀·주소가 빈 문자열이면 해당 줄을 숨깁니다. weddingInfo.showDday가 false이면 D-day와 갱신 타이머를 끕니다.
+날짜 처리 공통 유틸리티는 js/core/date.js에 있습니다. 예식 날짜와 시간은 한국 시간 기준이며 방문자의 기기 시간대에 영향을 받지 않습니다.
+달력 아래 박스에는 신랑♥신부의 결혼식까지 남은 날짜 안내와 일 : 시간 : 분 : 초 카운트다운을 표시합니다.
+안내 문구의 일수는 한국 달력상의 날짜 차이이며, 숫자 카운트다운은 실제 예식 시각까지 남은 시간을 계산합니다.
+화면이 보이는 동안 초 단위로 갱신하고, 숨겨진 탭에서 돌아오면 다시 계산합니다. 예식이 시작되면 숫자는 0에서 멈추고 안내 문구가 바뀝니다.
+결혼식 당일과 지난 날짜에는 각각 해당 안내를 표시합니다. weddingInfo.showCountdown이 false이면 카운트다운 박스와 갱신 타이머를 끕니다.
+이전 D-day 표시와 전용 문구 설정은 제거되었습니다. 날짜 차이 계산은 현재 카운트다운 문구에도 필요하므로 유지합니다.
 
 날짜 및 섹션 검증: node tests/date.test.mjs
 

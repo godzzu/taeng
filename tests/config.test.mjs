@@ -88,13 +88,13 @@ assert.equal(changed.share.title, source.share.title);
 assert.equal(changed.templateId, "wedding-floral");
 assert.equal(getWeddingConfig({ basic: source.basic }).gallery.visible, false);
 assert.equal(getWeddingConfig({ basic: source.basic }).guestbook.visible, false);
-const shareSource = await readFile(new URL("../js/services/kakao-share.js", import.meta.url), "utf8");
-const { getKakaoSharePayload } = await import(moduleUrl(shareSource));
-const payload = getKakaoSharePayload(changed, "https://example.com/wedding/");
-assert.equal(payload.content.title, source.share.title);
-assert.equal(payload.content.imageUrl, "https://example.com/wedding/assets/images/og/wedding.png");
-assert.equal(payload.content.link.webUrl, "https://example.com/wedding/");
-console.log("PASS: config normalization, date validation, visibility, isolation, URL filtering, derived content and share payload");
+const shareSource = await readFile(new URL("../js/core/share-metadata.js", import.meta.url), "utf8");
+const { getShareMetadata } = await import(moduleUrl(shareSource));
+const payload = getShareMetadata(changed, "https://example.com/wedding/");
+assert.equal(payload.title, source.share.title);
+assert.equal(payload.imageUrl, "https://example.com/wedding/assets/images/og/wedding.png");
+assert.equal(payload.url, "https://example.com/wedding/");
+console.log("PASS: config normalization, date validation, visibility, isolation, URL filtering, derived content and OG metadata");
 
 // Only the root theme and metadata may change; no section DOM is available here.
 const { applyTheme } = await import("../js/core/theme.js");

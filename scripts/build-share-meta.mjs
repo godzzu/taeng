@@ -2,16 +2,16 @@ import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getWeddingConfig } from "../js/core/config.js";
-import { getKakaoSharePayload } from "../js/services/kakao-share.js";
+import { getShareMetadata } from "../js/core/share-metadata.js";
 
 const escape = value => String(value).replace(/[&<>"']/g, char =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 export function renderShareMetadata(html, config, baseUrl = config.share.url) {
-  const content = baseUrl ? getKakaoSharePayload({ ...config, share: { ...config.share, url: baseUrl } }, baseUrl).content : null;
+  const content = baseUrl ? getShareMetadata(config, baseUrl) : null;
   const values = {
     description: config.share.description, "og:type": "website", "og:locale": "ko_KR",
     "og:title": config.share.title, "og:description": config.share.description,
-    "og:url": content?.link.webUrl || "", "og:image": content?.imageUrl || "",
+    "og:url": content?.url || "", "og:image": content?.imageUrl || "",
     "og:image:alt": config.share.image.alt
   };
   for (const [name, value] of Object.entries(values)) {

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 const source = await readFile(new URL("../js/core/date.js", import.meta.url), "utf8");
 const dateUrl = "data:text/javascript;base64," + Buffer.from(source).toString("base64");
-const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, millisecondsUntilKoreanMidnight, toKoreanDateTime, getWeddingCalendar, getWeddingCountdown } = await import(dateUrl);
+const { getWeddingDayState, getKoreanDate, formatKoreanDate, formatKoreanTime, toKoreanDateTime, getWeddingCalendar, getWeddingCountdown } = await import(dateUrl);
 const originalTimezone = process.env.TZ;
 try {
   for (const timezone of ["UTC", "America/Los_Angeles", "Asia/Seoul"]) {
@@ -15,8 +15,6 @@ try {
     assert.equal(getWeddingDayState("2028-03-01", new Date("2028-02-28T15:00:00Z")).daysRemaining, 1);
     assert.equal(getWeddingDayState("2028-01-01", new Date("2027-12-30T15:00:00Z")).daysRemaining, 1);
     assert.equal(getWeddingDayState("2027-03-15", new Date("2027-03-13T15:00:00Z")).daysRemaining, 1);
-    assert.equal(millisecondsUntilKoreanMidnight(new Date("2027-05-14T14:59:59.999Z")), 1);
-    assert.equal(millisecondsUntilKoreanMidnight(new Date("2027-05-14T15:00:00Z")), 86400000);
     assert.match(formatKoreanDate("2027-05-15"), /토요일/);
     const may = getWeddingCalendar("2027-05-15");
     assert.equal(may.days[14].column, 6);
@@ -69,7 +67,6 @@ const { initWeddingInfo } = await import("data:text/javascript;base64," + Buffer
 const config = {
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2099-05-15", weddingTime: "12:30" },
   weddingInfo: { visible: true, showCountdown: true, title: "약속의 날", subtitle: "WEDDING DAY", venue: "예식장", hall: "", address: "서울\n2층" },
-  labels: { ddayToday: "오늘, 결혼합니다", ddayPast: "결혼식이 {days}일 지났습니다" }
 };
 initWeddingInfo(config);
 assert.equal(section.querySelector('[data-field="countdown-message"]').textContent, '홍길동♥김하나의 결혼식까지\n' + getWeddingDayState(config.basic.weddingDate).daysRemaining + '일 남았습니다.');

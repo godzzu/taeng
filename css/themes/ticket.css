@@ -51,13 +51,6 @@ html[data-theme="wedding-ticket"] {
   --ticket-barcode: url("../../assets/images/templates/ticket/barcode.svg");
   --ticket-inset: clamp(24px, 6vw, 48px);
 }
-html[data-theme="wedding-ticket"] .brand {
-  font-family: var(--font-title);
-  font-size: clamp(1rem, 4vw, 1.25rem);
-  font-weight: 400;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
 html[data-theme="wedding-ticket"] .hero-date,
 html[data-theme="wedding-ticket"] .wedding-calendar .calendar-day {
   font-family: var(--font-ticket);

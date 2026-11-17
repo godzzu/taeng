@@ -25,7 +25,7 @@ export function getWeddingConfig(source = weddingConfig) {
   const input = object(source);
   const music = { visible: input.music?.visible !== false, key: text(input.music?.key) };
   const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"].includes(input.templateId) ? input.templateId : "wedding-floral" };
-  for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook", "footer", "share"]) {
+  for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook"]) {
     const section = object(input[key]);
     result[key] = { visible: visible(section.visible), title: text(section.title), subtitle: text(section.subtitle), description: text(section.description) };
   }
@@ -95,7 +95,7 @@ export function getWeddingConfig(source = weddingConfig) {
     .sort((a, b) => (contactOrder.indexOf(a.person) < 0 ? 99 : contactOrder.indexOf(a.person)) - (contactOrder.indexOf(b.person) < 0 ? 99 : contactOrder.indexOf(b.person)));
   result.contact.visible &&= result.contact.items.length > 0;
   result.guestbook.visible = input.guestbook?.visible === true;
-  result.footer.message = text(input.footer?.message);
+  result.share = { title: text(input.share?.title), description: text(input.share?.description) };
   result.share.title ||= `${result.basic.groomName} ♥ ${result.basic.brideName} 결혼합니다`;
   result.share.description ||= `${result.basic.dateLabel} ${result.basic.timeLabel}`;
   result.share.url = url(input.share?.url);

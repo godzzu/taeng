@@ -1,7 +1,6 @@
 #main-content {
   width: 100%; max-width: var(--content-width); margin-inline: auto;
 }
-.brand { font-family: var(--font-display); font-size: .9rem; text-decoration: none; }
 .section {
   width: 100%; max-width: var(--content-width); margin: 0 auto;
   padding: var(--section-space) 0;

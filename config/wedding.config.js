@@ -82,28 +82,17 @@ export const weddingConfig = {
     visible: true, title: "축하의 마음을 남겨주세요", subtitle: "", //GUESTBOOK
     description: "따뜻한 축하 메시지를 남겨주세요."
   },
-  footer: { visible: true, message: "축복해 주셔서 감사합니다." },
   share: {
-    visible: true,
     // 빈 문자열이면 이름과 날짜로 자동 생성합니다. 직접 입력하면 해당 문구를 사용합니다.
     title: "", description: "", url: "https://godzzu.github.io/wd_letter/",
     image: { visible: true, src: "./assets/images/og/wedding.png", alt: "결혼식 초대장" }
   },
   labels: {
-    brand: "Wedding Invitation", weddingNav: "예식 정보", galleryNav: "갤러리", locationNav: "오시는 길",
     copyAccount: "계좌번호 복사", accountCopied: "계좌번호가 복사되었습니다.",
     copyFailed: "복사에 실패했습니다. 브라우저 권한을 확인해 주세요.",
     accountCopyFallback: "자동 복사가 되지 않았습니다. 선택된 계좌번호를 길게 누르거나 Ctrl+C로 복사해 주세요.",
     accountNumber: "계좌번호", accountHolder: "예금주",
-    call: "전화하기", sms: "문자하기", share: "카카오톡으로 공유하기",
-    shareLoading: "공유 기능을 준비하고 있습니다.", shareReady: "버튼을 눌러 카카오톡으로 공유해 주세요.",
-    shareNoKey: "공유 기능을 준비 중입니다. 잠시 후 다시 이용해 주세요.",
-    shareInvalidUrl: "공유 주소가 아직 준비되지 않았습니다.",
-    shareInvalidImage: "공유 이미지를 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.",
-    shareSdkError: "카카오톡 공유를 준비하지 못했습니다. 버튼을 눌러 다시 시도해 주세요.",
-    shareSendError: "공유창을 열지 못했습니다. 팝업 차단을 확인한 후 다시 시도해 주세요.",
-    shareOpened: "공유창에서 받는 사람을 선택해 주세요. 창이 보이지 않으면 팝업 차단을 확인해 주세요.",
-    shareCopied: "주소가 복사되었습니다", shareFailed: "주소 복사에 실패했습니다",
+    call: "전화하기", sms: "문자하기",
     guestName: "이름", guestNamePlaceholder: "이름을 입력해 주세요",
     guestMessage: "축하 메시지", guestMessagePlaceholder: "따뜻한 축하 메시지를 남겨주세요",
     guestSubmit: "메시지 남기기", guestUnavailable: "방명록 서비스 연결이 필요합니다.",
@@ -115,7 +104,6 @@ export const weddingConfig = {
     guestNameInvalid: "이름을 1~30자로 입력해 주세요.", guestMessageInvalid: "축하 메시지를 1~300자로 입력해 주세요.",
     guestRateLimit: "등록이 많습니다. 잠시 후 다시 시도해 주세요.",
     guestDuplicate: "같은 내용이 이미 접수되었습니다.", guestClosed: "현재 메시지 등록이 마감되었습니다.",
-    ddayToday: "오늘, 결혼합니다", ddayPast: "결혼식이 {days}일 지났습니다",
     galleryOpen: "{number}번 사진 크게 보기", galleryDialog: "갤러리 이미지 확대",
     galleryClose: "이미지 닫기", galleryPrev: "이전 이미지", galleryNext: "다음 이미지",
     galleryLoading: "사진을 불러오는 중입니다.", galleryError: "사진을 불러올 수 없습니다.",

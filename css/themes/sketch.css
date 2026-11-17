@@ -77,9 +77,6 @@ html[data-theme="wedding-sketch"] .section-inner::after {
   pointer-events: none;
 }
 html[data-theme="wedding-sketch"] .section + .section::before { display: none; }
-html[data-theme="wedding-sketch"] .brand {
-  font-family: var(--font-script); font-size: 1.7rem;
-}
 html[data-theme="wedding-sketch"] .eyebrow {
   font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.3rem);
   text-transform: lowercase; letter-spacing: 0; line-height: 1.3;

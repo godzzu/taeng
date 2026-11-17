@@ -60,7 +60,6 @@ html[data-theme="wedding-autumn"] .section-inner::after {
   background: var(--autumn-leaves) left bottom / clamp(110px, 30vw, 165px) auto no-repeat;
 }
 html[data-theme="wedding-autumn"] .section + .section::before { display: none; }
-html[data-theme="wedding-autumn"] .brand { font-family: var(--font-script); font-style: italic; font-size: 1.65rem; color: var(--color-action); }
 html[data-theme="wedding-autumn"] .eyebrow {
   position: relative; width: fit-content; max-width: 100%; margin-inline: auto;
   padding: 8px 14px; font-family: var(--font-script); font-style: italic; font-size: 1.65rem;

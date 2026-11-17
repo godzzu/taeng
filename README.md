@@ -1,93 +1,86 @@
 # Mobile Wedding Invitation
 
-HTML5, CSS3, Vanilla JavaScript ES Modules로 구성한 단일 페이지 모바일 청첩장 초기 프로젝트입니다.
+HTML, CSS, Vanilla JavaScript ES Modules로 구성한 모바일 청첩장입니다. 콘텐츠는 설정 파일로 관리하고, `templateId`와 CSS 변수로 디자인을 전환합니다.
 
-## 실행 방법
+## 로컬 실행
 
-ES Modules는 `file://` 환경에서 브라우저 보안 정책으로 동작하지 않을 수 있습니다. 로컬 웹 서버로 실행하세요.
+Node.js **20.10 이상**이 필요합니다. 배포 workflow는 Node 22를 사용합니다. 외부 npm 패키지가 없어 `npm install`은 필요하지 않지만, **배포용 빌드는 필요합니다**.
 
-Node.js 20 이상이 설치된 환경에서 프로젝트 폴더로 이동한 뒤 실행합니다.
-외부 패키지가 없어 `npm install`이나 빌드 과정은 필요하지 않습니다.
+1. 처음 내려받았다면 `.env.example`을 `.env`로 복사하고 공개 연결 정보를 입력합니다. 기존 `.env`는 덮어쓰지 않습니다.
+2. 프로젝트 폴더에서 `npm start`를 실행합니다.
+3. 청첩장은 http://127.0.0.1:8000/ , 관리자는 http://127.0.0.1:8000/admin.html 에서 확인합니다.
 
-```bash
-npm start
-```
+종료는 `Ctrl+C`, 포트 변경은 `npm start -- --port 8001`입니다. `.env` 변경 후 서버를 재시작합니다. 개발 서버는 같은 컴퓨터에서만 접속할 수 있습니다.
 
-브라우저에서 `http://127.0.0.1:8000`을 엽니다. 종료는 `Ctrl+C`입니다.
-`npm run dev`도 동일하게 실행됩니다. 파일 수정 후에는 브라우저를 새로고침하세요.
+| 명령 | 역할 |
+| --- | --- |
+| `npm start` / `npm run dev` | .env 로딩 → 공개 설정 생성 → 개발 서버 실행 |
+| `npm run build:config` | 공개 설정만 생성. 다른 정적 서버 사용 전 실행 |
+| `npm test` | 공개 설정 생성 후 자동 테스트 실행 |
+| `npm run build` | dist 재생성 및 공개 설정·정적 OG 메타태그를 포함한 배포 파일 생성 |
+| `npm run build:meta` | 소스 index.html의 OG 메타태그만 갱신. 전체 빌드를 대체하지 않음 |
 
-포트가 사용 중이면 `npm start -- --port 8001`로 변경할 수 있습니다.
-이 서버는 로컬 개발용이며 같은 컴퓨터에서만 접속할 수 있습니다.
+## 설정과 구조
 
-검증은 `npm test`로 실행합니다. 설정·한국 시간 날짜 계산·서버의 모듈 및 정적 파일 제공을 확인합니다.
+| 경로 | 역할 |
+| --- | --- |
+| `config/wedding.config.js` | 이름, 예식 일시, 사진, 문구, 장소, 계좌, 연락처, 음악 key, 표시 여부 |
+| `.env` | 카카오·Supabase 공개 연결 설정. Git 제외 |
+| `config/app.config.js` | 생성된 공개 설정을 앱에 제공 |
+| `config/public-env.js` | 자동 생성 파일. 직접 편집·커밋하지 않음 |
+| `css/themes/` | 다섯 템플릿의 디자인 |
+| `js/sections/`, `js/services/`, `js/core/` | 화면, 외부 서비스, 공통 로직 |
+| `assets/images/` | 사진, 로고, 장식, 공유 이미지 |
+| `supabase/` | 방명록·관리자·음악 설치 및 검증 SQL |
+| `scripts/`, `tests/` | 빌드, 개발 서버, 테스트 |
 
-### 초기 실행 흐름
+지원 templateId: `wedding-floral`, `wedding-sketch`, `wedding-ticket`, `wedding-marble`, `wedding-autumn`.
 
-`npm start` → `scripts/dev-server.mjs` → `index.html` → `js/main.js`
+갤러리는 `gallery.items`, 소개 사진은 `invitation.parents`의 이미지 설정으로 관리합니다. 예식 일시는 `basic.weddingDate`, `basic.weddingTime`이며 한국 시간 기준입니다. 연결 설정은 [환경변수 안내](docs/environment.md)를 우선 참고하세요. 기존 기능별 문서에 app.config.js 직접 입력 안내가 남아 있다면 .env 방식으로 적용합니다.
 
-`js/main.js`에서 설정 검증 → 테마 적용 → 공통 콘텐츠 렌더링 → 섹션 초기화 → 공유 버튼 연결 순서로 실행됩니다.
-운영 배포에는 개발 서버가 필요하지 않으며 기존 정적 파일을 그대로 사용할 수 있습니다.
+## 현재 기능
 
-## 콘텐츠 및 디자인 변경
+- 본문 7개 섹션: hero, invitation, wedding-info, gallery, location, account, guestbook. 실제 순서는 index.html을 따릅니다.
+- 신랑·신부 소개 사진 카드와 페이드 전환, 부모님·관계·고인 표시.
+- invitation의 축하연락하기 모달. 공개 활성화한 연락처만 전화·문자 링크 표시.
+- Wedding Day 달력과 박스형 카운트다운. 안내 문구 두 줄과 일 : 시간 : 분 : 초 표시, 예식 시작 시 종료.
+- 갤러리 확대 모달, 키보드·스와이프, 지연 로딩 및 이미지 실패 안내.
+- 지도, 카카오맵·네이버지도 링크, 주소 복사 및 교통·주차 안내.
+- 계좌 아코디언, 복사 및 토스트.
+- Supabase 방명록과 관리자 로그인·공개 전환·삭제·CSV 저장.
+- `music.key`로 Supabase 등록 음원 선택. 고정 스피커 버튼으로 재생·정지. 관리자 음원 업로드 기능 없음.
+- 화면 너비 100%, 최대 448px 및 스크롤 fade-up 효과.
 
-- 청첩장 콘텐츠: `config/wedding.config.js`
-- 앱 연동 설정: `config/app.config.js`
-- 템플릿 ID: `wedding.config.js`의 `templateId`
-  - `wedding-floral`
-  - `wedding-sketch`
-  - `wedding-ticket`
-
-## 이미지 교체
-
-갤러리 이미지 경로는 `config/wedding.config.js`의 `gallery.items` 배열에서 변경합니다. 실제 배포 이미지에는 JPG 또는 WebP 사용을 권장합니다.
-
-## 기능 상태
-
-- [x] 8개 섹션의 초기 레이아웃
-- [x] 템플릿 ID 기반 테마 적용
-- [x] 설정 파일 기반 콘텐츠 렌더링
-- [x] 갤러리 모달, 이전/다음, 터치 스와이프
-- [x] 계좌번호 복사 및 토스트
-- [x] 전화 및 문자 링크
-- [x] 지도 서비스 외부 링크
-- [x] 카카오톡 공유 버튼
-- [x] Kakao JavaScript SDK 공유 및 정적 OG 메타 생성
-- [x] Supabase 방명록 등록/조회 코드 및 DB 구조(프로젝트 연결 필요)
+헤더 메뉴, 하단 감사 영역, 독립 contact 섹션, 카카오톡 공유 버튼은 현재 화면에 없습니다. 링크 미리보기용 `share.title`, `description`, `url`, `image` 및 OG 생성은 유지합니다. OG URL·이미지 검증은 `js/core/share-metadata.js`로 분리되어 있으며, 공유 SDK 코드는 제거했습니다.
 
 ## GitHub Pages 배포
 
-1. 프로젝트 파일을 GitHub 저장소에 push합니다.
-2. 저장소의 **Settings → Pages**로 이동합니다.
-3. 배포 소스로 `Deploy from a branch`를 선택합니다.
-4. 브랜치와 폴더(`/root` 또는 설정한 배포 폴더)를 선택합니다.
-5. 배포 URL을 확인합니다.
+현재 `.github/workflows/pages.yml`은 **수동 실행하여 dist만 업로드하는 방식**입니다. 소스 루트를 직접 배포하면 생성된 공개 설정이 누락될 수 있습니다.
 
-저장소 하위 경로 배포를 고려해 HTML, CSS, JS 및 이미지 경로는 상대경로를 사용합니다.
+1. 저장소 Settings → Secrets and variables → Actions의 Repository secrets에 아래 값을 등록합니다.
+   - `PUBLIC_KAKAO_JAVASCRIPT_KEY`
+   - `PUBLIC_KAKAO_MAP_JAVASCRIPT_KEY` (지도 전용 키. 미설정 시 위 키 사용)
+   - `PUBLIC_SUPABASE_URL`
+   - `PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+2. 기본값과 다르면 Repository variables에 `PUBLIC_GUESTBOOK_PROVIDER`(기본 supabase), `PUBLIC_GUESTBOOK_WEDDING_ID`(기본 default)를 등록합니다.
+3. wedding.config.js의 `share.url`을 실제 URL에 맞춥니다. 현재 설정은 `https://godzzu.github.io/wd_letter/`입니다.
+4. `npm test`, `npm run build` 및 [배포 체크리스트](docs/pre-deployment-checklist.md)를 확인합니다.
+5. 코드를 push하고 Settings → Pages → Source를 GitHub Actions로 설정합니다.
+6. Actions → Deploy wedding invitation → Run workflow를 실행합니다. push만으로 자동 배포되지 않습니다.
+7. 배포 후 청첩장, `/wd_letter/admin.html`, 지도·이미지·음악·방명록·링크 미리보기를 확인합니다.
 
-## 보안 주의
+빌드는 HTML, CSS, JS, 이미지, 공개 설정, .nojekyll을 dist에 생성합니다. .env, 개발 스크립트, 테스트, 문서, Supabase SQL은 포함하지 않습니다. 로컬 .env는 CI에 전달되지 않으므로 Actions에 별도로 등록해야 합니다.
 
-GitHub Pages에 올라간 JS 설정은 공개됩니다. 카카오 JavaScript 키처럼 브라우저에 노출되는 공개 키만 설정하고, Supabase service role key, Firebase Admin credential, 관리자 비밀번호 등 비밀정보는 절대 커밋하지 마세요. 방명록은 데이터베이스 보안 규칙과 스팸 방지 정책을 별도로 설정해야 합니다.
+## 공개 데이터와 외부 서비스
 
-## 콘텐츠 설정 구조
+.env는 설정을 저장소에서 분리하는 수단이며 브라우저 공개 키를 숨기지는 않습니다. Supabase service_role/sb_secret_, 관리자 비밀번호, Turnstile secret은 넣지 않습니다. `visible: false`는 화면 표시만 숨기므로 공개하면 안 되는 개인정보는 설정 값에서도 제거합니다.
 
-모든 콘텐츠와 표시 여부는 `config/wedding.config.js`에서 관리합니다. 상세 필드와 사용법은 [설정 문서](docs/configuration.md)를 참고하세요.
+방명록·관리자·음악에는 외부 Supabase 설정이 필요합니다. 지도 도메인/API와 DB 권한·승인 정책은 실제 배포 환경에서 확인합니다.
 
-## 방명록
+## 관련 문서
 
-Supabase 연결과 승인 운영 방법은 [방명록 설정](docs/guestbook.md)을 참고하세요.
-
-## 카카오톡 공유
-
-배포 전에 npm run build:meta를 실행하세요. 키·도메인 설정은 [카카오 공유 안내](docs/kakao-share.md)에 정리했습니다.
-
-## 통합 점검
-
-화면 크기별 결과, 수정 사항, 외부 서비스 확인 범위는 [최종 배포 체크리스트](docs/pre-deployment-checklist.md)를 참고하세요.
-
-## 방명록 관리자 페이지
-
-`admin.html`에서 방명록 ID/비밀번호 로그인, 공개·비공개 전환, 삭제, 전체 CSV 저장을 지원합니다. 사용 전 Supabase SQL 설치와 관리자 비밀번호 설정이 필요합니다. 자세한 절차는 [관리자 설치 안내](docs/guestbook-admin.md)를 참고하세요.
-
-## 청첩장 배경음악
-
-Supabase에 등록된 음원을 config/wedding.config.js의 music.key로 선택합니다. 해당 곡의 재생·정지 버튼을 표시하며 관리자 업로드 기능은 없습니다. [음악 설정 안내](docs/music.md)를 확인하세요.
+- [환경변수와 빌드](docs/environment.md)
+- [콘텐츠 설정](docs/configuration.md) · [디자인 시스템](docs/design-system.md)
+- [방명록](docs/guestbook.md) · [관리자 설치](docs/guestbook-admin.md) · [음악](docs/music.md)
+- [현재 배포 체크리스트](docs/pre-deployment-checklist.md)
+- [코드 정리 검토서](docs/deployment-cleanup-review.md)

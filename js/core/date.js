@@ -46,11 +46,6 @@ export function getWeddingDayState(weddingDate, now = new Date()) {
   return { daysRemaining, status: daysRemaining > 0 ? "upcoming" : daysRemaining === 0 ? "today" : "past" };
 }
 
-export function millisecondsUntilKoreanMidnight(now = new Date()) {
-  const midnight = new Date(getKoreanDate(now) + "T00:00:00+09:00").getTime();
-  return midnight + DAY_MS - now.getTime();
-}
-
 export function toKoreanDateTime(date, time) {
   parseDate(date);
   parseTime(time);

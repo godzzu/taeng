@@ -56,7 +56,6 @@ html[data-theme="wedding-marble"] #invitation .section-inner::before {
   filter: drop-shadow(0 1px .5px #8c682b30) drop-shadow(0 0 2px #e8c87530);
 }
 html[data-theme="wedding-marble"] .section + .section::before { display: none; }
-html[data-theme="wedding-marble"] .brand { font-family: var(--font-script); font-size: 1.65rem; color: var(--color-action); }
 html[data-theme="wedding-marble"] .eyebrow { font-family: var(--font-script); font-size: 1.65rem; letter-spacing: .02em; color: var(--color-action); }
 html[data-theme="wedding-marble"] h1,
 html[data-theme="wedding-marble"] h2 { letter-spacing: .05em; }
