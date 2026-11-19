@@ -1,3 +1,5 @@
+> 연락처·계좌의 실제 값은 설정 파일에 넣지 않습니다. 아래의 과거 직접 입력 예시보다 [현재 Supabase 설정 안내](private-info.md)가 우선합니다.
+
 # 청첩장 콘텐츠 설정
 
 콘텐츠 수정은 `config/wedding.config.js`에서만 합니다. 저장 후 페이지를 새로고침하면 반영됩니다.
@@ -8,7 +10,8 @@
 - `weddingInfo`: 예식장 이름·홀·주소의 단일 원본. 오시는 길도 이 값을 사용합니다.
 - `gallery.items`, `account.items`, `contact.items`, `location.links`: 순서대로 표시되는 배열.
 - `location.coordinates`: latitude/longitude 숫자. 미설정은 null. 카카오 지도와 목적지 길찾기에 사용하는 WGS84 좌표입니다.
-- `contact.items[].person`: groom 또는 bride. name이 비어 있으면 basic의 이름을 사용합니다.
+- `account.items`: visible/id/side만 저장합니다. 실제 은행·예금주·계좌번호는 Supabase에서 조회합니다.
+- `contact.items`: visible/id/person만 저장합니다. 부모님을 포함한 실제 연락처는 Supabase에서 조회합니다. [설치 안내](private-info.md)를 참고하세요.
 - `share`: 링크 미리보기용 title/description/url/image. 제목·설명은 빈 문자열이면 자동 생성, URL은 빈 문자열이면 현재 주소 사용.
 - `labels`: 버튼, 입력 안내 및 상태 메시지.
 

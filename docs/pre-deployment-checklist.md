@@ -56,6 +56,11 @@
 
 ## 4. Supabase와 관리자
 
+- [ ] supabase/private-info.sql 설치 후 연락처·계좌를 Table Editor에 입력. wedding_id/id와 is_public 확인.
+- [ ] supabase/private-info-test.sql 실행 및 직접 테이블 접근 차단·공개 RPC 검증.
+- [ ] 계좌/연락처 메뉴 열기 전 요청 없음, 로딩·실패·재시도·빈 목록·복사 확인.
+- [ ] .private-info.local.json이 Git과 dist에 포함되지 않는지 확인.
+
 - [ ] 방명록·관리자·음악 SQL 및 RLS/RPC 권한을 운영 프로젝트에서 확인.
 - [ ] 방명록 ID와 관리자 비밀번호를 서버에서 설정. 프런트엔드에 비밀번호 저장 금지.
 - [ ] 테스트 글 작성 → 승인 대기 → 관리자 공개 → 청첩장 조회 확인.

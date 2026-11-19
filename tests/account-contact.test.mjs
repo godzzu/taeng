@@ -28,22 +28,39 @@ globalThis.window = {
   setTimeout: fn => { timers.set(++nextTimer, fn); return nextTimer; }
 };
 Object.defineProperty(globalThis, "navigator", { configurable: true, value: { clipboard: {} } });
+// Native modal lifecycle: scroll styles and focus are restored on every close path.
+const style = () => ({ values: new Map(), getPropertyValue(k) { return this.values.get(k)?.[0] || ""; }, getPropertyPriority(k) { return this.values.get(k)?.[1] || ""; }, setProperty(k, v, p = "") { this.values.set(k, [v, p]); }, removeProperty(k) { this.values.delete(k); } });
+document.documentElement = { style: style() };
+document.body = { style: style() };
+document.body.style.setProperty("position", "relative", "important");
+window.scrollX = 0; window.scrollY = 230;
+window.scrollTo = (x, y) => { assert.equal(x, 0); assert.equal(y, 230); };
+const dispatch = (node, type, event = {}) => { for (const h of node.handlers) if (h.name === type && !h.signal?.aborted) h.fn(event); };
+contact.showModal = () => { contact.open = true; };
+contact.close = () => { contact.open = false; dispatch(contact, "close"); };
+
 const raw = structuredClone(weddingConfig);
-raw.account.items.push({ visible: true, label: "신랑 측", bank: "은행", holder: "부모님", number: "001-234-567" });
-raw.contact.items.push(
-  { visible: true, label: "신랑 어머니", name: "어머니", phone: "+82 (10) 1234-5678" },
-  { visible: false, label: "숨김", name: "숨김", phone: "010-1111-2222" },
-  { visible: true, name: "잘못된 번호", phone: "abc123" }
-);
+raw.account.items.push({ id: "groom-parent", visible: true, side: "groom" });
+raw.contact.items.push({ id: "groom-parent", visible: true, person: "groomMother" });
 const config = getWeddingConfig(raw);
+const fixtureNumber = "001-234-567"; // Synthetic test data only.
+let requests = 0;
+const api = {
+  async accounts(refs) { requests++; return refs.map(r => ({ ...r, label: "신랑 측", bank: "테스트은행", holder: "테스트", number: fixtureNumber })); },
+  async contacts(refs) { requests++; return refs.map(r => ({ ...r, side: r.person.startsWith("groom") ? "groom" : "bride", label: r.person === "groomMother" ? "신랑 어머니" : "신랑/신부", name: "테스트", dialNumber: "+821012345678" })); }
+};
+const flush = () => new Promise(resolve => setImmediate(resolve));
 assert.equal(config.contact.items.length, 3);
-assert.equal(config.contact.items[1].dialNumber, "+821012345678");
 const accountCards = () => account.querySelector('[data-field="accounts"]').children.flatMap(group => group.children[1].children);
-for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"]) {
+for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn", "moonlight"]) {
   config.templateId = templateId;
-  initAccount(config); initContact(config);
+  const beforeRequests = requests;
+  initAccount(config, {}, api); initContact(config, {}, api);
+  assert.equal(requests, beforeRequests);
   const groups = account.querySelector('[data-field="accounts"]').children;
   assert.equal(groups.length, 2);
+  for (const group of groups) { group.open = true; dispatch(group, "toggle"); }
+  await trigger.click(); await flush();
   assert.equal(groups[0].children[0].textContent, config.account.groupTitles.groom);
   assert.equal(groups[0].children[1].children.length, 2);
   const cards = accountCards();
@@ -79,26 +96,16 @@ let resolveCopy;
 navigator.clipboard.writeText = () => new Promise(resolve => { resolveCopy = resolve; });
 const oldButton = accountCards()[0].children[1].children[1];
 const pending = oldButton.click();
-initAccount(config);
+initAccount(config, {}, api);
 toast.textContent = "unchanged";
 resolveCopy(); await pending; assert.equal(toast.textContent, "unchanged");
 config.account.visible = config.contact.visible = false;
-initAccount(config); initContact(config);
+initAccount(config, {}, api); initContact(config, {}, api);
 assert(account.hidden && trigger.hidden);
 assert.equal(contact.querySelector('[data-field="contacts"]').children.length, 0);
 assert.equal(account.querySelector('[data-field="accounts"]').children.length, 0);
-// Native modal lifecycle: scroll styles and focus are restored on every close path.
-const style = () => ({ values: new Map(), getPropertyValue(k) { return this.values.get(k)?.[0] || ""; }, getPropertyPriority(k) { return this.values.get(k)?.[1] || ""; }, setProperty(k, v, p = "") { this.values.set(k, [v, p]); }, removeProperty(k) { this.values.delete(k); } });
-document.documentElement = { style: style() };
-document.body = { style: style() };
-document.body.style.setProperty("position", "relative", "important");
-window.scrollX = 0; window.scrollY = 230;
-window.scrollTo = (x, y) => { assert.equal(x, 0); assert.equal(y, 230); };
-const dispatch = (node, type, event = {}) => { for (const h of node.handlers) if (h.name === type && !h.signal?.aborted) h.fn(event); };
-contact.showModal = () => { contact.open = true; };
-contact.close = () => { contact.open = false; dispatch(contact, "close"); };
 config.contact.visible = true;
-initContact(config);
+initContact(config, {}, api);
 await trigger.click();
 assert(contact.open);
 assert.equal(document.body.style.getPropertyValue("position"), "fixed");
@@ -116,18 +123,19 @@ await trigger.click();
 await contact.querySelector("[data-contact-close]").click();
 assert(!contact.open);
 await trigger.click();
-initContact(config);
+initContact(config, {}, api);
 assert(!contact.open);
 assert.equal(document.documentElement.style.getPropertyValue("overflow"), "");
 const privateConfig = structuredClone(weddingConfig);
 privateConfig.contact.items = [
-  { person: "groomFather", phone: "01012345678" },
-  { person: "brideMother", visible: "true", phone: "01012345678" },
-  { person: "groomMother", visible: true, phone: "01012345678" }
+  { id: "father", person: "groomFather" },
+  { id: "mother", person: "brideMother", visible: "true" },
+  { id: "mother", person: "groomMother", visible: true }
 ];
 const normalized = getWeddingConfig(privateConfig);
 assert.equal(normalized.contact.items.length, 1);
 assert.equal(normalized.contact.items[0].person, "groomMother");
-assert.equal(normalized.contact.items[0].name, privateConfig.invitation.parents[0].mother);
+assert.equal(normalized.contact.items[0].id, "mother");
+assert(!("phone" in normalized.contact.items[0]));
 console.log("PASS: contact modal open/close/ESC/backdrop/reinitialization, focus and scroll restore, explicit privacy opt-in");
 console.log("PASS: multiple accounts, exact copied number, denied/missing Clipboard API, manual selection, parent contact visibility, tel/sms, toast timer and async cleanup.");

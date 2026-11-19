@@ -2,7 +2,35 @@ export function initHero(config) {
   const section = document.querySelector("#hero");
   if (!section) return;
   section.hidden = !config.hero.visible;
-  section.querySelector("h1").textContent = config.hero.title;
+  const couplePhoto = section.querySelector('[data-field="hero-couple-photo"]');
+  if (couplePhoto) {
+    const photo = config.hero.moonlightPhoto;
+    couplePhoto.hidden = !photo?.visible || !photo.src;
+    couplePhoto.onerror = () => { couplePhoto.hidden = true; };
+    couplePhoto.alt = photo?.alt || "신랑 신부의 웨딩 사진";
+    if (couplePhoto.hidden) couplePhoto.removeAttribute("src");
+    else couplePhoto.src = photo.src;
+  }
+  const title = section.querySelector("h1");
+  const titleText = document.createElement("span");
+  titleText.className = "hero-title-text";
+  titleText.textContent = config.hero.title;
+  title.hidden = !config.hero.title;
+  title.replaceChildren(titleText);
+  const titleImage = config.hero.titleImage;
+  if (titleImage?.visible && titleImage.src) {
+    const image = document.createElement("img");
+    image.className = "hero-title-image";
+    image.alt = titleImage.alt || config.hero.title;
+    image.decoding = "async";
+    image.onerror = () => {
+      title.replaceChildren(titleText);
+      title.hidden = !config.hero.title;
+    };
+    image.src = titleImage.src;
+    title.hidden = false;
+    title.replaceChildren(image);
+  }
   const subtitle = section.querySelector(".eyebrow");
   const subtitleText = document.createElement("span");
   subtitleText.className = "hero-subtitle-text";

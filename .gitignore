@@ -11,3 +11,4 @@ dist/
 .env.*
 !.env.example
 config/public-env.js
+.private-info.local.json

@@ -55,9 +55,19 @@
 
 /* SECTION 01 / 02: all colors, fonts and ornaments come from the active theme. */
 #hero {
+  --hero-viewport-height: 100vh;
   padding-block: 0;
-  align-items: start;
-  min-height: 0;
+  align-items: stretch;
+  min-height: var(--hero-viewport-height);
+}
+/* Keep the decorated panel and Floral background as tall as the viewport.
+   A minimum (not fixed) height lets enlarged text/short landscape screens scroll. */
+#hero .section-inner { min-height: var(--hero-viewport-height); }
+@supports (height: 100svh) {
+  #hero { --hero-viewport-height: 100svh; }
+}
+@supports (height: 100dvh) {
+  #hero { --hero-viewport-height: 100dvh; }
 }
 #hero .section-inner::before {
   width: min(var(--hero-decoration-width), 42%);
@@ -212,18 +222,10 @@
 @media (prefers-reduced-motion: no-preference) {
   #hero .hero-sparkles { display: block; }
   #hero .hero-sparkles span { animation-name: wedding-sparkle; animation-duration: 5.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
-  #hero .section-inner > * { animation: wedding-hero-enter 700ms ease-out backwards; }
-  #hero .hero-media { animation-delay: 80ms; }
-  #hero .hero-names { animation-delay: 160ms; }
-  #hero .hero-date { animation-delay: 220ms; }
   }
 @keyframes wedding-sparkle {
   0%, 55%, 100% { opacity: 0; transform: scale(.45) rotate(-12deg); }
   25% { opacity: .95; transform: scale(1) rotate(8deg); }
-}
-@keyframes wedding-hero-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* SECTION 03: readable date and venue details, shared by both templates. */
@@ -279,6 +281,7 @@
 .countdown-units strong { display: block; font-size: clamp(1.125rem, 5vw, 1.5rem); line-height: 1.4; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--color-heading); overflow-wrap: anywhere; }
 .countdown-units > div > span { display: block; margin-top: 6px; font-size: .75rem; color: var(--color-muted); }
 .countdown-separator { align-self: start; font-size: clamp(1.125rem, 5vw, 1.5rem); line-height: 1.4; color: var(--color-muted); }
+.remote-info-status { padding: 16px 8px; color: var(--color-muted); font-family: var(--font-body); font-size: .875rem; text-align: center; line-height: 1.7; }
 
 /* SECTION 04: thumbnail feedback and accessible theme-aware viewer. */
 #gallery .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

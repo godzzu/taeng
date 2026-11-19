@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <defs><linearGradient id="gold" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse"><stop stop-color="#aa7a3e"/><stop offset=".28" stop-color="#f4d695"/><stop offset=".56" stop-color="#bd9455"/><stop offset=".8" stop-color="#efd18d"/><stop offset="1" stop-color="#91662f"/></linearGradient>
+    <g id="corner" stroke="url(#gold)" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 24V12H8V7H13V3H24M6 24V15Q15 15 15 6H24"/><path d="M5 18Q18 18 18 5M8 11C4 6 12 4 11 9S7 13 9 16M16 9Q19 10 21 7"/><path d="M13 3L15 1L17 3L15 5Z" fill="#dec186" stroke="none"/></g>
+  </defs>
+  <path d="M24 3H76M24 6H76M24 97H76M24 94H76M3 24V76M6 24V76M97 24V76M94 24V76" stroke="url(#gold)" stroke-width=".7"/>
+  <use href="#corner"/><use href="#corner" transform="translate(100 0) scale(-1 1)"/><use href="#corner" transform="translate(0 100) scale(1 -1)"/><use href="#corner" transform="translate(100 100) scale(-1 -1)"/>
+</svg>

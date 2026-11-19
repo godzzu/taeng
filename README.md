@@ -24,17 +24,17 @@ Node.js **20.10 이상**이 필요합니다. 배포 workflow는 Node 22를 사�
 
 | 경로 | 역할 |
 | --- | --- |
-| `config/wedding.config.js` | 이름, 예식 일시, 사진, 문구, 장소, 계좌, 연락처, 음악 key, 표시 여부 |
+| `config/wedding.config.js` | 이름, 예식 일시, 사진, 문구, 장소, 계좌·연락처 조회 ID, 음악 key, 표시 여부 |
 | `.env` | 카카오·Supabase 공개 연결 설정. Git 제외 |
 | `config/app.config.js` | 생성된 공개 설정을 앱에 제공 |
 | `config/public-env.js` | 자동 생성 파일. 직접 편집·커밋하지 않음 |
-| `css/themes/` | 다섯 템플릿의 디자인 |
+| `css/themes/` | 여섯 템플릿의 디자인 |
 | `js/sections/`, `js/services/`, `js/core/` | 화면, 외부 서비스, 공통 로직 |
 | `assets/images/` | 사진, 로고, 장식, 공유 이미지 |
 | `supabase/` | 방명록·관리자·음악 설치 및 검증 SQL |
 | `scripts/`, `tests/` | 빌드, 개발 서버, 테스트 |
 
-지원 templateId: `wedding-floral`, `wedding-sketch`, `wedding-ticket`, `wedding-marble`, `wedding-autumn`.
+지원 templateId: `wedding-floral`, `wedding-sketch`, `wedding-ticket`, `wedding-marble`, `wedding-autumn`, `moonlight`. 현재 기본 테마는 `moonlight`입니다.
 
 갤러리는 `gallery.items`, 소개 사진은 `invitation.parents`의 이미지 설정으로 관리합니다. 예식 일시는 `basic.weddingDate`, `basic.weddingTime`이며 한국 시간 기준입니다. 연결 설정은 [환경변수 안내](docs/environment.md)를 우선 참고하세요. 기존 기능별 문서에 app.config.js 직접 입력 안내가 남아 있다면 .env 방식으로 적용합니다.
 
@@ -46,7 +46,7 @@ Node.js **20.10 이상**이 필요합니다. 배포 workflow는 Node 22를 사�
 - Wedding Day 달력과 박스형 카운트다운. 안내 문구 두 줄과 일 : 시간 : 분 : 초 표시, 예식 시작 시 종료.
 - 갤러리 확대 모달, 키보드·스와이프, 지연 로딩 및 이미지 실패 안내.
 - 지도, 카카오맵·네이버지도 링크, 주소 복사 및 교통·주차 안내.
-- 계좌 아코디언, 복사 및 토스트.
+- 계좌 아코디언, 복사 및 토스트. 계좌·연락처 실제 값은 Supabase에서 클릭 시 조회.
 - Supabase 방명록과 관리자 로그인·공개 전환·삭제·CSV 저장.
 - `music.key`로 Supabase 등록 음원 선택. 고정 스피커 버튼으로 재생·정지. 관리자 음원 업로드 기능 없음.
 - 화면 너비 100%, 최대 448px 및 스크롤 fade-up 효과.
@@ -79,6 +79,7 @@ Node.js **20.10 이상**이 필요합니다. 배포 workflow는 Node 22를 사�
 
 ## 관련 문서
 
+- [연락처·계좌 테이블 설치 및 입력](docs/private-info.md) — 새 버전 배포 전에 설치 필요
 - [환경변수와 빌드](docs/environment.md)
 - [콘텐츠 설정](docs/configuration.md) · [디자인 시스템](docs/design-system.md)
 - [방명록](docs/guestbook.md) · [관리자 설치](docs/guestbook-admin.md) · [음악](docs/music.md)

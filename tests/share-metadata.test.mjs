@@ -5,6 +5,7 @@ import { getShareMetadata, publicHttpsUrl } from "../js/core/share-metadata.js";
 import { renderShareMetadata } from "../scripts/build-share-meta.mjs";
 
 const config = getWeddingConfig();
+config.share.image.src = "./assets/images/og/wedding.png";
 config.share.url = "https://example.com/invitation/";
 const payload = getShareMetadata(config);
 assert.equal(payload.imageUrl, "https://example.com/invitation/assets/images/og/wedding.png");

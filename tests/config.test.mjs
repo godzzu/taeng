@@ -8,6 +8,18 @@ const core = await readFile(new URL("../js/core/config.js", import.meta.url), "u
 const dateUrl = moduleUrl(await readFile(new URL("../js/core/date.js", import.meta.url), "utf8"));
 const { getWeddingConfig } = await import(moduleUrl(core.replace('"../../config/wedding.config.js"', JSON.stringify(rawUrl)).replace('"./date.js"', JSON.stringify(dateUrl))));
 const source = structuredClone(weddingConfig);
+source.templateId = "wedding-floral";
+const moonlight = getWeddingConfig({ ...source, templateId: "moonlight" });
+assert.equal(moonlight.hero.title, source.hero.themeTitles.moonlight);
+assert.equal(moonlight.hero.image.src, source.hero.themeImages.moonlight.src);
+assert.equal(getWeddingConfig({ ...source, templateId: 'moonlight', hero: { ...source.hero, subtitle: 'default', themeSubtitles: { moonlight: '' } } }).hero.subtitle, '');
+assert.equal(getWeddingConfig({ ...source, hero: { ...source.hero, moonlightPhoto: { src: 'javascript:alert(1)' } } }).hero.moonlightPhoto.src, '');
+assert.equal(getWeddingConfig({ ...source, hero: { ...source.hero, moonlightPhoto: { visible: false, src: './photo.jpg' } } }).hero.moonlightPhoto.visible, false);
+assert.equal(getWeddingConfig(source).hero.image.src, source.hero.image.src);
+// Keep test fixtures independent of the invitation owner's edited content.
+source.basic.weddingDate = "2027-05-15"; source.basic.weddingTime = "12:30";
+source.share.title = ""; source.share.description = "";
+source.share.image.src = "./assets/images/og/wedding.png";
 source.share.url = ""; // Exercise current-page fallback independently of deployment settings.
 const config = getWeddingConfig(source);
 assert.deepEqual(getWeddingConfig({ ...source, music: { visible: true, key: ' piano-01 ' } }).music, { visible: true, key: 'piano-01' });
@@ -37,23 +49,25 @@ assert.equal(memorial[0].father, source.invitation.parents[0].father);
 const hiddenFamily = structuredClone(source);
 hiddenFamily.invitation.parents[0].visible = false;
 assert.equal(getWeddingConfig(hiddenFamily).invitation.parents[0].name, source.basic.brideName);
-for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"]) {
+for (const templateId of ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn", "moonlight"]) {
   assert.equal(getWeddingConfig({ ...source, templateId }).templateId, templateId);
 }
 assert.equal(config.gallery.items.length, 6);
 const accountSource = structuredClone(source);
 accountSource.account.items = [
-  { label: "신랑 아버지", number: "001" },
-  { label: "신부 어머니", number: "002" },
-  { label: "기타", number: "003" },
-  { side: "bride", label: "부모님", number: "004" },
+  { id: "a", side: "groom", number: "001" },
+  { id: "b", side: "bride", number: "002" },
+  { id: "c", number: "003" },
+  { id: "d", side: "bride", number: "004" },
   { side: "groom", visible: false, number: "005" }
 ];
 assert.deepEqual(getWeddingConfig(accountSource).account.items.map(row => row.side), ["groom", "bride", "other", "bride"]);
 assert.equal(config.basic.timeLabel, "오후 12시 30분");
 assert.match(config.basic.dateLabel, /토요일/);
 assert(config.invitation.message.includes("\n"));
-assert.equal(config.contact.items[0].name, source.basic.groomName);
+assert.equal(config.contact.items[0].id, "groom");
+assert(!("number" in getWeddingConfig(accountSource).account.items[0]));
+assert(!("phone" in config.contact.items[0]));
 config.account.items[0].number = "changed";
 assert.notEqual(source.account.items[0].number, "changed");
 source.basic.groomName = "새 이름";
@@ -107,7 +121,7 @@ globalThis.document = {
   }
 };
 globalThis.getComputedStyle = () => ({ getPropertyValue: () => " #0d1c42 " });
-for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding-marble", "wedding-autumn", "wedding-ticket"]) {
+for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding-marble", "wedding-autumn", "moonlight", "wedding-ticket"]) {
   assert.equal(applyTheme(id), id);
   assert.equal(document.documentElement.dataset.theme, id);
   assert.equal(themeMeta.content, "#0d1c42");
@@ -115,4 +129,4 @@ for (const id of ["wedding-ticket", "wedding-floral", "wedding-sketch", "wedding
 assert.equal(applyTheme("unknown"), "wedding-floral");
 delete globalThis.document;
 delete globalThis.getComputedStyle;
-console.log("PASS: five-theme switching, theme-color and fallback without section rendering");
+console.log("PASS: six-theme switching, theme-color and fallback without section rendering");

@@ -1,8 +1,10 @@
+import { createPrivateInfoApi } from "../services/private-info-api.js";
+import { createRemoteInfoLoader } from "../core/remote-info.js";
 import { showToast, createElement } from "../core/utils.js";
 import { copyText } from "../services/clipboard.js";
 
 let disposeAccount;
-export function initAccount(config) {
+export function initAccount(config, settings = {}, api = createPrivateInfoApi(settings)) {
   disposeAccount?.();
   const section = document.querySelector("#account");
   if (!section) return;
@@ -21,7 +23,7 @@ export function initAccount(config) {
   list.replaceChildren();
   if (section.hidden) return;
 
-  const groups = new Map();
+
   for (const side of ["groom", "bride", "other"]) {
     if (!config.account.items.some(account => account.side === side)) continue;
     const group = createElement("details", "account-group");
@@ -29,9 +31,12 @@ export function initAccount(config) {
     const content = createElement("div", "account-group-content");
     group.append(summary, content);
     list.append(group);
-    groups.set(side, content);
+    const refs = config.account.items.filter(row => row.side === side);
+    const load = createRemoteInfoLoader(content, signal => api.accounts(refs, signal), rows => renderCards(content, rows), events.signal);
+    group.addEventListener("toggle", () => { if (group.open) void load(); }, { signal: events.signal });
   }
-  config.account.items.forEach(account => {
+  function renderCards(content, rows) {
+  rows.forEach(account => {
     const card = createElement("div", "account-card");
     const header = createElement("div", "account-card-header");
     header.append(createElement("strong", "account-side", account.label));
@@ -79,6 +84,7 @@ export function initAccount(config) {
     }, { signal: events.signal });
     payment.append(details, button);
     card.append(header, payment, fallback);
-    groups.get(account.side).append(card);
+    content.append(card);
   });
+  }
 }

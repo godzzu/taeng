@@ -1,10 +1,39 @@
 # 모바일 청첩장 디자인 시스템
 
-최종 정리: 2026-11-07. Floral·Sketch·Ticket 세 템플릿을 지원한다. 기존 8개 섹션 DOM, 설정 데이터, 갤러리·지도·복사·방명록·공유 기능은 유지한다.
+최종 정리: 2026-11-19. Floral·Sketch·Ticket·Marble·Autumn·Moonlight 여섯 템플릿을 지원한다. 공통 DOM과 갤러리·지도·복사·방명록·음악 기능을 유지한다. 연락처는 Invitation의 모달로 제공한다.
+
+## Moonlight — 달빛 아래 황실의 서약
+
+버튼·박스: 버건디 그라데이션 위에 `control-frame.svg`의 이중 금선과 꺾인 모서리 장식을 9분할로 적용한다. 축하연락하기·지도·등록 버튼, 카운트다운, 정보 카드, 계좌 그룹/카드, 방명록 카드에 적용하며 작은 버튼은 장식을 축소한다. 입력창은 간결한 이중 금선으로 표현한다. 복사·전화 아이콘 pseudo-element와 포커스 표시, 44px 버튼 터치 영역을 유지한다. 카운트다운 문구와 숫자 사이에는 금색 구분선을 둔다.
+
+섹션 배경 배치: `section-roses.png`는 Invitation·Location·Account, `section-rings.png`는 Wedding day(`#wedding-info`)·Gallery·Guestbook에 적용한다. CSS `border-image-slice`의 fill로 배경과 테두리를 함께 표시하며 기존 왕관·꽃 pseudo-element 장식은 숨긴다. 상하 장식 높이는 화면 너비에 맞춰 제한하고 가운데 네이비 영역만 콘텐츠 길이에 따라 늘린다. 계좌 펼침이나 방명록 추가 시에도 장식과 텍스트가 겹치지 않도록 상하 패딩을 확보한다. Hero는 기존 배경을 유지한다.
+
+최신 조정: 제목 이미지는 `title-champagne-gold.png`를 사용한다. 기존 이미지의 노란 윤곽과 흰색 면을 샴페인·앤틱골드로 조정했다. 원본은 보관한다. 이름 하단 margin은 0, 예식정보 상단 margin은 4px이다.
+
+이미지 편집: built-in imagegen. 프롬프트: Preserve exact Korean lettering “우리 결혼합니다”, layout and swashes; recolor lemon outlines to antique gold #B79A58 and bronze #8E7549, white interiors to pale champagne #F3E4BE and #E3C187 restrained metallic highlights; soften gray shadow to bronze; preserve transparent background; no added ornaments or text.
+
+현재 Hero 제목은 사용자가 제공한 `title-wearegettingmarried.png`로 표시한다. `hero.themeTitleImages.moonlight`에서 이미지 경로·설명을 관리하며, 기존 제목 텍스트는 이미지 로딩 실패 시에만 대체 표시한다. 아래 폰트 디자인 설명은 이전 작업 기록이다. 신랑·신부 사진 최대 폭은 308px이며 제목 아래의 남는 공간을 위쪽으로 배분하고, 사진과 이름 사이 간격은 12px로 유지한다. 작은 화면에서는 내부 너비를 넘지 않도록 축소한다.
+
+현재 제목 최종 수정: Nymphette 장식과 금빛 그라데이션·광택 필터를 제거하고 단색 샴페인골드로 표시한다. `HeirofLightBold.ttf` 원본을 `HeirOfLightTitle` 웹폰트로 등록하여 h1과 내부 텍스트에 직접 지정한다. 아래 Nymphette 설명은 이전 디자인 기록이며 현재 사용하지 않는다. TTF 내부 이름과 제목의 모든 한글 글리프를 확인했다.
+
+Hero 메인 문구는 `우리\n결혼합니다`를 실제 `h1` 텍스트로 표시한다. 사용자가 제공한 빛의계승자 Bold와 샴페인·앤틱골드 그라데이션을 사용하며, 위아래는 Lauren Thompson의 Nymphette q/e 장식으로 꾸민다. 이전 영문 캘리그래피·SVG 곡선·이동 반짝임은 제거했다. 장식은 aria-hidden이며 다른 테마에서는 숨긴다. 폰트는 `assets/fonts/moonlight/`에서 자체 호스팅한다. 문구는 `hero.themeTitles.moonlight`에서 수정하고, 빈 `hero.themeSubtitles.moonlight`는 영문 보조 문구를 숨긴다.
+
+Hero의 장식 배경은 `hero.themeImages.moonlight`, 신랑·신부 사진은 `hero.moonlightPhoto`로 각각 설정한다. 사진의 `src`에 경로, `alt`에 설명을 입력하며 `visible: false` 또는 빈 경로이면 숨긴다. 로딩 실패 시에도 사진만 숨기고 배경과 문구는 유지한다. 사진은 제목과 이름 사이에 금색 아치 프레임으로 표시하며 다른 테마에서는 노출하지 않는다. 사진 추가로 내용이 길어지면 hero 높이가 자연스럽게 늘어난다.
+
+- ID: `moonlight`, CSS: `css/themes/moonlight.css`. 기본 활성 테마로 설정했다.
+- 배경 `#10182D`, 카드 `#172037`, 본문 `#F3E9D6`, 보조 글자 `#C7BCA9`, 제목 `#EED6A1`, 금색 `#C9AA6B`, 버건디 `#482034`.
+- 한글·숫자: MaruBuri 명조. 영문 장식 제목: Allura 캘리그래피. 본문·달력은 공통 크기를 유지한다.
+- 너비 100%, 최대 448px. 섹션 간격 0, 내부 좌우 24–40px, 상하 64/72px. 금박 프레임은 클릭을 방해하지 않는 장식 레이어다.
+- Hero: 황궁과 달을 제거한 딥네이비 배경에 금빛 왕관·테두리, 장미·촛불을 배치한다. `hero-navy-frame.png`를 섹션 전체에 맞춰 표시하여 테두리 잘림을 방지한다. 중복 CSS 프레임과 어두운 오버레이는 사용하지 않는다.
+- Invitation: 장미·왕관 장식. 나머지 섹션: 금색 왕관 문양. 버튼·카운트다운: 버건디 바탕과 금색 테두리. 달력 선택일: 금색 바탕과 네이비 글자.
+- 자산: `assets/images/templates/moonlight/`의 `hero-navy-frame.png`, `roses.png`, `frame.svg`, `crest.svg`. 이전 배경 `palace.png`는 원본으로 보관한다.
+- `hero.themeTitles`, `hero.themeSubtitles`, `hero.themeImages`의 `moonlight` 값은 설정 로딩 시 적용한다. 다른 테마는 기본 hero 콘텐츠를 사용한다. `applyTheme()`는 CSS만 전환하므로 콘텐츠 변경은 설정 후 새로고침한다.
+- 기존 스크롤 등장 효과와 reduced-motion 설정을 유지한다. 이름·날짜·제목은 실제 HTML이며 이미지에 합성하지 않는다.
+- 생성 도구: built-in imagegen. 배경 프롬프트: “Portrait moonlit Gothic imperial palace, deep navy and burgundy, ornate antique gold arch, ruby crown, full moon, quiet title space above and name space below, red roses and candles, romantic fantasy wedding illustration, no text.” 장식 프롬프트: “Transparent horizontal ornament, antique gold crown with ruby, symmetric burgundy roses and gold botanical filigree, painterly romantic fantasy webtoon style, no text or background.”
 
 ## 구조와 테마 전환
 
-- `config/wedding.config.js`: 콘텐츠와 `templateId`. 현재 기본값은 `wedding-sketch`.
+- `config/wedding.config.js`: 콘텐츠와 `templateId`. 현재 기본값은 `moonlight`.
 - `css/variables.css`: 공통 토큰 계약과 폴백.
 - `css/common.css`, `css/layout.css`: 공통 타이포그래피·레이아웃·접근성·반응형.
 - `css/components/sections.css`, `buttons.css`: 공통 섹션 및 버튼 동작 표현.
@@ -18,7 +47,7 @@ applyTheme('wedding-sketch');
 applyTheme('wedding-ticket');
 ```
 
-`applyTheme`는 루트 `data-theme`과 `theme-color`만 갱신한다. HTML 재생성이나 섹션 재초기화가 없으므로 입력값, 이벤트와 모달 상태를 유지한다. 세 테마 CSS는 항상 로드한다.
+`applyTheme`는 루트 `data-theme`과 `theme-color`만 갱신한다. HTML 재생성이나 섹션 재초기화가 없으므로 입력값, 이벤트와 모달 상태를 유지한다. 여섯 테마 CSS는 항상 로드한다.
 
 ## Floral 색상
 
@@ -352,3 +381,13 @@ main 바로 아래 모든 공개 섹션(Hero, Invitation, Wedding Day, Location,
 ## Floral 교대 테두리 — 2026-11-14
 
 Floral의 표시되는 섹션은 첫 번째부터 단선과 이중선을 번갈아 적용한다. hidden 섹션은 순서에서 제외한다. 기본은 1px 단선이며 짝수 번째 공개 섹션은 안쪽 4px 위치에 선을 추가한다. Hero 아치와 Invitation 직선 형태, 전체 너비 및 내부 콘텐츠 여백은 유지한다.
+
+## Hero 화면 높이 대응 (2026-11-19)
+
+모든 템플릿의 hero와 내부 장식 패널은 공통 `--hero-viewport-height`를 최소 높이로 사용합니다. `100vh`를 기본으로 지원 브라우저에서 `100svh`, `100dvh` 순서로 적용하여 모바일 주소창 변화에도 현재 화면 높이를 채웁니다. Floral의 기존 580~680px 최소 높이 제한은 제거했으며 배경 사진도 패널 높이를 따릅니다. 고정 높이가 아니므로 가로 화면·큰 글씨·긴 콘텐츠에서는 잘리지 않고 필요한 만큼 늘어납니다. 기존 최대 너비 448px는 유지합니다.
+
+## 요소별 스크롤 fade-up (2026-11-19)
+
+섹션 패널 전체의 fade-up을 제목·부제목·문구·날짜·소개 사진/설명·갤러리 항목·교통 안내·계좌 내용·방명록 텍스트 등 개별 요소로 변경했습니다. 화면에 진입할 때 한 번만 재생하며, 같은 관찰 콜백에서 등장하는 요소는 60ms 간격(최대 240ms)으로 순차 표시합니다. 지속시간은 650ms, 이동 거리는 24px입니다.
+
+MutationObserver로 조회 후 추가된 계좌·방명록과 hidden 해제 요소도 등록합니다. 카드와 내부 문구가 중첩되어 이중 이동하지 않도록 처리하며 카운트다운 숫자 갱신으로 효과를 반복하지 않습니다. SDK 지도 내부·사진 슬라이드 레이어·실시간 오류 안내는 제외합니다. 기존 hero 전체 진입 효과는 제거하고 꽃잎·반짝임·글자 쓰기 효과는 유지합니다. 모션 감소 설정에서는 fade-up과 대기 중 투명 효과를 적용하지 않으며 키보드 포커스가 들어간 요소는 즉시 표시합니다.

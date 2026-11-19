@@ -2,11 +2,17 @@
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
   music: { visible: true, key: "atlasaudio2" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
-  templateId: "wedding-floral",
+  templateId: "moonlight",
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-11-06", weddingTime: "11:00" },
   hero: {
     visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
-    image: { visible: true, src: "./assets/images/gallery/sample01.jpg", alt: "신랑 신부의 웨딩 사진" }
+    themeTitles: { moonlight: "" },
+    themeTitleImages: { moonlight: { visible: true, src: "./assets/images/templates/moonlight/title-champagne-gold.png", alt: "우리 결혼합니다" } },
+    themeSubtitles: { moonlight: "" },
+    themeImages: { moonlight: { visible: true, src: "./assets/images/templates/moonlight/section-arch.png", alt: "" } },
+    // moonlight의 장식 배경(themeImages) 위에 표시할 신랑·신부 사진. visible: false로 숨깁니다.
+    moonlightPhoto: { visible: true, src: "./assets/images/gallery/sample02.png", alt: "신랑 신부의 웨딩 사진" },
+    image: { visible: true, src: "./assets/images/gallery/sample02.png", alt: "신랑 신부의 웨딩 사진" }
   },
   invitation: {
     visible: true, title: "", subtitle: "INVITATION",
@@ -62,20 +68,20 @@ export const weddingConfig = {
     description: "축하의 마음을 전하실 분들을 위해 계좌 정보를 안내합니다.",
     groupTitles: { groom: "신랑측 마음 전하는 곳", bride: "신부측 마음 전하는 곳", other: "마음 전하는 곳" },
     items: [
-      { visible: true, side: "groom", label: "신랑", bank: "OO은행", holder: "홍길동", number: "000-000-000000" },
-      { visible: true, side: "bride", label: "신부", bank: "OO은행", holder: "김하나", number: "000-000-000000" }
+      { visible: true, id: "groom", side: "groom" },
+      { visible: true, id: "bride", side: "bride" }
     ]
   },
   contact: {
     visible: true, title: "축하연락하기", subtitle: "CONTACT",
+    // 개인정보는 Supabase에서 관리합니다. ID는 테이블의 id와 일치해야 합니다.
     items: [
-      { visible: true, label: "신랑", name: "", person: "groom", phone: "010-4966-1988" },
-      { visible: true, label: "신부", name: "", person: "bride", phone: "010-4966-1988" },
-      // 부모님 연락처는 실제 정보를 입력하고 visible을 true로 변경하세요.
-      { visible: false, label: "신랑 아버지", person: "groomFather", name: "", phone: "" },
-      { visible: false, label: "신랑 어머니", person: "groomMother", name: "", phone: "" },
-      { visible: false, label: "신부 아버지", person: "brideFather", name: "", phone: "" },
-      { visible: false, label: "신부 어머니", person: "brideMother", name: "", phone: "" }
+      { visible: true, id: "groom", person: "groom" },
+      { visible: true, id: "bride", person: "bride" },
+      { visible: false, id: "groom-father", person: "groomFather" },
+      { visible: false, id: "groom-mother", person: "groomMother" },
+      { visible: false, id: "bride-father", person: "brideFather" },
+      { visible: false, id: "bride-mother", person: "brideMother" }
     ]
   },
   guestbook: {

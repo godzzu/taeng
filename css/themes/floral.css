@@ -63,7 +63,6 @@ html[data-theme="wedding-floral"] #hero .section-inner {
   padding-top: 72px; padding-bottom: 32px; display: flex; flex-direction: column;
   background: var(--color-background) var(--paper-image);
 }
-html[data-theme="wedding-floral"] #hero .section-inner:has(.hero-media:not([hidden])) { min-height: clamp(580px, 145vw, 680px); }
 html[data-theme="wedding-floral"] #hero .section-inner::after { inset: 0; border-radius: 240px 240px 0 0; box-shadow: none; z-index: 2; }
 /* Count only visible sections, so optional sections do not break the alternation. */
 html[data-theme="wedding-floral"] #main-content > .section:nth-child(even of .section:not([hidden])) .section-inner::after {

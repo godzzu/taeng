@@ -15,7 +15,7 @@ const mimeTypes = {
   ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
   ".webp": "image/webp", ".avif": "image/avif", ".gif": "image/gif",
   ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2",
-  ".ttf": "font/ttf", ".mp3": "audio/mpeg", ".mp4": "video/mp4"
+  ".ttf": "font/ttf", ".otf": "font/otf", ".mp3": "audio/mpeg", ".mp4": "video/mp4"
 };
 
 export function createDevServer() {

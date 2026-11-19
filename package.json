@@ -11,7 +11,7 @@
     "start": "node scripts/with-env.mjs scripts/dev-server.mjs",
     "dev": "node scripts/with-env.mjs scripts/dev-server.mjs",
     "build:meta": "node scripts/build-share-meta.mjs",
-    "test": "node tests/env.test.mjs && node tests/config.test.mjs && node tests/invitation.test.mjs && node tests/date.test.mjs && node tests/gallery.test.mjs && node tests/location.test.mjs && node tests/account-contact.test.mjs && node tests/guestbook.test.mjs && node tests/guestbook-admin.test.mjs && node tests/admin-ui.test.mjs && node tests/music.test.mjs && node tests/share-metadata.test.mjs && node tests/server.test.mjs",
+    "test": "node tests/env.test.mjs && node tests/config.test.mjs && node tests/invitation.test.mjs && node tests/date.test.mjs && node tests/section-motion.test.mjs && node tests/gallery.test.mjs && node tests/location.test.mjs && node tests/private-info.test.mjs && node tests/account-contact.test.mjs && node tests/guestbook.test.mjs && node tests/guestbook-admin.test.mjs && node tests/admin-ui.test.mjs && node tests/music.test.mjs && node tests/share-metadata.test.mjs && node tests/server.test.mjs",
     "build:config": "node scripts/with-env.mjs scripts/build-config.mjs",
     "build": "node scripts/with-env.mjs scripts/build.mjs",
     "pretest": "npm run build:config"

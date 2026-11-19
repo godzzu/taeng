@@ -1,7 +1,9 @@
+import { createPrivateInfoApi } from "../services/private-info-api.js";
+import { createRemoteInfoLoader } from "../core/remote-info.js";
 import { createElement } from "../core/utils.js";
 
 let disposeContact;
-export function initContact(config) {
+export function initContact(config, settings = {}, api = createPrivateInfoApi(settings)) {
   disposeContact?.();
   const trigger = document.querySelector("[data-contact-open]");
   const dialog = document.querySelector("[data-contact-dialog]");
@@ -17,9 +19,9 @@ export function initContact(config) {
   list.replaceChildren();
   let restore;
   let backdropStart = false;
-  if (!trigger.hidden) {
+  const load = createRemoteInfoLoader(list, signal => api.contacts(config.contact.items, signal), rows => {
     let previousSide;
-    for (const contact of config.contact.items) {
+    for (const contact of rows) {
       const row = createElement("div", "contact-dialog-row" + (previousSide && previousSide !== contact.side ? " contact-group-start" : ""));
       previousSide = contact.side;
       row.append(createElement("span", "contact-role", contact.label));
@@ -36,7 +38,7 @@ export function initContact(config) {
       row.append(actions);
       list.append(row);
     }
-  }
+  }, events.signal);
   function unlock() {
     if (!restore) return;
     const release = restore;
@@ -75,7 +77,7 @@ export function initContact(config) {
       if (behavior) root.style.setProperty("scroll-behavior", behavior, priority);
       else root.style.removeProperty("scroll-behavior");
     };
-    try { dialog.showModal(); close.focus({ preventScroll: true }); }
+    try { dialog.showModal(); close.focus({ preventScroll: true }); void load(); }
     catch (error) { unlock(); throw error; }
   });
   on(close, "click", dismiss);

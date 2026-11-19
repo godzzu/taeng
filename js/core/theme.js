@@ -1,4 +1,4 @@
-const VALID_THEMES = ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn"];
+const VALID_THEMES = ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn", "moonlight"];
 
 export function applyTheme(templateId = "wedding-floral") {
   const selected = VALID_THEMES.includes(templateId) ? templateId : "wedding-floral";

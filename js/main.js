@@ -24,8 +24,8 @@ function initializeWedding() {
   initWeddingInfo(config);
   initGallery(config);
   initLocation(config, appConfig);
-  initAccount(config);
-  initContact(config);
+  initAccount(config, appConfig);
+  initContact(config, appConfig);
   initGuestbook(config, appConfig);
   initMusic(config, appConfig);
   initSectionMotion();

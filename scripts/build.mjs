@@ -4,10 +4,18 @@ import { join } from "node:path";
 import { publicConfig, writePublicConfig } from "./build-config.mjs";
 import { renderShareMetadata } from "./build-share-meta.mjs";
 import { getWeddingConfig } from "../js/core/config.js";
+import { weddingConfig } from "../config/wedding.config.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const output = join(root, "dist");
 publicConfig(); // Validate before replacing the previous build.
+for (const section of ["account", "contact"]) {
+  for (const row of weddingConfig[section]?.items || []) {
+    if (["phone", "dialNumber", "bank", "holder", "number", "account_number", "name"].some(key => key in row)) {
+      throw new Error(`${section}.items must contain lookup references only. Manage personal values in Supabase.`);
+    }
+  }
+}
 // Fixed workspace-local build directory, never a path supplied by configuration.
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
