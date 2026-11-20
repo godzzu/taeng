@@ -7,10 +7,25 @@ export function initInvitation(config) {
   const section = document.querySelector("#invitation");
   if (!section) return;
   section.hidden = !config.invitation.visible;
-  section.querySelector("h2").textContent = config.invitation.title;
+  const title = section.querySelector("h2");
+  title.textContent = config.invitation.title;
   const subtitle = section.querySelector(".eyebrow");
   subtitle.textContent = config.invitation.subtitle;
   subtitle.hidden = !config.invitation.subtitle;
+  const titleImage = config.invitation.titleImage;
+  if (titleImage?.visible && titleImage.src) {
+    const image = createElement("img", "invitation-title-image");
+    image.alt = titleImage.alt || "초대합니다";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.onerror = () => {
+      title.textContent = config.invitation.title || titleImage.alt || "초대합니다";
+      subtitle.hidden = !config.invitation.subtitle;
+    };
+    image.src = titleImage.src;
+    title.replaceChildren(image);
+    subtitle.hidden = true;
+  }
   const message = section.querySelector('[data-field="message"]');
   message.textContent = config.invitation.message;
   message.hidden = !config.invitation.message.trim();

@@ -2,7 +2,7 @@
 // 날짜/시간은 한국 시간이며, 표시 문구는 자동 생성됩니다.
 export const weddingConfig = {
   music: { visible: true, key: "atlasaudio2" }, // Supabase music_tracks에 등록된 key. 비워 두면 음악을 사용하지 않습니다.
-  templateId: "moonlight",
+  templateId: "moonlight", // wedding-floral, wedding-sketch, wedding-ticket, wedding-marble, wedding-autumn, moonlight
   basic: { groomName: "홍길동", brideName: "김하나", weddingDate: "2027-11-06", weddingTime: "11:00" },
   hero: {
     visible: true, title: "", subtitle: "WE ARE GETTING MARRIED",
@@ -16,6 +16,7 @@ export const weddingConfig = {
   },
   invitation: {
     visible: true, title: "", subtitle: "INVITATION",
+    themeTitleImages: { moonlight: { visible: true, src: "./assets/images/templates/moonlight/invitation-eng-gold.png", alt: "Invitation · 초대합니다" } },
     message: "서로의 이름을 부르며 살아온 두 사람이\n이제 하나의 이름으로 새로운 시작을 합니다.\n따뜻한 마음으로 축복해 주세요.",
     parents: [
       // 고인인 부모님만 fatherDeceased 또는 motherDeceased를 true로 설정합니다.
@@ -33,6 +34,7 @@ export const weddingConfig = {
   },
   // 장소 정보는 이곳에서 한 번만 입력합니다. 오시는 길에서도 공유합니다.
   weddingInfo: {
+    themeTitleImages: { moonlight: { visible: true, src: "./assets/images/templates/moonlight/weddingday-eng-gold.png", alt: "Wedding Day · 예식일 안내" } },
     visible: true, title: "", subtitle: "WEDDING DAY",
     venue: "보타닉파크웨딩", hall: "2층 그랜드홀", address: "서울특별시 강서구 마곡중앙5로 6 보타닉푸르지오시티 L층",
     showCountdown: true

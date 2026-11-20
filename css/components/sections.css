@@ -229,6 +229,7 @@
 }
 
 /* SECTION 03: readable date and venue details, shared by both templates. */
+.wedding-datetime-separator { display: none; }
 #wedding-info { scroll-margin-top: 80px; }
 #wedding-info .date-large,
 #wedding-info .wedding-time { font-size: 1.0625rem; }

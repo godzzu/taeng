@@ -4,6 +4,18 @@
 
 ## Moonlight — 달빛 아래 황실의 서약
 
+Wedding Day 제목은 `weddingInfo.themeTitleImages.moonlight`의 `weddingday-eng-gold.png`로 교체한다. 최대 280px/내부 폭 90%, 중앙 정렬, 원본 비율 유지. 기존 텍스트 부제는 이미지 사용 시 숨기며 이미지 실패 시 텍스트로 복구한다. 원본 `weddingday_eng.png`는 보관한다. built-in imagegen 편집 프롬프트: Preserve WeddingDay spelling, italic letterforms, swashes and decorations; recolor purple to champagne #F3E4BE and antique gold #C9AA6B, bronze outline, restrained metallic highlights; remove heavy gray halo, transparent background, no crop or layout change.
+
+Invitation 최신 제목: 사용자가 제공한 `invitation_eng.png`를 금색으로 편집한 `invitation-eng-gold.png`. 폭은 82%, 최대 256px, 높이는 원본 비율로 표시한다. 영문만 있는 주 제목이므로 불투명하게 표시하고 중앙 정렬을 유지한다. 원본 파일은 보관한다. 편집 도구는 built-in imagegen이며 프롬프트는 “Preserve exact Invitation lettering, swashes, underline and stars; recolor purple to champagne #F3E4BE and antique gold #C9AA6B with bronze outlines; remove heavy gray halo; transparent background, no cropping or layout changes.”이다.
+
+한글 폰트 최종 통일: `--font-body`와 이를 참조하는 `--font-display`에 `HeirofLightOTFRegular.otf`(`HeirOfLightTitle`)를 적용한다. 본문·이름·부모님 설명·날짜·달력·버튼·입력창·연락처 모달에 공통 적용하며 합성 굵기/기울임을 사용하지 않는다. 영문 부제는 Antique Quest St를 유지하고, 이미지로 된 제목의 글자 모양은 바뀌지 않는다.
+
+Invitation 제목 최신 이미지: `title-invitation-gold-soft.png`. 영문 Invitation만 약 30% 불투명도를 목표로 imagegen에서 반투명 편집하고, 한글과 장식은 불투명하게 유지했다. 픽셀별 알파는 가장자리와 음영에 따라 달라진다. 편집 프롬프트: Preserve Korean lettering and gold ornaments; reduce only the English Invitation lettering, outlines and shadows to approximately 30% alpha, retain position and transparent background. 기존 gold 파일은 원본으로 보관한다.
+
+Invitation 제목은 `invitation.themeTitleImages.moonlight`의 `title-invitation-gold.png`로 표시한다. 원본 `title-invitation.png`는 보관하며, 표시 폭은 콘텐츠의 90%, 최대 280px이고 높이는 원본 비율을 유지한다. 이미지가 있을 때 기존 제목·INVITATION 부제는 중복 표시하지 않는다. 로딩 실패 시 접근 가능한 텍스트 제목으로 복구한다.
+
+편집 도구: built-in imagegen. 프롬프트: Preserve exact Korean “초대합니다” and English “Invitation”, lettering, swashes and layout; recolor purple/violet/navy to champagne #F3E4BE, antique gold #C9AA6B and bronze #8E7549 outlines with restrained gold foil highlights; transparent background, no crop or new decoration.
+
 버튼·박스: 버건디 그라데이션 위에 `control-frame.svg`의 이중 금선과 꺾인 모서리 장식을 9분할로 적용한다. 축하연락하기·지도·등록 버튼, 카운트다운, 정보 카드, 계좌 그룹/카드, 방명록 카드에 적용하며 작은 버튼은 장식을 축소한다. 입력창은 간결한 이중 금선으로 표현한다. 복사·전화 아이콘 pseudo-element와 포커스 표시, 44px 버튼 터치 영역을 유지한다. 카운트다운 문구와 숫자 사이에는 금색 구분선을 둔다.
 
 섹션 배경 배치: `section-roses.png`는 Invitation·Location·Account, `section-rings.png`는 Wedding day(`#wedding-info`)·Gallery·Guestbook에 적용한다. CSS `border-image-slice`의 fill로 배경과 테두리를 함께 표시하며 기존 왕관·꽃 pseudo-element 장식은 숨긴다. 상하 장식 높이는 화면 너비에 맞춰 제한하고 가운데 네이비 영역만 콘텐츠 길이에 따라 늘린다. 계좌 펼침이나 방명록 추가 시에도 장식과 텍스트가 겹치지 않도록 상하 패딩을 확보한다. Hero는 기존 배경을 유지한다.

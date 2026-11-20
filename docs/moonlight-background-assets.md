@@ -1,5 +1,9 @@
 # Moonlight 섹션 배경 3종
 
+최신 적용: Hero를 제외한 여섯 섹션은 `section-roses-clean-bottom.png` / `section-rings-clean-bottom.png`를 사용한다. 하단 장미·촛불·랜턴과 관련 정물(잎·천·진주)을 제거하고 상단 장식과 금색 프레임을 유지했다. 원본 이미지는 보관한다. 하단 slice는 145px, 표시 높이는 52–73px로 줄여 불필요한 여백을 제거했다.
+
+편집 도구: built-in imagegen. 각 원본에 적용한 프롬프트: Remove all lower floral and candle still life including leaves, lantern, cloth, pearls and glow; replace with matching deep navy texture; preserve upper ornaments, thin gold frame and bottom corner filigree, same portrait proportions, no crop or added text.
+
 시안에서 텍스트와 UI를 제거하고 재구성한 배경·테두리 일체형 PNG. 현재 Moonlight의 Invitation·Location·Account에는 section-roses.png, Wedding day·Gallery·Guestbook에는 section-rings.png를 적용했다. Hero는 기존 설정을 유지한다.
 
 | 파일 (assets/images/templates/moonlight/) | 디자인 | 권장 용도 |

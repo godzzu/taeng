@@ -1,8 +1,13 @@
 /* Moonlit Imperial — shared markup, dark surfaces, antique gold and ruby accents. */
 @font-face {
   font-family: "HeirOfLightTitle";
-  src: url("../../assets/fonts/moonlight/HeirofLightBold.ttf") format("truetype");
-  font-weight: 700; font-style: normal; font-display: swap;
+  src: url("../../assets/fonts/moonlight/HeirofLightOTFRegular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Antique Quest St";
+  src: url("../../assets/fonts/moonlight/Antique Quest St.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
 }
 .hero-couple-photo { display: none; }
 html[data-theme="moonlight"] #hero .hero-couple-photo {
@@ -20,10 +25,12 @@ html[data-theme="moonlight"] #hero .hero-couple-photo {
 }
 html[data-theme="moonlight"] #hero .hero-couple-photo:not([hidden]) ~ .hero-names { padding-top: 0; margin-top: 0; }
 html[data-theme="moonlight"] #hero .hero-title-image {
-  display: block; width: 100%; height: auto; object-fit: contain;
+  display: block; width: 90%; height: auto; margin-inline: auto;
+  justify-self: center; object-fit: contain; object-position: center;
 }
 html[data-theme="moonlight"] {
   color-scheme: dark;
+  font-synthesis: none;
   --color-primary: #c9aa6b;
   --color-secondary: #8e455c;
   --color-background: #10182d;
@@ -40,9 +47,9 @@ html[data-theme="moonlight"] {
   --color-focus: #ffe0a4;
   --color-overlay: #080d1b;
   --color-on-overlay: #f3e9d6;
-  --font-body: "MaruBuri", "Noto Serif KR", "Batang", serif;
+  --font-body: "HeirOfLightTitle", "MaruBuri", "Noto Serif KR", "Batang", serif;
   --font-display: var(--font-body);
-  --font-script: "Allura", "Segoe Script", cursive;
+  --font-script: "Antique Quest St", "HeirOfLightTitle", serif;
   --section-space: 0px;
   --page-gutter: clamp(20px, 6vw, 36px);
   --card-padding: clamp(12px, 4vw, 22px);
@@ -77,11 +84,16 @@ html[data-theme="moonlight"] .section-inner::before {
 }
 html[data-theme="moonlight"] .section + .section::before { display: none; }
 html[data-theme="moonlight"] .eyebrow {
+  font-weight: 400; font-style: normal; font-synthesis: none;
   font-family: var(--font-script); font-size: clamp(2.2rem, 10vw, 3rem);
   line-height: 1.15; letter-spacing: 0; text-transform: lowercase;
   color: var(--color-heading); margin-bottom: 24px;
 }
 html[data-theme="moonlight"] h2:empty { display: none; }
+html[data-theme="moonlight"] .section h2 {
+  font-family: "HeirOfLightTitle", "MaruBuri", serif;
+  font-weight: 400; font-style: normal; font-synthesis: none;
+}
 html[data-theme="moonlight"] #hero .section-inner {
   display: flex; flex-direction: column; padding-top: clamp(102px, 18vh, 156px);
   padding-bottom: max(42px, env(safe-area-inset-bottom, 0px));
@@ -103,21 +115,21 @@ html[data-theme="moonlight"] #hero .hero-media::after {
   background: none;
 }
 html[data-theme="moonlight"] #hero .eyebrow {
-  font-family: var(--font-body); font-size: .65rem; letter-spacing: .22em;
+  font-family: var(--font-script); font-size: .65rem; letter-spacing: .22em;
   text-transform: none; margin-bottom: 12px; color: #f3e9d6;
 }
 html[data-theme="moonlight"] #hero h1 {
   display: grid; justify-items: center; gap: 6px;
   width: 100%; max-width: 360px;
   font-family: "HeirOfLightTitle", "MaruBuri", serif;
-  font-style: normal; font-weight: 700; font-size: clamp(2rem, 9vw, 2.65rem);
+  font-style: normal; font-weight: 400; font-size: clamp(2rem, 9vw, 2.65rem);
   line-height: 1.4; letter-spacing: .04em;
   color: #f4d79b; margin: 0 auto 24px;
   text-shadow: none;
 }
 html[data-theme="moonlight"] #hero .hero-title-text {
   font-family: "HeirOfLightTitle", "MaruBuri", serif;
-  font-weight: 700; font-style: normal; font-synthesis: none;
+  font-weight: 400; font-style: normal; font-synthesis: none;
   position: relative; z-index: 1; display: block; width: 100%;
   padding-block: 8px; white-space: pre-line; overflow-wrap: anywhere;
   color: #f4d79b;
@@ -132,16 +144,16 @@ html[data-theme="moonlight"] #hero .hero-date { color: #f3e9d6; }
 /* Nine-slice the original artwork: top/bottom ornaments keep their height
    while the quiet navy center grows with galleries and expanded accounts. */
 html[data-theme="moonlight"] :is(#invitation, #location, #account) {
-  --section-art: url("../../assets/images/templates/moonlight/section-roses.png");
-  --section-art-slices: 320 54 500 54 fill;
+  --section-art: url("../../assets/images/templates/moonlight/section-roses-clean-bottom.png");
+  --section-art-slices: 320 54 145 54 fill;
   --section-art-top: clamp(115px, 36vw, 162px);
-  --section-art-bottom: clamp(180px, 57vw, 256px);
+  --section-art-bottom: clamp(52px, 16vw, 73px);
 }
 html[data-theme="moonlight"] :is(#wedding-info, #gallery, #guestbook) {
-  --section-art: url("../../assets/images/templates/moonlight/section-rings.png");
-  --section-art-slices: 300 54 400 54 fill;
+  --section-art: url("../../assets/images/templates/moonlight/section-rings-clean-bottom.png");
+  --section-art-slices: 300 54 145 54 fill;
   --section-art-top: clamp(108px, 34vw, 152px);
-  --section-art-bottom: clamp(145px, 46vw, 206px);
+  --section-art-bottom: clamp(52px, 16vw, 73px);
 }
 html[data-theme="moonlight"] :is(#invitation, #location, #account, #wedding-info, #gallery, #guestbook) .section-inner {
   padding-top: calc(var(--section-art-top) + 24px);
@@ -163,6 +175,32 @@ html[data-theme="moonlight"] :is(#invitation, #location, #account, #wedding-info
   border-image-repeat: stretch;
 }
 html[data-theme="moonlight"] #invitation .invitation-message { line-height: 2.25; }
+html[data-theme="moonlight"] #invitation .section-inner {
+  padding-bottom: calc(var(--section-art-bottom) + 12px);
+}
+html[data-theme="moonlight"] #invitation .invitation-title-image {
+  display: block;
+  width: min(82%, 256px);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+html[data-theme="moonlight"] #wedding-info .wedding-title-image {
+  display: block;
+  width: min(90%, 280px);
+  height: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+html[data-theme="moonlight"] #wedding-info h2:has(.wedding-title-image) {
+  margin-bottom: 28px;
+  line-height: 1;
+}
+html[data-theme="moonlight"] #invitation h2:has(.invitation-title-image) {
+  margin-top: -50px;
+  margin-bottom: 28px;
+  line-height: 1;
+}
 html[data-theme="moonlight"] #invitation .family-photo {
   border: 1px solid #c9aa6b; box-shadow: 0 0 0 3px #10182d, 0 0 0 4px #8e7549;
 }
@@ -174,6 +212,17 @@ html[data-theme="moonlight"] .wedding-countdown {
 }
 html[data-theme="moonlight"] .button:hover { background: #612840; }
 html[data-theme="moonlight"] #wedding-info .info-card { background: #10182d; }
+html[data-theme="moonlight"] #wedding-info .wedding-datetime {
+  display: flex; justify-content: center; align-items: baseline;
+  gap: clamp(4px, 1.3vw, 6px); white-space: nowrap;
+  letter-spacing: 0;
+}
+html[data-theme="moonlight"] #wedding-info .wedding-datetime :is(.date-large, .wedding-time, .wedding-datetime-separator) {
+  display: inline; margin: 0;
+  font-size: clamp(.75rem, 3vw, .875rem);
+  line-height: 1.7; text-wrap: nowrap;
+  color: var(--color-heading);
+}
 html[data-theme="moonlight"] .calendar-selected { fill: #e3c187; }
 html[data-theme="moonlight"] .wedding-calendar .is-wedding { fill: #10182d; }
 html[data-theme="moonlight"] #location .travel-icon { background: #482034; border: 1px solid #a88a52; color: #e3c187; }
@@ -223,12 +272,13 @@ html[data-theme="moonlight"] #guestbook .guestbook-form :is(input, textarea) {
 html[data-theme="moonlight"] #guestbook .guestbook-form [aria-invalid="true"] { border: 2px solid var(--color-text); }
 /* Keep the venue frame delicate and leave a real gutter around map tiles. */
 html[data-theme="moonlight"] #main-content #location .info-card {
-  border-image-width: 8px;
+  border: 1px solid #c9aa6b;
+  border-image: none;
   padding: 16px;
   box-shadow: none;
 }
 html[data-theme="moonlight"] #location .location-map-frame {
-  border: 1px solid #8e7549;
+  border: 1px solid #c9aa6b;
   border-image: none;
   border-radius: 2px;
   padding: 6px;

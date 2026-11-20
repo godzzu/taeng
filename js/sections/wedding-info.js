@@ -34,10 +34,25 @@ export function initWeddingInfo(config) {
   if (!section) return;
   const info = config.weddingInfo;
   section.hidden = !info.visible;
-  section.querySelector("h2").textContent = info.title;
+  const title = section.querySelector("h2");
+  title.textContent = info.title;
   const subtitle = section.querySelector(".eyebrow");
   subtitle.textContent = info.subtitle;
   subtitle.hidden = !info.subtitle;
+  if (info.titleImage?.visible && info.titleImage.src) {
+    const image = document.createElement("img");
+    image.className = "wedding-title-image";
+    image.alt = info.titleImage.alt || "Wedding Day";
+    image.loading = "lazy";
+    image.decoding = "async";
+    image.onerror = () => {
+      title.textContent = info.title || info.titleImage.alt || "Wedding Day";
+      subtitle.hidden = !info.subtitle;
+    };
+    image.src = info.titleImage.src;
+    title.replaceChildren(image);
+    subtitle.hidden = true;
+  }
   const { weddingDate, weddingTime } = config.basic;
   const date = section.querySelector('[data-field="date"]');
   date.textContent = formatKoreanDate(weddingDate);

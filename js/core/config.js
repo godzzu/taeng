@@ -24,7 +24,7 @@ function image(value) {
 export function getWeddingConfig(source = weddingConfig) {
   const input = object(source);
   const music = { visible: input.music?.visible !== false, key: text(input.music?.key) };
-  const result = { templateId: ["wedding-floral", "wedding-sketch", "wedding-ticket", "wedding-marble", "wedding-autumn", "moonlight"].includes(input.templateId) ? input.templateId : "wedding-floral" };
+  const result = { templateId: ["wedding-floral", "wedding-sketch", "moonlight"].includes(input.templateId) ? input.templateId : "wedding-floral" };
   for (const key of ["hero", "invitation", "weddingInfo", "gallery", "location", "account", "contact", "guestbook"]) {
     const section = object(input[key]);
     result[key] = { visible: visible(section.visible), title: text(section.title), subtitle: text(section.subtitle), description: text(section.description) };
@@ -46,6 +46,7 @@ export function getWeddingConfig(source = weddingConfig) {
   result.hero.moonlightPhoto = image(input.hero?.moonlightPhoto);
   result.hero.titleImage = image(input.hero?.themeTitleImages?.[result.templateId]);
   result.invitation.message = text(input.invitation?.message);
+  result.invitation.titleImage = image(input.invitation?.themeTitleImages?.[result.templateId]);
   // Resolve the person before filtering hidden rows so names never swap sides.
   const familyRows = Array.isArray(input.invitation?.parents) ? input.invitation.parents.map((row, index) => row && ({
     ...row, person: row.person || (index === 0 ? "groom" : index === 1 ? "bride" : "")
@@ -62,6 +63,7 @@ export function getWeddingConfig(source = weddingConfig) {
   }));
   for (const key of ["venue", "hall", "address"]) result.weddingInfo[key] = text(input.weddingInfo?.[key]);
   result.weddingInfo.showCountdown = visible(input.weddingInfo?.showCountdown);
+  result.weddingInfo.titleImage = image(input.weddingInfo?.themeTitleImages?.[result.templateId]);
   result.gallery.items = items(input.gallery?.items, image).filter(item => item.src);
   result.gallery.visible &&= result.gallery.items.length > 0;
   const travelTitles = { car: "자차", transport: "대중교통 · 버스", subway: "지하철", parking: "주차" };
